@@ -14,6 +14,8 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddCors(x => x.AddDefaultPolicy(builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod()));
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -26,6 +28,8 @@ var app = builder.Build();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.UseCors();
 
 app.Run();
 
