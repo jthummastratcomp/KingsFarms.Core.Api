@@ -1,0 +1,43 @@
+using Microsoft.AspNetCore.Mvc;
+
+namespace HotTowel.Core.Api.Controllers;
+
+[ApiController]
+[Route("[controller]")]
+public class CustomerController : ControllerBase
+{
+    private static readonly string[] Summaries =
+    {
+        "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
+    };
+
+    private readonly ILogger<CustomerController> _logger;
+    private readonly IWeeklyOrdersService _ordersService;
+
+    public CustomerController(ILogger<CustomerController> logger, IWeeklyOrdersService ordersService)
+    {
+        _logger = logger;
+        _ordersService = ordersService;
+    }
+
+    [HttpGet]
+    [Route(ApiRoutes.AllCustomersWeeklyShipmentsForGraph)]
+    public IEnumerable<WeatherForecast> Get()
+    {
+        return Enumerable.Range(1, 5).Select(index => new WeatherForecast
+            {
+                Date = DateTime.Now.AddDays(index),
+                TemperatureC = Random.Shared.Next(-20, 55),
+                Summary = Summaries[Random.Shared.Next(Summaries.Length)]
+            })
+            .ToArray();
+    }
+
+    [HttpGet]
+    [Route(ApiRoutes.HarvestWeeks)]
+    public List<SearchDto> GetInvoiceWeeksListForYear()
+    {
+        //return _ordersService.GetInvoiceWeeksListForYear();
+        return new List<SearchDto>();
+    }
+}
