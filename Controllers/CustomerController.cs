@@ -21,9 +21,9 @@ public class CustomerController : ControllerBase
         _ordersService = ordersService;
     }
 
-    //[HttpGet(Name = "GetCustomerForecast")]
-    [HttpGet]
-    [Route(ApiRoutes.HarvestWeeks)]
+    [HttpGet(ApiRoutes.HarvestWeeks, Name = "GetHArvestWeeks")]
+    //[HttpGet]
+    //[Route(ApiRoutes.HarvestWeeks)]
     public IEnumerable<SearchDto> Get()
     {
         return _ordersService.GetInvoiceWeeksListForYear();

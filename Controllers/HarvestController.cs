@@ -43,8 +43,8 @@ public class HarvestController : ControllerBase
     //}
 
 
-    [HttpGet]
-    [Route(ApiRoutes.HarvestInfo)]
+    [HttpGet(ApiRoutes.HarvestInfo, Name = "GetHarvestInfo")]
+    //[Route(ApiRoutes.HarvestInfo)]
     public List<SearchDto> GetHarvestInfo()
     {
         //return _ordersService.GetInvoiceWeeksListForYear();
