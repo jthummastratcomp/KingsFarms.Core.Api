@@ -7,7 +7,43 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Cache\**" />
+    <Content Remove="Cache\**" />
+    <EmbeddedResource Remove="Cache\**" />
+    <None Remove="Cache\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Services\AdminService.cs" />
+    <Compile Remove="Services\BedHarvestFieldOpsService.cs" />
+    <Compile Remove="Services\CosmosDbService.cs" />
+    <Compile Remove="Services\CustomerLoadService.cs" />
+    <Compile Remove="Services\CustomerService.cs" />
+    <Compile Remove="Services\FieldOperationsService.cs" />
+    <Compile Remove="Services\GenerateWeeklyOrdersService.cs" />
+    <Compile Remove="Services\Interfaces\IAdminService.cs" />
+    <Compile Remove="Services\Interfaces\IBedHarvestFieldOpsService.cs" />
+    <Compile Remove="Services\Interfaces\ICosmosDbService.cs" />
+    <Compile Remove="Services\Interfaces\ICustomerLoadService.cs" />
+    <Compile Remove="Services\Interfaces\ICustomerService.cs" />
+    <Compile Remove="Services\Interfaces\IFieldOperationsService.cs" />
+    <Compile Remove="Services\Interfaces\IGenerateWeeklyOrdersService.cs" />
+    <Compile Remove="Services\Interfaces\IIntuitDataService.cs" />
+    <Compile Remove="Services\Interfaces\IInvoiceLoadLoopService.cs" />
+    <Compile Remove="Services\Interfaces\IInvoiceLoadService.cs" />
+    <Compile Remove="Services\Interfaces\IInvoiceService.cs" />
+    <Compile Remove="Services\IntuitDataService.cs" />
+    <Compile Remove="Services\InvoiceLoadLoopService.cs" />
+    <Compile Remove="Services\InvoiceLoadService.cs" />
+    <Compile Remove="Services\InvoiceService.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="7.2.0" />
+    <PackageReference Include="Azure.Storage.Blobs" Version="12.10.0" />
+    <PackageReference Include="EPPlus" Version="5.8.3" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="Serilog.Sinks.Seq" Version="5.1.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
   </ItemGroup>
 

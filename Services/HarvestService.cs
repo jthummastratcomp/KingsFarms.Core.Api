@@ -1,0 +1,229 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
+using System.IO;
+using System.Linq;
+using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Specialized;
+
+using HotTowel.Web.Helpers;
+using HotTowel.Web.Services.Interfaces;
+using HotTowel.Web.ViewModels;
+using OfficeOpenXml;
+using Serilog;
+
+namespace HotTowel.Web.Services
+{
+    public class HarvestService : IHarvestService
+    {
+        private readonly Serilog.ILogger _logger;
+        private readonly string _azStoreConnStr;
+        private readonly string _azStoreContName;
+        private readonly string _harvestFile;
+
+        public HarvestService(Serilog.ILogger logger, string azStoreConnStr, string azStoreContName, string harvestFile)
+        {
+            _logger = logger;
+            _azStoreConnStr = azStoreConnStr;
+            _azStoreContName = azStoreContName;
+            _harvestFile = harvestFile;
+        }
+
+        public List<HarvestViewModel> GetHarvestInfo()
+        {
+            List<HarvestViewModel> list;
+
+            var client = new BlobServiceClient(_azStoreConnStr);
+            var container = client.GetBlobContainerClient(_azStoreContName);
+            var blob = container.GetBlockBlobClient(_harvestFile);
+
+            using (var memoryStream = new MemoryStream())
+            {
+                blob.DownloadTo(memoryStream);
+
+                using (var package = new ExcelPackage(memoryStream))
+                {
+                    //var harvest20 = package.Workbook.Worksheets["2020_2021_HARVEST"];
+                    var harvest21 = package.Workbook.Worksheets["2021_2022_HARVEST"];
+
+                    //var dtHarvest20 = EpplusUtils.ExcelPackageToDataTable(harvest20);
+                    var dtHarvest21 = EpplusUtils.ExcelPackageToDataTable(harvest21);
+
+                    list = GetHarvestViewModels(dtHarvest21, 2021);
+                }
+            }
+            _logger.Information("GetHarvestInfo returning {@Count}", list.Count);
+            return list;
+        }
+
+        //[CacheTimeout]
+        public List<BedHarvestFieldOpsViewModel> GetBedInfo()
+        {
+            var list = new List<BedHarvestFieldOpsViewModel>();
+
+            var client = new BlobServiceClient(_azStoreConnStr);
+            var container = client.GetBlobContainerClient(_azStoreContName);
+            var blob = container.GetBlockBlobClient(_harvestFile);
+
+            using (var memoryStream = new MemoryStream())
+            {
+                blob.DownloadTo(memoryStream);
+
+                using (var package = new ExcelPackage(memoryStream))
+                {
+                    var harvest20 = package.Workbook.Worksheets["2020_2021_HARVEST"];
+                    var harvest21 = package.Workbook.Worksheets["2021_2022_HARVEST"];
+
+                    var dtHarvest20 = EpplusUtils.ExcelPackageToDataTable(harvest20);
+                    var dtHarvest21 = EpplusUtils.ExcelPackageToDataTable(harvest21);
+
+                    var dataRow = dtHarvest21.Rows[0];
+
+                    for (var col = 5; col < 56; col++)
+                    {
+                        var bedNumber = col - 4;
+                        var plantsCount = Utils.ParseToInteger(dataRow[col].ToString());
+                        list.Add(new BedHarvestFieldOpsViewModel
+                        {
+                            Id = $"Bed.{bedNumber}",
+                            BedNumber = $"Bed {bedNumber}",
+                            PlantsCount = plantsCount,
+                            Section = GetBedSection(bedNumber),
+                            PlantedDate = GetPlantedDate(bedNumber),
+                            HarvestQty20 = GetHarvestQuantityForBed(dtHarvest20, col),
+                            HarvestQty21 = GetHarvestQuantityForBed(dtHarvest21, col),
+                            Harvests = GetBedHarvests(dtHarvest20, dtHarvest21, col),
+                            FieldOperations = new List<BedFieldOpsViewModel>()
+                            {
+                                new BedFieldOpsViewModel(){OperationDate = DateTime.Today, WorkType = FieldOperationEnum.Weeded},
+                                new BedFieldOpsViewModel(){OperationDate = DateTime.Today, WorkType = FieldOperationEnum.Aerated},
+                                new BedFieldOpsViewModel(){OperationDate = DateTime.Today, WorkType = FieldOperationEnum.Cleaned}
+                            }
+                        });
+                    }
+                }
+            }
+            _logger.Information("GetBedInfo returning {@Count}", list.Count);
+            return list;
+        }
+
+
+        //[CacheTimeout]
+        public List<BedHarvestFieldOpsViewModel> GetBedInfoGrouped()
+        {
+            var groupedList = GetBedsGroupedBySection(GetBedInfo());
+
+            var list = new List<BedHarvestFieldOpsViewModel>();
+
+            foreach (var byYearGroup in groupedList)
+                list.Add(new BedHarvestFieldOpsViewModel
+                {
+                    Section = byYearGroup.Key,
+                    BedNumber = byYearGroup.Count().ToString(),
+                    PlantsCount = byYearGroup.Sum(x => x.PlantsCount),
+                    PlantedDate = byYearGroup.First().PlantedDate,
+                    HarvestQty20 = byYearGroup.Sum(x => x.HarvestQty20),
+                    HarvestQty21 = byYearGroup.Sum(x => x.HarvestQty21)
+                });
+
+            _logger.Information("GetBedInfoGrouped returning {@Count}", list.Count);
+            return list.OrderBy(x => x.Section).ToList();
+        }
+
+        private static IEnumerable<IGrouping<SectionEnum, BedHarvestFieldOpsViewModel>> GetBedsGroupedBySection(IEnumerable<BedHarvestFieldOpsViewModel> list)
+        {
+            return from bed in list
+                group bed by bed.Section
+                into listBySection
+                orderby listBySection.Key
+                select listBySection;
+        }
+
+        private static SectionEnum GetBedSection(int bedNumber)
+        {
+            if (bedNumber >= 1 && bedNumber <= 11) return SectionEnum.MidWest;
+            if (bedNumber >= 12 && bedNumber <= 22) return SectionEnum.SouthWest;
+            if (bedNumber >= 23 && bedNumber <= 28) return SectionEnum.SouthEastOne;
+            if (bedNumber >= 29 && bedNumber <= 37) return SectionEnum.SouthEastTwo;
+            if (bedNumber >= 38 && bedNumber <= 45) return SectionEnum.MidEastTwo;
+            if (bedNumber >= 46 && bedNumber <= 51) return SectionEnum.MidEastOne;
+            return SectionEnum.None;
+        }
+
+        private static DateTime GetPlantedDate(int bedNumber)
+        {
+            if (bedNumber >= 1 && bedNumber <= 11) return new DateTime(2018, 9, 1);
+            if (bedNumber >= 12 && bedNumber <= 22) return new DateTime(2018, 9, 1);
+            if (bedNumber >= 23 && bedNumber <= 28) return new DateTime(2019, 10, 1);
+            if (bedNumber >= 29 && bedNumber <= 37) return new DateTime(2020, 12, 1);
+            if (bedNumber >= 38 && bedNumber <= 45) return new DateTime(2021, 1, 1);
+            if (bedNumber >= 46 && bedNumber <= 51) return new DateTime(2021, 1, 1);
+            return DateTime.MinValue;
+        }
+
+        private static List<HarvestViewModel> GetHarvestViewModels(DataTable table, int year)
+        {
+            var list = new List<HarvestViewModel>();
+
+            for (var row = 6; row < 75; row++)
+            {
+                var dataRow = table.Rows[row];
+                var harvestDate = Utils.ParseToDateTime(dataRow[1].ToString());
+                if (!harvestDate.HasValue) continue;
+
+                list.Add(new HarvestViewModel { HarvestDate = harvestDate.GetValueOrDefault(), BedHarvests = GetHarvestsForWeek(dataRow, year) });
+            }
+
+            return list;
+        }
+
+        private static int GetHarvestQuantityForBed(DataTable table, int bedNumber)
+        {
+            var qty = 0;
+            for (var row = 5; row < 70; row++) qty += Utils.ParseToInteger(table.Rows[row][bedNumber].ToString());
+
+            return qty;
+        }
+
+        private static List<BedHarvestViewModel> GetBedHarvests(DataTable dtHarvest20, DataTable dtHarvest21, int bedNumber)
+        {
+            var list = new List<BedHarvestViewModel>();
+
+            for (var row = 5; row < 70; row++)
+            {
+                var harvestDate20 = Utils.ParseToDateTime(dtHarvest20.Rows[row][1 /* col 1 is date */].ToString());
+                if (harvestDate20.HasValue)
+                {
+                    var qty = Utils.ParseToInteger(dtHarvest20.Rows[row][bedNumber].ToString());
+                    if (qty > 0) list.Add(new BedHarvestViewModel { HarvestDate = harvestDate20.GetValueOrDefault(), HarvestQty = qty });
+                }
+
+                var harvestDate21 = Utils.ParseToDateTime(dtHarvest21.Rows[row][1 /* col 1 is date */].ToString());
+                if (harvestDate21.HasValue)
+                {
+                    var qty = Utils.ParseToInteger(dtHarvest20.Rows[row][bedNumber].ToString());
+                    if (qty > 0) list.Add(new BedHarvestViewModel { HarvestDate = harvestDate21.GetValueOrDefault(), HarvestQty = qty });
+                }
+            }
+
+            return list.OrderByDescending(x => x.HarvestDate).ToList();
+        }
+
+        private static List<HarvestBedViewModel> GetHarvestsForWeek(DataRow row, int year)
+        {
+            var list = new List<HarvestBedViewModel>();
+
+            for (var col = 5; col < 56; col++)
+            {
+                var qty = Utils.ParseToInteger(row[col].ToString());
+                if (qty <= 0) continue;
+                var model = new HarvestBedViewModel { BedNumber = $"Bed {col - 4}" };
+                if (year == 20201) model.HarvestQty20 = qty;
+                if (year == 2021) model.HarvestQty21 = qty;
+                list.Add(model);
+            }
+
+            return list;
+        }
+    }
+}

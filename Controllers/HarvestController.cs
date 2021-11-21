@@ -1,3 +1,6 @@
+using HotTowel.Web.Results;
+using HotTowel.Web.Services.Interfaces;
+using HotTowel.Web.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HotTowel.Core.Api.Controllers;
@@ -12,13 +15,21 @@ public class HarvestController : ControllerBase
         "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
     };
 
-    private readonly ILogger<HarvestController> _logger;
+    private readonly Serilog.ILogger _logger;
     private readonly IWeeklyOrdersService _ordersService;
+    private readonly IHarvestService _harvestService;
 
-    public HarvestController(ILogger<HarvestController> logger, IWeeklyOrdersService ordersService)
+    //public HarvestController(ILogger<HarvestController> logger, IWeeklyOrdersService ordersService)
+    //{
+    //    _logger = logger;
+    //    _ordersService = ordersService;
+    //}
+
+    public HarvestController( IWeeklyOrdersService ordersService, IHarvestService harvestService, Serilog.ILogger logger)
     {
-        _logger = logger;
         _ordersService = ordersService;
+        _harvestService = harvestService;
+        _logger = logger;
     }
 
     //[HttpGet]
@@ -49,5 +60,22 @@ public class HarvestController : ControllerBase
     {
         //return _ordersService.GetInvoiceWeeksListForYear();
         return new List<SearchDto>();
+    }
+
+    [HttpGet(ApiRoutes.HarvestWeeks, Name = "GetHarvestWeeks")]
+    //[HttpGet]
+    //[Route(ApiRoutes.HarvestWeeks)]
+    public IEnumerable<SearchDto> GetHarvestWeeks()
+    {
+        return _ordersService.GetInvoiceWeeksListForYear();
+    }
+
+    [HttpGet(ApiRoutes.BedInfo)]
+    public IQueryResult GetBedInfo()
+    {
+        _logger.Information("GetBedInfo");
+        var list = _harvestService.GetBedInfo();
+
+        return new QueryResult<List<BedHarvestFieldOpsViewModel>> { Data = list, Status = new SuccessResult() };
     }
 }

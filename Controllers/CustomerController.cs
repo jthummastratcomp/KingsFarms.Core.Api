@@ -1,4 +1,5 @@
 using HotTowel.Core.Api.Controllers;
+using HotTowel.Web.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebApplication1.Controllers;
@@ -21,11 +22,11 @@ public class CustomerController : ControllerBase
         _ordersService = ordersService;
     }
 
-    [HttpGet(ApiRoutes.HarvestWeeks, Name = "GetHArvestWeeks")]
-    //[HttpGet]
-    //[Route(ApiRoutes.HarvestWeeks)]
-    public IEnumerable<SearchDto> Get()
-    {
-        return _ordersService.GetInvoiceWeeksListForYear();
-    }
+    //[HttpGet(ApiRoutes.HarvestWeeks, Name = "GetHArvestWeeks")]
+    ////[HttpGet]
+    ////[Route(ApiRoutes.HarvestWeeks)]
+    //public IEnumerable<SearchDto> Get()
+    //{
+    //    return _ordersService.GetInvoiceWeeksListForYear();
+    //}
 }
