@@ -6,9 +6,9 @@ namespace HotTowel.Web.Services
 {
     public class CosmosDbService : ICosmosDbService
     {
-        private readonly ILogger _logger;
+        private readonly Serilog.ILogger _logger;
         private readonly CosmosClient _cosmosClient;
-        public CosmosDbService(string cosmosDbUri, string cosmosDbKey, ILogger logger)
+        public CosmosDbService(string cosmosDbUri, string cosmosDbKey, Serilog.ILogger logger)
         {
             _logger = logger;
             _cosmosClient = new CosmosClient(cosmosDbUri, cosmosDbKey, new CosmosClientOptions { ApplicationName = "CosmosDBKings" });

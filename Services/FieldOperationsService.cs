@@ -15,7 +15,7 @@ namespace HotTowel.Web.Services
 
         private readonly ICosmosDbService _cosmosDbService;
 
-        private readonly ILogger _logger;
+        private readonly Serilog.ILogger _logger;
         //private static readonly string EndpointUri = ConfigurationManager.AppSettings["EndPointUri"];
         //private static readonly string PrimaryKey = ConfigurationManager.AppSettings["PrimaryKey"];
 
@@ -28,7 +28,7 @@ namespace HotTowel.Web.Services
         // The container we will create.
         //private Container container;
 
-        public FieldOperationsService(string cosmosDbDatabase, string cosmosDbContainer, ICosmosDbService cosmosDbService, ILogger logger)
+        public FieldOperationsService(string cosmosDbDatabase, string cosmosDbContainer, ICosmosDbService cosmosDbService, Serilog.ILogger logger)
         {
             _cosmosDbDatabase = cosmosDbDatabase;
             _cosmosDbContainer = cosmosDbContainer;

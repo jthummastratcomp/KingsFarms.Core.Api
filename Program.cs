@@ -7,7 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 
 
-var someSettings = builder.Configuration.GetSection(typeof(SomeSettings).Name).Get<SomeSettings>();
+var someSettings = builder.Configuration.GetSection(typeof(HotTowelCoreApiSettings).Name).Get<HotTowelCoreApiSettings>();
 
 builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
 //builder.Host.ConfigureContainer<ContainerBuilder>(b => b.RegisterModule<WebBootstrap>());
@@ -38,19 +38,3 @@ app.MapControllers();
 app.UseCors();
 
 app.Run();
-
-public class SomeSettings
-{
-    public string seqLogUrl { get; set; }
-    public string logFile { get; set; }
-    public string cosmosDbUri { get; set; }
-    public string cosmosDbKey { get; set; }
-    public string cosmosDbContainer_Beds { get; set; }
-    public string cosmosDbDatabaseId { get; set; }
-    
-    
-    public string azStoreConnStr { get; set; }
-    public string azStoreContName { get; set; }
-    public string weeklyOrdersFile { get; set; }
-    public string harvestFile { get; set; }
-}

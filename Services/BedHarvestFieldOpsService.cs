@@ -12,13 +12,13 @@ namespace HotTowel.Web.Services
     public class BedHarvestFieldOpsService : IBedHarvestFieldOpsService
     {
         private readonly string _cosmosDbContainer;
-        private readonly ILogger _logger;
+        private readonly Serilog.ILogger _logger;
         private readonly string _cosmosDbDatabase;
         private readonly ICosmosDbService _cosmosDbService;
         private readonly IHarvestService _harvestService;
 
 
-        public BedHarvestFieldOpsService(ILogger logger, string cosmosDbDatabase, string cosmosDbContainer, ICosmosDbService cosmosDbService, IHarvestService harvestService)
+        public BedHarvestFieldOpsService(Serilog.ILogger logger, string cosmosDbDatabase, string cosmosDbContainer, ICosmosDbService cosmosDbService, IHarvestService harvestService)
         {
             _logger = logger.ForContext<BedHarvestFieldOpsService>();
             _cosmosDbDatabase = cosmosDbDatabase;
