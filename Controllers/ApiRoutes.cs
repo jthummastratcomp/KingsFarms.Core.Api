@@ -16,7 +16,7 @@ public static class ApiRoutes
     public const string AddCustomerInvoice = "api/customer/{customerId}/invoice/add";
     public const string CustomerYearlyShipmentsBills = "api/customer/{customerId}/yearlyShipmentsBills";
     public const string CustomerWeeklyShipments = "api/customer/{customerId}/weeklyShipments";
-    public const string AllCustomersWeeklyShipmentsForGraph = "api/customer/weeklyShipmentsGraph";
+    public const string AllCustomersWeeklyShipmentsForGraph = "shipments/weekly/graph";
     public const string HarvestWeeks = "harvest/weeks";
     public const string LoadInvoicesForWeek = "api/invoices/{week}/load";
     public const string GenerateInvoicesForWeek = "api/invoices/{week}/generate";
@@ -30,7 +30,7 @@ public static class ApiRoutes
     public const string FieldOperations = "api/operation/field";
 
     //HARVEST
-    public const string HarvestInfo = "api/harvest/info";
+    public const string HarvestInfo = "harvest/info";
     public const string BedInfo = "api/harvest/bedInfo";
     public const string BedInfoGrouped = "api/harvest/bedInfo/grouped";
     public const string BedInfoHarvestFieldOps = "api/harvest/bedInfoHarvestOps";

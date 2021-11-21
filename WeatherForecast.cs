@@ -1,4 +1,4 @@
-namespace HotTowel.Core.Api
+namespace WebApplication1
 {
     public class WeatherForecast
     {
