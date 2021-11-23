@@ -34,4 +34,6 @@ public static class ApiRoutes
     public const string BedInfo = "api/harvest/bedInfo";
     public const string BedInfoGrouped = "api/harvest/bedInfo/grouped";
     public const string BedInfoHarvestFieldOps = "api/harvest/bedInfoHarvestOps";
+
+    public const string Dashboard = "api/dashboard";
 }
