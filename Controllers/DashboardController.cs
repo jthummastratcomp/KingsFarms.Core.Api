@@ -18,7 +18,7 @@ public class DashboardController : ControllerBase
 
 
     [HttpGet(ApiRoutes.Dashboard)]
-    public IQueryResult GetDashboard()
+    public List<DashboardViewModel> GetDashboard()
     {
         _logger.Information("GetDashboard");
         //var list = _harvestService.GetHarvestInfo();
@@ -48,6 +48,6 @@ public class DashboardController : ControllerBase
             }
         };
 
-        return new QueryResult<List<DashboardViewModel>> { Data = list, Status = new SuccessResult() };
+        return list;
     }
 }
