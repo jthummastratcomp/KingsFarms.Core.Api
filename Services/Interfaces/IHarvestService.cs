@@ -7,7 +7,5 @@ namespace HotTowel.Web.Services.Interfaces
     public interface IHarvestService
     {
         List<HarvestViewModel> GetHarvestInfo();
-        List<BedHarvestFieldOpsViewModel> GetBedInfo();
-        List<BedHarvestFieldOpsViewModel> GetBedInfoGrouped();
     }
 }

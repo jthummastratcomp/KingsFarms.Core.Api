@@ -47,6 +47,11 @@ namespace HotTowel.Web.Bootstrap
                 .WithParameter("azStoreContName", azStoreContName)
                 .WithParameter("harvestFile", harvestFile);
 
+            builder.RegisterType<BedService>().As<IBedService>()
+                .WithParameter("azStoreConnStr", azStoreConnStr)
+                .WithParameter("azStoreContName", azStoreContName)
+                .WithParameter("harvestFile", harvestFile);
+
             builder.RegisterType<CosmosDbService>().As<ICosmosDbService>()
                 .WithParameter("cosmosDbUri", cosmosDbUri)
                 .WithParameter("cosmosDbKey", cosmosDbKey);

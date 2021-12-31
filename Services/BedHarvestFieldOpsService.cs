@@ -16,20 +16,22 @@ namespace HotTowel.Web.Services
         private readonly string _cosmosDbDatabase;
         private readonly ICosmosDbService _cosmosDbService;
         private readonly IHarvestService _harvestService;
+        private readonly IBedService _bedService;
 
 
-        public BedHarvestFieldOpsService(Serilog.ILogger logger, string cosmosDbDatabase, string cosmosDbContainer, ICosmosDbService cosmosDbService, IHarvestService harvestService)
+        public BedHarvestFieldOpsService(Serilog.ILogger logger, string cosmosDbDatabase, string cosmosDbContainer, ICosmosDbService cosmosDbService, IHarvestService harvestService, IBedService bedService)
         {
             _logger = logger.ForContext<BedHarvestFieldOpsService>();
             _cosmosDbDatabase = cosmosDbDatabase;
             _cosmosDbContainer = cosmosDbContainer;
             _cosmosDbService = cosmosDbService;
             _harvestService = harvestService;
+            _bedService = bedService;
         }
 
         public async Task<List<BedHarvestFieldOpsViewModel>> GetOrAddBedInfoToCosmosDbAsync()
         {
-            var bedList = _harvestService.GetBedInfo();
+            var bedList = _bedService.GetBedInfo();
 
             var container = await _cosmosDbService.GetOrCreateCosmosDbContainerAsync(_cosmosDbDatabase, _cosmosDbContainer);
 
