@@ -5,6 +5,6 @@ namespace HotTowel.Web.Services.Interfaces;
 public interface IBedService
 {
     
-    List<BedHarvestFieldOpsViewModel> GetBedInfo();
-    List<BedHarvestFieldOpsViewModel> GetBedInfoGrouped();
+    List<BedHarvestFieldOpsViewModel> GetBedsInfo();
+    List<BedHarvestFieldOpsViewModel> GetBedsInfoGrouped();
 }

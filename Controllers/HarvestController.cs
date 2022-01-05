@@ -23,10 +23,10 @@ public class HarvestController : ControllerBase
     }
 
     [HttpGet(ApiRoutes.HarvestInfo)]
-    public IQueryResult GetHarvestInfo()
+    public IQueryResult GetHarvestInfo(int year)
     {
         _logger.Information("GetHarvestInfo");
-        var list = _harvestService.GetHarvestInfo();
+        var list = _harvestService.GetHarvestInfo(year);
 
         return new QueryResult<List<HarvestViewModel>> { Data = list, Status = new SuccessResult() };
     }

@@ -6,6 +6,6 @@ namespace HotTowel.Web.Services.Interfaces
 {
     public interface IHarvestService
     {
-        List<HarvestViewModel> GetHarvestInfo();
+        List<HarvestViewModel> GetHarvestInfo(int harvestYear);
     }
 }

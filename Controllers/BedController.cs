@@ -25,19 +25,19 @@ public class BedController : ControllerBase
 
    
     [HttpGet(ApiRoutes.BedInfo, Name = "GetBeds")]
-    public IQueryResult GetBedInfo()
+    public IQueryResult GetBedsInfo()
     {
         _logger.Information("GetBedInfo");
-        var list = _bedService.GetBedInfo();
+        var list = _bedService.GetBedsInfo();
 
         return new QueryResult<List<BedHarvestFieldOpsViewModel>> { Data = list, Status = new SuccessResult() };
     }
 
     [HttpGet(ApiRoutes.BedInfoGrouped, Name = "GetBedsInfoGrouped")]
-    public IQueryResult GetBedInfoGrouped()
+    public IQueryResult GetBedsInfoGrouped()
     {
         _logger.Information("BedInfoGrouped");
-        var list = _bedService.GetBedInfoGrouped();
+        var list = _bedService.GetBedsInfoGrouped();
 
         return new QueryResult<List<BedHarvestFieldOpsViewModel>> { Data = list, Status = new SuccessResult() };
     }

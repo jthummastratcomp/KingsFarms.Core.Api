@@ -24,9 +24,11 @@ public class HarvestService : IHarvestService
         _harvestFile = harvestFile;
     }
 
-    public List<HarvestViewModel> GetHarvestInfo()
+    public List<HarvestViewModel> GetHarvestInfo(int harvestYear)
     {
-        List<HarvestViewModel> list;
+        //var harvestYear = Utils.ParseToInteger(year);
+
+        var list = new List<HarvestViewModel>();
 
         var client = new BlobServiceClient(_azStoreConnStr);
         var container = client.GetBlobContainerClient(_azStoreContName);
@@ -36,20 +38,23 @@ public class HarvestService : IHarvestService
         {
             blob.DownloadTo(memoryStream);
 
-            using (var package = new ExcelPackage(memoryStream))
-            {
-                //var harvest20 = package.Workbook.Worksheets["2020_2021_HARVEST"];
-                var harvest21 = package.Workbook.Worksheets["2021_2022_HARVEST"];
-
-                //var dtHarvest20 = EpplusUtils.ExcelPackageToDataTable(harvest20);
-                var dtHarvest21 = EpplusUtils.ExcelPackageToDataTable(harvest21);
-
-                list = GetHarvestViewModels(dtHarvest21, 2021);
-            }
+            using var package = new ExcelPackage(memoryStream);
+            var dtHarvest = GetHarvestWorksheetData(package, harvestYear);
+            if(dtHarvest != null) list = GetHarvestViewModels(dtHarvest, harvestYear);
         }
 
         _logger.Information("GetHarvestInfo returning {@Count}", list.Count);
         return list;
+    }
+
+    private static DataTable? GetHarvestWorksheetData(ExcelPackage package, int harvestYear)
+    {
+        return harvestYear switch
+        {
+            2020 => EpplusUtils.ExcelPackageToDataTable(package.Workbook.Worksheets["2020_2021_HARVEST"]),
+            2021 => EpplusUtils.ExcelPackageToDataTable(package.Workbook.Worksheets["2021_2022_HARVEST"]),
+            _ => null
+        };
     }
 
 
@@ -74,12 +79,13 @@ public class HarvestService : IHarvestService
     {
         var list = new List<HarvestBedViewModel>();
 
-        for (var col = 5; col < 56; col++)
+        var colMax = year == 2020 ? 33 : 56;
+        for (var col = 5; col < colMax; col++)
         {
             var qty = Utils.ParseToInteger(row[col].ToString());
             if (qty <= 0) continue;
             var model = new HarvestBedViewModel { BedNumber = $"Bed {col - 4}" };
-            if (year == 20201) model.HarvestQty20 = qty;
+            if (year == 2020) model.HarvestQty20 = qty;
             if (year == 2021) model.HarvestQty21 = qty;
             list.Add(model);
         }

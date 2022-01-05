@@ -31,7 +31,7 @@ namespace HotTowel.Web.Services
 
         public async Task<List<BedHarvestFieldOpsViewModel>> GetOrAddBedInfoToCosmosDbAsync()
         {
-            var bedList = _bedService.GetBedInfo();
+            var bedList = _bedService.GetBedsInfo();
 
             var container = await _cosmosDbService.GetOrCreateCosmosDbContainerAsync(_cosmosDbDatabase, _cosmosDbContainer);
 

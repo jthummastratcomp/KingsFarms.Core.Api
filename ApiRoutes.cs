@@ -30,9 +30,11 @@ public static class ApiRoutes
     public const string FieldOperations = "api/operation/field";
 
     //HARVEST
-    public const string HarvestInfo = "api/harvest/info";
-    public const string BedInfo = "api/harvest/bedInfo";
-    public const string BedInfoGrouped = "api/harvest/bedInfo/grouped";
+    public const string HarvestInfo = "api/harvest/info/{year}";
+
+    //BEDS
+    public const string BedInfo = "api/beds/info";
+    public const string BedInfoGrouped = "api/beds/info/grouped";
     public const string BedInfoHarvestFieldOps = "api/harvest/bedInfoHarvestOps";
 
     public const string Dashboard = "api/dashboard";

@@ -25,7 +25,7 @@ public class BedService : IBedService
 
    
     //[CacheTimeout]
-    public List<BedHarvestFieldOpsViewModel> GetBedInfo()
+    public List<BedHarvestFieldOpsViewModel> GetBedsInfo()
     {
         var list = new List<BedHarvestFieldOpsViewModel>();
 
@@ -77,9 +77,9 @@ public class BedService : IBedService
 
 
     //[CacheTimeout]
-    public List<BedHarvestFieldOpsViewModel> GetBedInfoGrouped()
+    public List<BedHarvestFieldOpsViewModel> GetBedsInfoGrouped()
     {
-        var groupedList = GetBedsGroupedBySection(GetBedInfo());
+        var groupedList = GetBedsGroupedBySection(GetBedsInfo());
 
         var list = new List<BedHarvestFieldOpsViewModel>();
 
