@@ -76,7 +76,9 @@ public class BedService : IBedService
                 var total = new BedHarvestFieldOpsViewModel()
                 {
                     Id = "Total",
+                    BedNumber = "Total",
                     PlantsCount = list.Sum(x=>x.PlantsCount),
+                    Section = GetBedSection(0),
                     HarvestQty20_21 = list.Sum(x=>x.HarvestQty20_21),
                     HarvestQty21_22 = list.Sum(x => x.HarvestQty21_22),
                     HarvestQty22_23 = list.Sum(x => x.HarvestQty22_23)

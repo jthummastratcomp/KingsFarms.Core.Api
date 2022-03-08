@@ -10,6 +10,6 @@ namespace HotTowel.Web.ViewModels
         [Description("South East 2")] SouthEastTwo,
         [Description("Mid East 1")] MidEastOne,
         [Description("Mid East 2")] MidEastTwo,
-        None
+        [Description("Total")] None
     }
 }
