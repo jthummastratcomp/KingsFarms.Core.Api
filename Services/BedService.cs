@@ -39,13 +39,15 @@ public class BedService : IBedService
 
             using (var package = new ExcelPackage(memoryStream))
             {
-                var harvest20 = package.Workbook.Worksheets["2020_2021_HARVEST"];
-                var harvest21 = package.Workbook.Worksheets["2021_2022_HARVEST"];
+                var harvest20_21 = package.Workbook.Worksheets["2020_2021_HARVEST"];
+                var harvest21_22 = package.Workbook.Worksheets["2021_2022_HARVEST"];
+                var harvest22_23 = package.Workbook.Worksheets["2022_2023_HARVEST"];
 
-                var dtHarvest20 = EpplusUtils.ExcelPackageToDataTable(harvest20);
-                var dtHarvest21 = EpplusUtils.ExcelPackageToDataTable(harvest21);
+                var dtHarvest20_21 = EpplusUtils.ExcelPackageToDataTable(harvest20_21);
+                var dtHarvest21_22 = EpplusUtils.ExcelPackageToDataTable(harvest21_22);
+                var dtHarvest22_23 = EpplusUtils.ExcelPackageToDataTable(harvest22_23);
 
-                var dataRow = dtHarvest21.Rows[0];
+                var dataRow = dtHarvest21_22.Rows[0];
                  
                 for (var col = 5; col < 56; col++)
                 {
@@ -58,15 +60,16 @@ public class BedService : IBedService
                         PlantsCount = plantsCount,
                         Section = GetBedSection(bedNumber),
                         PlantedDate = GetPlantedDate(bedNumber),
-                        HarvestQty20_21 = bedNumber > 28 ? 0 : GetHarvestQuantityForBed(dtHarvest20, col),
-                        HarvestQty21_22 = bedNumber > 51 ? 0 : GetHarvestQuantityForBed(dtHarvest21, col),
+                        HarvestQty20_21 = bedNumber > 28 ? 0 : GetHarvestQuantityForBed(dtHarvest20_21, col),
+                        HarvestQty21_22 = bedNumber > 51 ? 0 : GetHarvestQuantityForBed(dtHarvest21_22, col),
+                        HarvestQty22_23 = bedNumber > 51 ? 0 : GetHarvestQuantityForBed(dtHarvest22_23, col),
 
-                        FieldOperations = new List<BedFieldOpsViewModel>()
-                        {
-                            new BedFieldOpsViewModel(){OperationDate = DateTime.Today, WorkType = FieldOperationEnum.Weeded},
-                            new BedFieldOpsViewModel(){OperationDate = DateTime.Today, WorkType = FieldOperationEnum.Aerated},
-                            new BedFieldOpsViewModel(){OperationDate = DateTime.Today, WorkType = FieldOperationEnum.Cleaned}
-                        }
+                        //FieldOperations = new List<BedFieldOpsViewModel>()
+                        //{
+                        //    new BedFieldOpsViewModel(){OperationDate = DateTime.Today, WorkType = FieldOperationEnum.Weeded},
+                        //    new BedFieldOpsViewModel(){OperationDate = DateTime.Today, WorkType = FieldOperationEnum.Aerated},
+                        //    new BedFieldOpsViewModel(){OperationDate = DateTime.Today, WorkType = FieldOperationEnum.Cleaned}
+                        //}
                     });
                 }
             }
@@ -91,7 +94,8 @@ public class BedService : IBedService
                 PlantsCount = byYearGroup.Sum(x => x.PlantsCount),
                 PlantedDate = byYearGroup.First().PlantedDate,
                 HarvestQty20_21 = byYearGroup.Sum(x => x.HarvestQty20_21),
-                HarvestQty21_22 = byYearGroup.Sum(x => x.HarvestQty21_22)
+                HarvestQty21_22 = byYearGroup.Sum(x => x.HarvestQty21_22),
+                HarvestQty22_23 = byYearGroup.Sum(x => x.HarvestQty22_23)
             });
 
         _logger.Information("GetBedInfoGrouped returning {@Count}", list.Count);
@@ -153,44 +157,44 @@ public class BedService : IBedService
         return qty;
     }
 
-    private static List<BedHarvestViewModel> GetBedHarvests(DataTable dtHarvest20, DataTable dtHarvest21, int bedNumber)
-    {
-        var list = new List<BedHarvestViewModel>();
+    //private static List<BedHarvestViewModel> GetBedHarvests(DataTable dtHarvest20, DataTable dtHarvest21, int bedNumber)
+    //{
+    //    var list = new List<BedHarvestViewModel>();
 
-        for (var row = 5; row < 70; row++)
-        {
-            var harvestDate20 = Utils.ParseToDateTime(dtHarvest20.Rows[row][1 /* col 1 is date */].ToString());
-            if (harvestDate20.HasValue)
-            {
-                var qty = Utils.ParseToInteger(dtHarvest20.Rows[row][bedNumber].ToString());
-                if (qty > 0) list.Add(new BedHarvestViewModel { HarvestDate = harvestDate20.GetValueOrDefault(), HarvestQty = qty });
-            }
+    //    for (var row = 5; row < 70; row++)
+    //    {
+    //        var harvestDate20 = Utils.ParseToDateTime(dtHarvest20.Rows[row][1 /* col 1 is date */].ToString());
+    //        if (harvestDate20.HasValue)
+    //        {
+    //            var qty = Utils.ParseToInteger(dtHarvest20.Rows[row][bedNumber].ToString());
+    //            if (qty > 0) list.Add(new BedHarvestViewModel { HarvestDate = harvestDate20.GetValueOrDefault(), HarvestQty = qty });
+    //        }
 
-            var harvestDate21 = Utils.ParseToDateTime(dtHarvest21.Rows[row][1 /* col 1 is date */].ToString());
-            if (harvestDate21.HasValue)
-            {
-                var qty = Utils.ParseToInteger(dtHarvest20.Rows[row][bedNumber].ToString());
-                if (qty > 0) list.Add(new BedHarvestViewModel { HarvestDate = harvestDate21.GetValueOrDefault(), HarvestQty = qty });
-            }
-        }
+    //        var harvestDate21 = Utils.ParseToDateTime(dtHarvest21.Rows[row][1 /* col 1 is date */].ToString());
+    //        if (harvestDate21.HasValue)
+    //        {
+    //            var qty = Utils.ParseToInteger(dtHarvest20.Rows[row][bedNumber].ToString());
+    //            if (qty > 0) list.Add(new BedHarvestViewModel { HarvestDate = harvestDate21.GetValueOrDefault(), HarvestQty = qty });
+    //        }
+    //    }
 
-        return list.OrderByDescending(x => x.HarvestDate).ToList();
-    }
+    //    return list.OrderByDescending(x => x.HarvestDate).ToList();
+    //}
 
-    private static List<HarvestBedViewModel> GetHarvestsForWeek(DataRow row, int year)
-    {
-        var list = new List<HarvestBedViewModel>();
+    //private static List<HarvestBedViewModel> GetHarvestsForWeek(DataRow row, int year)
+    //{
+    //    var list = new List<HarvestBedViewModel>();
 
-        for (var col = 5; col < 56; col++)
-        {
-            var qty = Utils.ParseToInteger(row[col].ToString());
-            if (qty <= 0) continue;
-            var model = new HarvestBedViewModel { BedNumber = $"Bed {col - 4}" };
-            if (year == 20201) model.HarvestQty20 = qty;
-            if (year == 2021) model.HarvestQty21 = qty;
-            list.Add(model);
-        }
+    //    for (var col = 5; col < 56; col++)
+    //    {
+    //        var qty = Utils.ParseToInteger(row[col].ToString());
+    //        if (qty <= 0) continue;
+    //        var model = new HarvestBedViewModel { BedNumber = $"Bed {col - 4}" };
+    //        if (year == 20201) model.HarvestQty20 = qty;
+    //        if (year == 2021) model.HarvestQty21 = qty;
+    //        list.Add(model);
+    //    }
 
-        return list;
-    }
+    //    return list;
+    //}
 }

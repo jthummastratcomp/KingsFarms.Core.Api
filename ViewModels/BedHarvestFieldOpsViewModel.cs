@@ -48,11 +48,14 @@ public class BedHarvestFieldOpsViewModel
     }
 
     //todo be refactor
-    public int HarvestQty21_22 { get; set; }
     public int HarvestQty20_21 { get; set; }
+    public int HarvestQty21_22 { get; set; }
+    public int HarvestQty22_23 { get; set; }
     public decimal Avg20_21 => PlantsCount > 0 && HarvestQty20_21 > 0 ? (decimal)HarvestQty20_21 / PlantsCount : 0;
     public decimal Avg21_22 => PlantsCount > 0 && HarvestQty21_22 > 0 ? (decimal)HarvestQty21_22 / PlantsCount : 0;
+    public decimal Avg22_23 => PlantsCount > 0 && HarvestQty22_23 > 0 ? (decimal)HarvestQty22_23 / PlantsCount : 0;
     public decimal GrowthPercent21_22 => PlantsCount > 0 && HarvestQty20_21 > 0 && HarvestQty21_22 > 0 ? (decimal)(HarvestQty21_22 - HarvestQty20_21) / HarvestQty20_21 : 0;
+    public decimal GrowthPercent22_23 => PlantsCount > 0 && HarvestQty21_22 > 0 && HarvestQty22_23 > 0 ? (decimal)(HarvestQty22_23 - HarvestQty21_22) / HarvestQty21_22 : 0;
 
     //todo be refactor
 
