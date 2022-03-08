@@ -58,8 +58,8 @@ public class BedService : IBedService
                         PlantsCount = plantsCount,
                         Section = GetBedSection(bedNumber),
                         PlantedDate = GetPlantedDate(bedNumber),
-                        HarvestQty20 = bedNumber > 28 ? 0 : GetHarvestQuantityForBed(dtHarvest20, col),
-                        HarvestQty21 = bedNumber > 51 ? 0 : GetHarvestQuantityForBed(dtHarvest21, col),
+                        HarvestQty20_21 = bedNumber > 28 ? 0 : GetHarvestQuantityForBed(dtHarvest20, col),
+                        HarvestQty21_22 = bedNumber > 51 ? 0 : GetHarvestQuantityForBed(dtHarvest21, col),
 
                         FieldOperations = new List<BedFieldOpsViewModel>()
                         {
@@ -90,8 +90,8 @@ public class BedService : IBedService
                 BedNumber = byYearGroup.Count().ToString(),
                 PlantsCount = byYearGroup.Sum(x => x.PlantsCount),
                 PlantedDate = byYearGroup.First().PlantedDate,
-                HarvestQty20 = byYearGroup.Sum(x => x.HarvestQty20),
-                HarvestQty21 = byYearGroup.Sum(x => x.HarvestQty21)
+                HarvestQty20_21 = byYearGroup.Sum(x => x.HarvestQty20_21),
+                HarvestQty21_22 = byYearGroup.Sum(x => x.HarvestQty21_22)
             });
 
         _logger.Information("GetBedInfoGrouped returning {@Count}", list.Count);
