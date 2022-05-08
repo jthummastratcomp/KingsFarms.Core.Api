@@ -30,7 +30,7 @@ namespace HotTowel.Web.Services
             return Utils.GetWeeksOfYear(DateTime.Today.Year);
         }
 
-        public List<CustomerInvoicesViewModel> LoadInvoicesForWeek(string week, CompanyEnum company)
+        public List<CustomerInvoicesViewModel> LoadInvoicesForWeek(string? week, CompanyEnum company)
         {
             var list = new List<CustomerInvoicesViewModel>();
 
@@ -69,7 +69,7 @@ namespace HotTowel.Web.Services
             return list;
         }
 
-        private static List<CustomerInvoicesViewModel> CustomerInvoicesViewModels(string week, DataTable dtSource, List<CustomerDashboardViewModel> customersList, DataTable dtKings, DataTable dtMansi)
+        private static List<CustomerInvoicesViewModel> CustomerInvoicesViewModels(string? week, DataTable dtSource, List<CustomerDashboardViewModel> customersList, DataTable dtKings, DataTable dtMansi)
         {
             var list = new List<CustomerInvoicesViewModel>();
 

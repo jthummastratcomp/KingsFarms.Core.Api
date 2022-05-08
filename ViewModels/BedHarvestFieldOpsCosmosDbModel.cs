@@ -10,7 +10,7 @@ namespace HotTowel.Web.ViewModels
         public string Section;
         public string BedNumber { get; set; }
         public int PlantsCount { get; set; }
-        public string PlantedDate { get; set; }
+        public string? PlantedDate { get; set; }
 
         public BedHarvestViewModel[] Harvests { get; set; }
 

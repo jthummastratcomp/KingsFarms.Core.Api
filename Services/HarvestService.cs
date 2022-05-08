@@ -53,6 +53,7 @@ public class HarvestService : IHarvestService
         {
             2020 => EpplusUtils.ExcelPackageToDataTable(package.Workbook.Worksheets["2020_2021_HARVEST"]),
             2021 => EpplusUtils.ExcelPackageToDataTable(package.Workbook.Worksheets["2021_2022_HARVEST"]),
+            2022 => EpplusUtils.ExcelPackageToDataTable(package.Workbook.Worksheets["2022_2023_HARVEST"]),
             _ => null
         };
     }
@@ -87,6 +88,7 @@ public class HarvestService : IHarvestService
             var model = new HarvestBedViewModel { BedNumber = $"Bed {col - 4}" };
             if (year == 2020) model.HarvestQty20 = qty;
             if (year == 2021) model.HarvestQty21 = qty;
+            if (year == 2022) model.HarvestQty22 = qty;
             list.Add(model);
         }
 

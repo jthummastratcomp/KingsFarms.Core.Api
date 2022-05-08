@@ -47,7 +47,7 @@ namespace HotTowel.Web.Helpers
             return list;
         }
 
-        private static string GetRowValue(DataRow row, string columnName)
+        private static string? GetRowValue(DataRow row, string columnName)
         {
             var value = row[columnName].ToString();
             return string.IsNullOrEmpty(value) ? string.Empty : value.Trim();

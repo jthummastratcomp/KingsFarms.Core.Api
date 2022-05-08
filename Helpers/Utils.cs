@@ -21,7 +21,7 @@ namespace HotTowel.Web.Helpers
             return list.Cast<object>().Aggregate(19, (current, foo) => current * 31 + foo.GetHashCode());
         }
 
-        public static int ParseToInteger(string integerValue)
+        public static int ParseToInteger(string? integerValue)
         {
             if (!string.IsNullOrEmpty(integerValue) && int.TryParse(integerValue, out var value)) return value;
             return 0;
@@ -39,7 +39,7 @@ namespace HotTowel.Web.Helpers
             return 0;
         }
 
-        public static decimal ParseToDecimal(string decimalValue)
+        public static decimal ParseToDecimal(string? decimalValue)
         {
             if (!string.IsNullOrEmpty(decimalValue) && decimal.TryParse(decimalValue, out var value)) return value;
             return 0;
@@ -71,7 +71,7 @@ namespace HotTowel.Web.Helpers
             return !string.IsNullOrEmpty(boolValue) && boolValue.ToLower() == "y";
         }
 
-        public static DateTime? ParseToDateTime(string dateTimeValue)
+        public static DateTime? ParseToDateTime(string? dateTimeValue)
         {
             if (!string.IsNullOrEmpty(dateTimeValue) && DateTime.TryParse(dateTimeValue, out var value)) return value;
             return null;
@@ -136,7 +136,7 @@ namespace HotTowel.Web.Helpers
             return number;
         }
 
-        public static string ParseToDateTimeShort(string dateTimeValue)
+        public static string ParseToDateTimeShort(string? dateTimeValue)
         {
             var value = ParseToDateTime(dateTimeValue);
             return value?.ToShortDateString() ?? null;
@@ -147,7 +147,7 @@ namespace HotTowel.Web.Helpers
             return dateTime.ToString("yyyy-MM-dd");
         }
 
-        public static string ParseToDateTimeYearMonthDay(string dateTimeValue)
+        public static string ParseToDateTimeYearMonthDay(string? dateTimeValue)
         {
             var value = ParseToDateTime(dateTimeValue);
             return value == null ? string.Empty : ParseToDateTimeYearMonthDay(value.Value);
