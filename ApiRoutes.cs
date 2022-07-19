@@ -38,4 +38,8 @@ public static class ApiRoutes
     public const string BedInfoHarvestFieldOps = "api/harvest/bedInfoHarvestOps";
 
     public const string Dashboard = "api/dashboard";
+
+
+    //FEDEX
+    public const string FedExInfo = "api/fedex/info";
 }
