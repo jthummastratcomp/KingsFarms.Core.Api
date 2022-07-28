@@ -37,6 +37,14 @@ public static class ApiRoutes
     public const string BedInfoGrouped = "api/beds/info/grouped";
     public const string BedInfoHarvestFieldOps = "api/harvest/bedInfoHarvestOps";
 
+    //MANURE
+    public const string ManureForMonth = "api/manure/month/{month}";
+    public const string ManureAllMonths = "api/manure/month/all";
+    public const string ManureForFarm = "api/manure/farm/{farm}";
+    public const string ManureAllFarms = "api/manure/farm/all";
+    
+
+    //DASHBOARD
     public const string Dashboard = "api/dashboard";
 
 
