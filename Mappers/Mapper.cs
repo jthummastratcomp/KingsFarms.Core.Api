@@ -1,11 +1,9 @@
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using HotTowel.Web.Controllers;
-using HotTowel.Web.ViewModels;
+using HotTowel.Core.Api.Enums;
+using HotTowel.Core.Api.Helpers;
+using HotTowel.Core.Api.ViewModels;
 
-
-namespace HotTowel.Web.Helpers
+namespace HotTowel.Core.Api.Mappers
 {
     public class Mapper
     {

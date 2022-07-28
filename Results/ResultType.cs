@@ -1,4 +1,4 @@
-﻿namespace HotTowel.Web.Results
+﻿namespace HotTowel.Core.Api.Results
 {
     public enum ResultType
     {

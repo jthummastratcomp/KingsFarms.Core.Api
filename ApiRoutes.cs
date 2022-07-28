@@ -1,4 +1,4 @@
-namespace HotTowel.Core.Api.Controllers;
+namespace HotTowel.Core.Api;
 
 public static class ApiRoutes
 {

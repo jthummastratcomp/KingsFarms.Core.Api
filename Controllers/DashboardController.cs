@@ -1,5 +1,4 @@
-using HotTowel.Web.Results;
-using HotTowel.Web.ViewModels;
+using HotTowel.Core.Api.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using ILogger = Serilog.ILogger;
 

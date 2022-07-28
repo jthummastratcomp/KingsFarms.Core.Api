@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace HotTowel.Web.ViewModels
+﻿namespace HotTowel.Core.Api.ViewModels
 {
     public class WeeklyShipmentsViewModel
     {

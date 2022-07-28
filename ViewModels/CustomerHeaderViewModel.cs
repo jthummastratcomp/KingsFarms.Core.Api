@@ -1,6 +1,4 @@
-﻿using HotTowel.Web.Controllers;
-
-namespace HotTowel.Web.ViewModels
+﻿namespace HotTowel.Core.Api.ViewModels
 {
     public class CustomerHeaderViewModel
     {

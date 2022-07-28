@@ -1,7 +1,6 @@
-﻿using System;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
-namespace HotTowel.Web.ViewModels
+namespace HotTowel.Core.Api.ViewModels
 {
     public class BedHarvestViewModel
     {

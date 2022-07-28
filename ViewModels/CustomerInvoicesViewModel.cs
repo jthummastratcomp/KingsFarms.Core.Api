@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace HotTowel.Web.ViewModels
+﻿namespace HotTowel.Core.Api.ViewModels
 {
     public class CustomerInvoicesViewModel
     {

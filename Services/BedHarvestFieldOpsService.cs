@@ -1,13 +1,11 @@
-﻿using System.Collections.Generic;
-using System.Net;
-using System.Threading.Tasks;
-using HotTowel.Web.Helpers;
-using HotTowel.Web.Services.Interfaces;
-using HotTowel.Web.ViewModels;
+﻿using System.Net;
+using HotTowel.Core.Api.Helpers;
+using HotTowel.Core.Api.Mappers;
+using HotTowel.Core.Api.Services.Interfaces;
+using HotTowel.Core.Api.ViewModels;
 using Microsoft.Azure.Cosmos;
-using Serilog;
 
-namespace HotTowel.Web.Services
+namespace HotTowel.Core.Api.Services
 {
     public class BedHarvestFieldOpsService : IBedHarvestFieldOpsService
     {
