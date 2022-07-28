@@ -1,3 +1,5 @@
+namespace HotTowel.Core.Api;
+
 public class HotTowelCoreApiSettings
 {
     public string seqLogUrl { get; set; }
@@ -13,4 +15,8 @@ public class HotTowelCoreApiSettings
     public string azStoreContName { get; set; }
     public string weeklyOrdersFile { get; set; }
     public string harvestFile { get; set; }
+
+    public string fedexUrl { get; set; }
+    public string fedexClientId { get; set; }
+    public string fedexClientSecret { get; set; }
 }

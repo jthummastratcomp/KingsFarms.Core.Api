@@ -1,17 +1,16 @@
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
-using HotTowel.Web.Bootstrap;
-using Microsoft.VisualBasic.CompilerServices;
+using HotTowel.Core.Api;
+using HotTowel.Core.Api.Bootstrap;
 
 var builder = WebApplication.CreateBuilder(args);
 
 
-
-var someSettings = builder.Configuration.GetSection(typeof(HotTowelCoreApiSettings).Name).Get<HotTowelCoreApiSettings>();
+var apiSettings = builder.Configuration.GetSection(typeof(HotTowelCoreApiSettings).Name).Get<HotTowelCoreApiSettings>();
 
 builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
 //builder.Host.ConfigureContainer<ContainerBuilder>(b => b.RegisterModule<WebBootstrap>());
-builder.Host.ConfigureContainer<ContainerBuilder>(b => b.RegisterModule( new WebBootstrap(someSettings) ));
+builder.Host.ConfigureContainer<ContainerBuilder>(b => b.RegisterModule(new WebBootstrap(apiSettings)));
 
 // Add services to the container.
 
@@ -27,8 +26,8 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 //if (app.Environment.IsDevelopment())
 //{
-    app.UseSwagger();
-    app.UseSwaggerUI();
+app.UseSwagger();
+app.UseSwaggerUI();
 //}
 
 app.UseAuthorization();

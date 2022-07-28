@@ -1,8 +1,7 @@
-﻿using System.Threading.Tasks;
+﻿using HotTowel.Core.Api.Services.Interfaces;
 using Microsoft.Azure.Cosmos;
-using Serilog;
 
-namespace HotTowel.Web.Services
+namespace HotTowel.Core.Api.Services
 {
     public class CosmosDbService : ICosmosDbService
     {

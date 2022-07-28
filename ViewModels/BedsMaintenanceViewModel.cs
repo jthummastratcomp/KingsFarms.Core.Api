@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using HotTowel.Web.Controllers;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
-namespace HotTowel.Web.ViewModels
+namespace HotTowel.Core.Api.ViewModels
 {
     public class BedsMaintenanceViewModel
     {

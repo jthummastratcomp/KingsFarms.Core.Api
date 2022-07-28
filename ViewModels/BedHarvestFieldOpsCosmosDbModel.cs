@@ -1,9 +1,8 @@
-﻿using System.Linq;
-using System.Text;
-using HotTowel.Web.Helpers;
+﻿using System.Text;
+using HotTowel.Core.Api.Helpers;
 using Newtonsoft.Json;
 
-namespace HotTowel.Web.ViewModels
+namespace HotTowel.Core.Api.ViewModels
 {
     public class BedHarvestFieldOpsCosmosDbModel
     {

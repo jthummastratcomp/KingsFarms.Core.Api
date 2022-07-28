@@ -1,7 +1,6 @@
-﻿using System.Threading.Tasks;
-using Microsoft.Azure.Cosmos;
+﻿using Microsoft.Azure.Cosmos;
 
-namespace HotTowel.Web.Services
+namespace HotTowel.Core.Api.Services.Interfaces
 {
     public interface ICosmosDbService
     {

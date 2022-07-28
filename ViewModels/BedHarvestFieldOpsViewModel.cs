@@ -1,7 +1,8 @@
 ﻿using System.Text;
-using HotTowel.Web.Helpers;
+using HotTowel.Core.Api.Enums;
+using HotTowel.Core.Api.Helpers;
 
-namespace HotTowel.Web.ViewModels;
+namespace HotTowel.Core.Api.ViewModels;
 
 public class BedHarvestFieldOpsViewModel
 {

@@ -1,6 +1,6 @@
-﻿using System;
+﻿using HotTowel.Core.Api.Enums;
 
-namespace HotTowel.Web.ViewModels
+namespace HotTowel.Core.Api.ViewModels
 {
     public class FieldOperationViewModel
     {

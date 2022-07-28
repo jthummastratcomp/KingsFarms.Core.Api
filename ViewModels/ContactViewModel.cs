@@ -1,4 +1,4 @@
-﻿namespace HotTowel.Web.Controllers
+﻿namespace HotTowel.Core.Api.ViewModels
 {
     public class ContactViewModel
     {

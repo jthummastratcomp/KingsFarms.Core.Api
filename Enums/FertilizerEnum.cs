@@ -1,4 +1,4 @@
-﻿namespace HotTowel.Web.ViewModels
+﻿namespace HotTowel.Core.Api.Enums
 {
     public enum FertilizerEnum
     {

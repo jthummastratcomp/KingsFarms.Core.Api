@@ -1,7 +1,6 @@
-using HotTowel.Web.Results;
-using HotTowel.Web.Services;
-using HotTowel.Web.Services.Interfaces;
-using HotTowel.Web.ViewModels;
+using HotTowel.Core.Api.Results;
+using HotTowel.Core.Api.Services.Interfaces;
+using HotTowel.Core.Api.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HotTowel.Core.Api.Controllers;

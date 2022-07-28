@@ -1,88 +1,86 @@
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
 using OfficeOpenXml;
 
-namespace HotTowel.Web.Helpers
+namespace HotTowel.Core.Api.Helpers;
+
+public static class EpplusUtils
 {
-    public static class EpplusUtils
+    public static string GetCellValue(ExcelWorksheet worksheet, string cellAddress)
     {
-        public static string GetCellValue(ExcelWorksheet worksheet, string cellAddress)
+        if (worksheet == null) return string.Empty;
+
+        var range = worksheet.Cells[cellAddress];
+
+        return range.GetValue<string>();
+    }
+
+    private static string GetNamedRangeValue(ExcelWorksheet worksheet, string namedRange, bool checkWorkbook = false)
+    {
+        if (worksheet == null) return string.Empty;
+
+        var value = worksheet.Names.ContainsKey(namedRange) ? worksheet.Names[namedRange].Text : null;
+
+        if (string.IsNullOrEmpty(value) && checkWorkbook)
+            return worksheet.Workbook.Names.ContainsKey(namedRange)
+                ? worksheet.Workbook.Names[namedRange].Text
+                : null;
+
+        return value;
+    }
+
+    public static DataTable ExcelPackageToDataTable(ExcelWorksheet worksheet)
+    {
+        var dt = new DataTable();
+
+
+        //check if the worksheet is completely empty
+        if (worksheet.Dimension == null) return dt;
+
+        //create a list to hold the column names
+        var columnNames = new List<string>();
+
+        //needed to keep track of empty column headers
+        var currentColumn = 1;
+
+        //loop all columns in the sheet and add them to the datatable
+        foreach (var cell in worksheet.Cells[1, 1, 1, worksheet.Dimension.End.Column - 1])
         {
-            if (worksheet == null) return string.Empty;
+            var columnName = cell.Text.Trim();
 
-            var range = worksheet.Cells[cellAddress];
-
-            return range.GetValue<string>();
-        }
-        private static string GetNamedRangeValue(ExcelWorksheet worksheet, string namedRange, bool checkWorkbook = false)
-        {
-            if (worksheet == null) return string.Empty;
-
-            var value = worksheet.Names.ContainsKey(namedRange) ? worksheet.Names[namedRange].Text : null;
-
-            if (string.IsNullOrEmpty(value) && checkWorkbook)
-                return worksheet.Workbook.Names.ContainsKey(namedRange)
-                    ? worksheet.Workbook.Names[namedRange].Text
-                    : null;
-
-            return value;
-        }
-
-        public static DataTable ExcelPackageToDataTable(ExcelWorksheet worksheet)
-        {
-            var dt = new DataTable();
-
-
-            //check if the worksheet is completely empty
-            if (worksheet.Dimension == null) return dt;
-
-            //create a list to hold the column names
-            var columnNames = new List<string>();
-
-            //needed to keep track of empty column headers
-            var currentColumn = 1;
-
-            //loop all columns in the sheet and add them to the datatable
-            foreach (var cell in worksheet.Cells[1, 1, 1, worksheet.Dimension.End.Column-1])
+            //check if the previous header was empty and add it if it was
+            if (cell.Start.Column != currentColumn)
             {
-                var columnName = cell.Text.Trim();
-
-                //check if the previous header was empty and add it if it was
-                if (cell.Start.Column != currentColumn)
-                {
-                    columnNames.Add("Header_" + currentColumn);
-                    dt.Columns.Add("Header_" + currentColumn);
-                    currentColumn++;
-                }
-
-                //add the column name to the list to count the duplicates
-                columnNames.Add(columnName);
-
-                //count the duplicate column names and make them unique to avoid the exception
-                //A column named 'Name' already belongs to this DataTable
-                var occurrences = columnNames.Count(x => x.Equals(columnName));
-                if (occurrences > 1) columnName = columnName + "_" + occurrences;
-
-                //add the column to the datatable
-                dt.Columns.Add(columnName);
-
+                columnNames.Add("Header_" + currentColumn);
+                dt.Columns.Add("Header_" + currentColumn);
                 currentColumn++;
             }
 
-            //start adding the contents of the excel file to the datatable
-            for (var i = 2; i <= worksheet.Dimension.End.Row; i++)
-            {
-                var row = worksheet.Cells[i, 1, i, /*worksheet.Dimension.End.Column-1*/ currentColumn - 1];
-                var newRow = dt.NewRow();
+            //add the column name to the list to count the duplicates
+            columnNames.Add(columnName);
 
-                //loop all cells in the row
-                foreach (var cell in row) newRow[cell.Start.Column - 1] = cell.Text;
+            //count the duplicate column names and make them unique to avoid the exception
+            //A column named 'Name' already belongs to this DataTable
+            var occurrences = columnNames.Count(x => x.Equals(columnName));
+            if (occurrences > 1) columnName = columnName + "_" + occurrences;
 
-                dt.Rows.Add(newRow);
-            }
+            //add the column to the datatable
+            dt.Columns.Add(columnName);
 
-            return dt;
+            currentColumn++;
         }
+
+        //start adding the contents of the excel file to the datatable
+        for (var i = 2; i <= worksheet.Dimension.End.Row; i++)
+        {
+            var row = worksheet.Cells[i, 1, i, /*worksheet.Dimension.End.Column-1*/ currentColumn - 1];
+            var newRow = dt.NewRow();
+
+            //loop all cells in the row
+            foreach (var cell in row) newRow[cell.Start.Column - 1] = cell.Text;
+
+            dt.Rows.Add(newRow);
+        }
+
+        return dt;
     }
 }

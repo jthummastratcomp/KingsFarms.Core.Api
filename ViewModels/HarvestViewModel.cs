@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using HotTowel.Web.Helpers;
+﻿using HotTowel.Core.Api.Helpers;
 
-namespace HotTowel.Web.ViewModels
+namespace HotTowel.Core.Api.ViewModels
 {
     public class HarvestViewModel
     {

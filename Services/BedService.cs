@@ -1,12 +1,13 @@
 ﻿using System.Data;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Specialized;
-using HotTowel.Web.Helpers;
-using HotTowel.Web.Services.Interfaces;
-using HotTowel.Web.ViewModels;
+using HotTowel.Core.Api.Enums;
+using HotTowel.Core.Api.Helpers;
+using HotTowel.Core.Api.Services.Interfaces;
+using HotTowel.Core.Api.ViewModels;
 using OfficeOpenXml;
 
-namespace HotTowel.Web.Services;
+namespace HotTowel.Core.Api.Services;
 
 public class BedService : IBedService
 {

@@ -1,7 +1,7 @@
-﻿using System;
+﻿using HotTowel.Core.Api.Enums;
 using Newtonsoft.Json;
 
-namespace HotTowel.Web.ViewModels
+namespace HotTowel.Core.Api.ViewModels
 {
     public class BedFieldOpsViewModel
     {

@@ -1,13 +1,9 @@
-﻿using System.Configuration;
-using Autofac;
-
-using HotTowel.Web.Helpers;
-using HotTowel.Web.Services;
-using HotTowel.Web.Services.Interfaces;
+﻿using Autofac;
+using HotTowel.Core.Api.Services;
+using HotTowel.Core.Api.Services.Interfaces;
 using Serilog;
 
-
-namespace HotTowel.Web.Bootstrap
+namespace HotTowel.Core.Api.Bootstrap
 {
     public class WebBootstrap : Module
     {
@@ -34,6 +30,10 @@ namespace HotTowel.Web.Bootstrap
             var azStoreContName = _hotTowelCoreApiSettings.azStoreContName;
             var weeklyOrdersFile = _hotTowelCoreApiSettings.weeklyOrdersFile;
             var harvestFile = _hotTowelCoreApiSettings.harvestFile;
+
+            var fedexUrl = _hotTowelCoreApiSettings.fedexUrl;
+            var fedexClientId = _hotTowelCoreApiSettings.fedexClientId;
+            var fedexClientSecret = _hotTowelCoreApiSettings.fedexClientSecret;
 
             builder.Register<Serilog.ILogger>((c, p) => new LoggerConfiguration().Enrich.WithProperty("App", "HotTowellette").WriteTo.Seq(seqLogUrl).CreateLogger());
 
@@ -63,6 +63,15 @@ namespace HotTowel.Web.Bootstrap
             builder.RegisterType<FieldOperationsService>().As<IFieldOperationsService>()
                 .WithParameter("cosmosDbDatabase", cosmosDbDatabaseId)
                 .WithParameter("cosmosDbContainer", cosmosDbContainer_Beds);
+
+            builder.RegisterType<FedexTokenService>().As<IFedexTokenService>()
+                .WithParameter("url", fedexUrl)
+                .WithParameter("clientId", fedexClientId)
+                .WithParameter("clientSecret", fedexClientSecret);
+
+            builder.RegisterType<FedexLocationService>().As<IFedexLocationService>()
+                .WithParameter("url", fedexUrl);
+
 
             //Bind<ILogger>().ToMethod(x => new LoggerConfiguration()
             //    //.WriteTo.File(logFile)

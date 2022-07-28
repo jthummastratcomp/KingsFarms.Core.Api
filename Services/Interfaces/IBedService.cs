@@ -1,6 +1,6 @@
-﻿using HotTowel.Web.ViewModels;
+﻿using HotTowel.Core.Api.ViewModels;
 
-namespace HotTowel.Web.Services.Interfaces;
+namespace HotTowel.Core.Api.Services.Interfaces;
 
 public interface IBedService
 {

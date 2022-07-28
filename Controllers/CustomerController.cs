@@ -1,8 +1,7 @@
-using HotTowel.Core.Api.Controllers;
-using HotTowel.Web.Services.Interfaces;
+using HotTowel.Core.Api.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
-namespace WebApplication1.Controllers;
+namespace HotTowel.Core.Api.Controllers;
 
 [ApiController]
 //[Route("[controller]")]

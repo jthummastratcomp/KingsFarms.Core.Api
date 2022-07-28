@@ -1,4 +1,6 @@
-﻿namespace HotTowel.Web.ViewModels
+﻿using HotTowel.Core.Api.Enums;
+
+namespace HotTowel.Core.Api.ViewModels
 {
     public class CompanyViewModel
     {
