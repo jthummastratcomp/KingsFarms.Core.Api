@@ -1,8 +1,8 @@
-using HotTowel.Core.Api.ViewModels;
+using KingsFarms.Core.Api.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using ILogger = Serilog.ILogger;
 
-namespace HotTowel.Core.Api.Controllers;
+namespace KingsFarms.Core.Api.Controllers;
 
 [ApiController]
 public class DashboardController : ControllerBase

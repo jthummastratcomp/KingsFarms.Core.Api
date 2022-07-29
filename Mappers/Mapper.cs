@@ -1,9 +1,9 @@
 using System.Data;
-using HotTowel.Core.Api.Enums;
-using HotTowel.Core.Api.Helpers;
-using HotTowel.Core.Api.ViewModels;
+using KingsFarms.Core.Api.Enums;
+using KingsFarms.Core.Api.Helpers;
+using KingsFarms.Core.Api.ViewModels;
 
-namespace HotTowel.Core.Api.Mappers
+namespace KingsFarms.Core.Api.Mappers
 {
     public class Mapper
     {

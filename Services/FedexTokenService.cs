@@ -1,10 +1,10 @@
 ﻿using System.Text.Json.Serialization;
-using HotTowel.Core.Api.Services.Endpoints;
-using HotTowel.Core.Api.Services.Extensions;
-using HotTowel.Core.Api.Services.Interfaces;
+using KingsFarms.Core.Api.Services.Endpoints;
+using KingsFarms.Core.Api.Services.Extensions;
+using KingsFarms.Core.Api.Services.Interfaces;
 using RestSharp;
 
-namespace HotTowel.Core.Api.Services;
+namespace KingsFarms.Core.Api.Services;
 
 public class FedexTokenService : IFedexTokenService
 {

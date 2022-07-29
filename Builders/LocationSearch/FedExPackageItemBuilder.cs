@@ -1,4 +1,4 @@
-﻿namespace HotTowel.Core.Api.Builders.LocationSearch;
+﻿namespace KingsFarms.Core.Api.Builders.LocationSearch;
 
 public class FedExPackageItemBuilder
 {

@@ -1,15 +1,15 @@
 ﻿using Autofac;
-using HotTowel.Core.Api.Services;
-using HotTowel.Core.Api.Services.Interfaces;
+using KingsFarms.Core.Api.Services;
+using KingsFarms.Core.Api.Services.Interfaces;
 using Serilog;
 
-namespace HotTowel.Core.Api.Bootstrap
+namespace KingsFarms.Core.Api.Bootstrap
 {
     public class WebBootstrap : Module
     {
-        private readonly HotTowelCoreApiSettings _hotTowelCoreApiSettings;
+        private readonly KingsFarmsCoreApiSettings _hotTowelCoreApiSettings;
 
-        public WebBootstrap(HotTowelCoreApiSettings hotTowelCoreApiSettings)
+        public WebBootstrap(KingsFarmsCoreApiSettings hotTowelCoreApiSettings)
         {
             _hotTowelCoreApiSettings = hotTowelCoreApiSettings;
 

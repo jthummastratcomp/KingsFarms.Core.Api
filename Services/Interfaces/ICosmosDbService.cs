@@ -1,6 +1,6 @@
 ﻿using Microsoft.Azure.Cosmos;
 
-namespace HotTowel.Core.Api.Services.Interfaces
+namespace KingsFarms.Core.Api.Services.Interfaces
 {
     public interface ICosmosDbService
     {

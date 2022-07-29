@@ -1,6 +1,6 @@
-namespace HotTowel.Core.Api;
+namespace KingsFarms.Core.Api;
 
-public class HotTowelCoreApiSettings
+public class KingsFarmsCoreApiSettings
 {
     public string seqLogUrl { get; set; }
     public string logFile { get; set; }

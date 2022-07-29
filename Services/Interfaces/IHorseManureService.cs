@@ -1,7 +1,7 @@
-﻿using HotTowel.Core.Api.Enums;
-using HotTowel.Core.Api.ViewModels;
+﻿using KingsFarms.Core.Api.Enums;
+using KingsFarms.Core.Api.ViewModels;
 
-namespace HotTowel.Core.Api.Services.Interfaces;
+namespace KingsFarms.Core.Api.Services.Interfaces;
 
 public interface IHorseManureService
 {

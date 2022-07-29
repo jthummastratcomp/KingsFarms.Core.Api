@@ -1,9 +1,9 @@
-using HotTowel.Core.Api.Results;
-using HotTowel.Core.Api.Services.Interfaces;
-using HotTowel.Core.Api.ViewModels;
+using KingsFarms.Core.Api.Results;
+using KingsFarms.Core.Api.Services.Interfaces;
+using KingsFarms.Core.Api.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
-namespace HotTowel.Core.Api.Controllers;
+namespace KingsFarms.Core.Api.Controllers;
 
 [ApiController]
 public class FedExLocationsController : ControllerBase

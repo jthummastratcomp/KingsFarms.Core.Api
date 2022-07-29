@@ -1,6 +1,6 @@
-﻿using HotTowel.Core.Api.Enums;
+﻿using KingsFarms.Core.Api.Enums;
 
-namespace HotTowel.Core.Api.ViewModels
+namespace KingsFarms.Core.Api.ViewModels
 {
     public class FieldOperationViewModel
     {

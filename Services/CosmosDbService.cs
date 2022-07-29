@@ -1,7 +1,7 @@
-﻿using HotTowel.Core.Api.Services.Interfaces;
+﻿using KingsFarms.Core.Api.Services.Interfaces;
 using Microsoft.Azure.Cosmos;
 
-namespace HotTowel.Core.Api.Services
+namespace KingsFarms.Core.Api.Services
 {
     public class CosmosDbService : ICosmosDbService
     {

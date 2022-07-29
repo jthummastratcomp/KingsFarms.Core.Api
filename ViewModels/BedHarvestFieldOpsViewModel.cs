@@ -1,8 +1,8 @@
 ﻿using System.Text;
-using HotTowel.Core.Api.Enums;
-using HotTowel.Core.Api.Helpers;
+using KingsFarms.Core.Api.Enums;
+using KingsFarms.Core.Api.Helpers;
 
-namespace HotTowel.Core.Api.ViewModels;
+namespace KingsFarms.Core.Api.ViewModels;
 
 public class BedHarvestFieldOpsViewModel
 {
