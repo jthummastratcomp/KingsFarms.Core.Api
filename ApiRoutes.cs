@@ -49,5 +49,9 @@ public static class ApiRoutes
 
 
     //FEDEX
-    public const string FedExInfo = "api/fedex/info";
+    public const string FedExLocationInfo = "api/fedex/location/info";
+    public const string ValidatedAddress = "api/fedex/validate/address";
+    public const string CreateShipment = "api/fedex/shipment/create";
+    public const string CreateShipmentJson = "api/fedex/shipment/create/{json}";
+
 }
