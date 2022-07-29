@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace HotTowel.Core.Api.ViewModels;
+namespace KingsFarms.Core.Api.ViewModels;
 
 public class HarvestBedCosmosDbModel
 {

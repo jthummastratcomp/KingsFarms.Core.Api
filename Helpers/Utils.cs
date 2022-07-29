@@ -2,9 +2,9 @@ using System.Collections;
 using System.Globalization;
 using System.Numerics;
 using System.Text.RegularExpressions;
-using HotTowel.Core.Api.ViewModels;
+using KingsFarms.Core.Api.ViewModels;
 
-namespace HotTowel.Core.Api.Helpers;
+namespace KingsFarms.Core.Api.Helpers;
 
 public static class Utils
 {

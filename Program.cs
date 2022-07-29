@@ -1,12 +1,12 @@
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
-using HotTowel.Core.Api;
-using HotTowel.Core.Api.Bootstrap;
+using KingsFarms.Core.Api;
+using KingsFarms.Core.Api.Bootstrap;
 
 var builder = WebApplication.CreateBuilder(args);
 
 
-var apiSettings = builder.Configuration.GetSection(typeof(HotTowelCoreApiSettings).Name).Get<HotTowelCoreApiSettings>();
+var apiSettings = builder.Configuration.GetSection(typeof(KingsFarmsCoreApiSettings).Name).Get<KingsFarmsCoreApiSettings>();
 
 builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
 //builder.Host.ConfigureContainer<ContainerBuilder>(b => b.RegisterModule<WebBootstrap>());

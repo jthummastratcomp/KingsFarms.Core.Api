@@ -1,4 +1,4 @@
-namespace HotTowel.Core.Api.Results
+namespace KingsFarms.Core.Api.Results
 {
     public class SuccessResult : BaseResult, IResult
     {

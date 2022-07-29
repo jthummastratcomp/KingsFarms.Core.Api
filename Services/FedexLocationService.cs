@@ -1,13 +1,13 @@
-﻿using HotTowel.Core.Api.Builders.LocationSearch;
-using HotTowel.Core.Api.Services.Endpoints;
-using HotTowel.Core.Api.Services.Extensions;
-using HotTowel.Core.Api.Services.Interfaces;
-using HotTowel.Core.Api.ViewModels;
+﻿using KingsFarms.Core.Api.Builders.LocationSearch;
+using KingsFarms.Core.Api.Services.Endpoints;
+using KingsFarms.Core.Api.Services.Extensions;
+using KingsFarms.Core.Api.Services.Interfaces;
+using KingsFarms.Core.Api.ViewModels;
 using Newtonsoft.Json;
 using RestSharp;
 using ILogger = Serilog.ILogger;
 
-namespace HotTowel.Core.Api.Services;
+namespace KingsFarms.Core.Api.Services;
 
 public class FedexLocationService : IFedexLocationService
 {

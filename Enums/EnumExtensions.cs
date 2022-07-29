@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace HotTowel.Core.Api.Enums
+namespace KingsFarms.Core.Api.Enums
 {
     public static class EnumExtensions
     {

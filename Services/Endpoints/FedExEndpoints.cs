@@ -1,4 +1,4 @@
-namespace HotTowel.Core.Api.Services.Endpoints;
+namespace KingsFarms.Core.Api.Services.Endpoints;
 
 public static class FedExEndpoints
 {

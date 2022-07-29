@@ -1,9 +1,9 @@
-﻿using HotTowel.Core.Api.Mappers;
-using HotTowel.Core.Api.Services.Interfaces;
-using HotTowel.Core.Api.ViewModels;
+﻿using KingsFarms.Core.Api.Mappers;
+using KingsFarms.Core.Api.Services.Interfaces;
+using KingsFarms.Core.Api.ViewModels;
 using Microsoft.Azure.Cosmos;
 
-namespace HotTowel.Core.Api.Services
+namespace KingsFarms.Core.Api.Services
 {
     public class FieldOperationsService : IFieldOperationsService
     {

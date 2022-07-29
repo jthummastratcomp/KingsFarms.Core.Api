@@ -1,4 +1,4 @@
-namespace HotTowel.Core.Api;
+namespace KingsFarms.Core.Api;
 
 public static class ApiRoutes
 {

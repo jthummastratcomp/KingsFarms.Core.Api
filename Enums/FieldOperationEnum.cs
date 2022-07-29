@@ -1,4 +1,4 @@
-﻿namespace HotTowel.Core.Api.Enums
+﻿namespace KingsFarms.Core.Api.Enums
 {
     public enum FieldOperationEnum
     {

@@ -1,14 +1,14 @@
 ﻿using System.Data;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Specialized;
-using HotTowel.Core.Api.Enums;
-using HotTowel.Core.Api.Helpers;
-using HotTowel.Core.Api.Mappers;
-using HotTowel.Core.Api.Services.Interfaces;
-using HotTowel.Core.Api.ViewModels;
+using KingsFarms.Core.Api.Enums;
+using KingsFarms.Core.Api.Helpers;
+using KingsFarms.Core.Api.Mappers;
+using KingsFarms.Core.Api.Services.Interfaces;
+using KingsFarms.Core.Api.ViewModels;
 using OfficeOpenXml;
 
-namespace HotTowel.Core.Api.Services
+namespace KingsFarms.Core.Api.Services
 {
     public class WeeklyOrdersService : IWeeklyOrdersService
     {

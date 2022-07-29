@@ -1,7 +1,7 @@
 using System.Data;
 using OfficeOpenXml;
 
-namespace HotTowel.Core.Api.Helpers;
+namespace KingsFarms.Core.Api.Helpers;
 
 public static class EpplusUtils
 {

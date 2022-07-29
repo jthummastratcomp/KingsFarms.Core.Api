@@ -1,6 +1,6 @@
 ﻿using RestSharp;
 
-namespace HotTowel.Core.Api.Services.Extensions;
+namespace KingsFarms.Core.Api.Services.Extensions;
 
 public static class RestRequestExtensions
 {
