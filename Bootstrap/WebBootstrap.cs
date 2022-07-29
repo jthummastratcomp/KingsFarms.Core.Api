@@ -30,6 +30,8 @@ namespace HotTowel.Core.Api.Bootstrap
             var azStoreContName = _hotTowelCoreApiSettings.azStoreContName;
             var weeklyOrdersFile = _hotTowelCoreApiSettings.weeklyOrdersFile;
             var harvestFile = _hotTowelCoreApiSettings.harvestFile;
+            var horseManureFile = _hotTowelCoreApiSettings.horseManureFile;
+            var fieldOperationsFile = _hotTowelCoreApiSettings.fieldOperationsFile;
 
             var fedexUrl = _hotTowelCoreApiSettings.fedexUrl;
             var fedexClientId = _hotTowelCoreApiSettings.fedexClientId;
@@ -46,6 +48,16 @@ namespace HotTowel.Core.Api.Bootstrap
                 .WithParameter("azStoreConnStr", azStoreConnStr)
                 .WithParameter("azStoreContName", azStoreContName)
                 .WithParameter("harvestFile", harvestFile);
+
+            builder.RegisterType<FieldOperationService>().As<IFieldOperationService>()
+                .WithParameter("azStoreConnStr", azStoreConnStr)
+                .WithParameter("azStoreContName", azStoreContName)
+                .WithParameter("fieldOperationsFile", fieldOperationsFile);
+
+            builder.RegisterType<HorseManureService>().As<IHorseManureService>()
+                .WithParameter("azStoreConnStr", azStoreConnStr)
+                .WithParameter("azStoreContName", azStoreContName)
+                .WithParameter("horseManureFile", horseManureFile);
 
             builder.RegisterType<BedService>().As<IBedService>()
                 .WithParameter("azStoreConnStr", azStoreConnStr)

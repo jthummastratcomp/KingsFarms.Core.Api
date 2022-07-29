@@ -70,7 +70,7 @@ public static class EpplusUtils
         }
 
         //start adding the contents of the excel file to the datatable
-        for (var i = 2; i <= worksheet.Dimension.End.Row; i++)
+        for (var i = 1; i <= worksheet.Dimension.End.Row; i++)
         {
             var row = worksheet.Cells[i, 1, i, /*worksheet.Dimension.End.Column-1*/ currentColumn - 1];
             var newRow = dt.NewRow();
