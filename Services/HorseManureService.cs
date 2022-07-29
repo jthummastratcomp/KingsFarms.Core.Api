@@ -42,7 +42,7 @@ public class HorseManureService : IHorseManureService
             if (dtHarvest != null) list = GetManureLoadViewModels(dtHarvest);
         }
 
-        _logger.Information("GetHarvestInfo returning {@Count}", list.Count);
+        _logger.Information("GetManureInfo returning {@Count}", list.Count);
         return list;
     }
 
@@ -90,7 +90,7 @@ public class HorseManureService : IHorseManureService
                 if (farmLoadQty > 0) manureLoad.AddFarmLoad(farm, farmLoadQty);
             }
 
-            list.Add(manureLoad);
+            if(Utils.HasRows(manureLoad.Loads)) list.Add(manureLoad);
         }
 
         return list;
