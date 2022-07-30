@@ -6,7 +6,7 @@ public interface IFedexLocationService
 {
     List<FedexLocationViewModel> GetLocations();
     List<FedexLocationViewModel> ValidateAddress();
-    List<FedexLocationViewModel> CreateShipment(string? json = null);
+    CreateShipmentResponse? CreateShipment(string? json = null);
     
 
 }

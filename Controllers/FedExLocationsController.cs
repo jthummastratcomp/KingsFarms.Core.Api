@@ -1,4 +1,5 @@
 using KingsFarms.Core.Api.Results;
+using KingsFarms.Core.Api.Services;
 using KingsFarms.Core.Api.Services.Interfaces;
 using KingsFarms.Core.Api.ViewModels;
 using Microsoft.AspNetCore.Mvc;
@@ -36,14 +37,14 @@ public class FedExLocationsController : ControllerBase
     {
         var data = _locationService.CreateShipment();
 
-        return new QueryResult<List<FedexLocationViewModel>> { Data = data, Status = new SuccessResult() };
+        return new QueryResult<CreateShipmentResponse?> { Data = data, Status = new SuccessResult() };
     }
 
-    [HttpGet(ApiRoutes.CreateShipmentJson, Name = "CreateShipmentJson")]
-    public IQueryResult CreateShipmentJson(string json)
-    {
-        var data = _locationService.CreateShipment(json);
+    //[HttpGet(ApiRoutes.CreateShipmentJson, Name = "CreateShipmentJson")]
+    //public IQueryResult CreateShipmentJson(string json)
+    //{
+    //    var data = _locationService.CreateShipment(json);
 
-        return new QueryResult<List<FedexLocationViewModel>> { Data = data, Status = new SuccessResult() };
-    }
+    //    return new QueryResult<List<FedexLocationViewModel>> { Data = data, Status = new SuccessResult() };
+    //}
 }
