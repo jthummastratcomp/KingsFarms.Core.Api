@@ -4,7 +4,7 @@ namespace KingsFarms.Core.Api.Builders.LocationSearch;
 
 public class FedExLabelSpecification
 {
-    [JsonProperty("labelStockType")] public string StockType { get; init; }
-    [JsonProperty("imageType")] public string ImageType { get; init; }
+    [JsonProperty("labelStockType")] public string? StockType { get; init; }
+    [JsonProperty("imageType")] public string? ImageType { get; init; }
     
 }

@@ -2,14 +2,30 @@
 
 public class FedExRequestedShipmentBuilder
 {
-    private FedExShipperRecipient _shipper;
-    private List<FedExShipperRecipient> _recepients = new List<FedExShipperRecipient>();
-    private string _pickupType;
-    private string _packagingType;
-    private string _serviceType;
-    private FedExShippingPayment _payment;
-    private FedExLabelSpecification _labelSpecification;
-    private List<FedExPackageItem> _packageItems = new List<FedExPackageItem>();
+    private readonly List<FedExPackageItem> _packageItems;
+    private readonly List<FedExShipperRecipient> _recipients;
+    private bool _blockInsightVisibility;
+    private FedExLabelSpecification? _labelSpecification;
+    private int _packageCount;
+    private string? _packagingType;
+    private FedExShippingPayment? _payment;
+    private string? _pickupType;
+    private string? _serviceType;
+
+    private string _shipDate;
+    private FedExShipperRecipient? _shipper;
+
+    public FedExRequestedShipmentBuilder()
+    {
+        _packageItems = new List<FedExPackageItem>();
+        _recipients = new List<FedExShipperRecipient>();
+    }
+
+    public FedExRequestedShipmentBuilder WithShipDate(string value)
+    {
+        _shipDate = value;
+        return this;
+    }
 
     public FedExRequestedShipmentBuilder WithShipper(FedExShipperRecipient shipper)
     {
@@ -19,7 +35,7 @@ public class FedExRequestedShipmentBuilder
 
     public FedExRequestedShipmentBuilder WithRecipient(FedExShipperRecipient recipient)
     {
-        _recepients.Add(recipient);
+        _recipients.Add(recipient);
         return this;
     }
 
@@ -34,6 +50,7 @@ public class FedExRequestedShipmentBuilder
         _serviceType = value;
         return this;
     }
+
     public FedExRequestedShipmentBuilder WithPackagingType(string value)
     {
         _packagingType = value;
@@ -46,9 +63,21 @@ public class FedExRequestedShipmentBuilder
         return this;
     }
 
+    public FedExRequestedShipmentBuilder WithBlockInsightVisibility(bool value)
+    {
+        _blockInsightVisibility = value;
+        return this;
+    }
+
     public FedExRequestedShipmentBuilder WithLabelSpecification(FedExLabelSpecification labelSpecification)
     {
         _labelSpecification = labelSpecification;
+        return this;
+    }
+
+    public FedExRequestedShipmentBuilder WithPackageCount(int value)
+    {
+        _packageCount = value;
         return this;
     }
 
@@ -58,18 +87,22 @@ public class FedExRequestedShipmentBuilder
         return this;
     }
 
-    public FedExRequestedShipment Build()
+    public FedExRequestedShipment? Build()
     {
         return new FedExRequestedShipment
         {
             Shipper = _shipper,
-            Recepients = _recepients,
-            PickupType = _pickupType,
-            PackagingType = _packagingType,
+            Recipients = _recipients,
+            PackageItems = _packageItems,
+            //ShipDate = "2022-07-30",
+            //ShipDate = _shipDate,
             ServiceType = _serviceType,
+            PackagingType = _packagingType,
+            PickupType = _pickupType,
+            BlockInsightVisibility = _blockInsightVisibility,
             ShippingPayment = _payment,
             LabelSpec = _labelSpecification,
-            PackageItems = _packageItems
+            PackageCount = _packageCount,
         };
     }
 }

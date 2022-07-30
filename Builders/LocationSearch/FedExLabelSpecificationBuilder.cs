@@ -2,16 +2,16 @@
 
 public class FedExLabelSpecificationBuilder
 {
-    private string _imageType;
-    private string _stockType;
+    private string? _imageType;
+    private string? _stockType;
 
-    public FedExLabelSpecificationBuilder WithStockType(string value)
+    public FedExLabelSpecificationBuilder WithStockType(string? value)
     {
         _stockType = value;
         return this;
     }
 
-    public FedExLabelSpecificationBuilder WithImageType(string value)
+    public FedExLabelSpecificationBuilder WithImageType(string? value)
     {
         _imageType = value;
         return this;
@@ -19,6 +19,10 @@ public class FedExLabelSpecificationBuilder
 
     public FedExLabelSpecification Build()
     {
-        return new FedExLabelSpecification { StockType = _stockType, ImageType = _imageType };
+        return new FedExLabelSpecification
+        {
+            ImageType = _imageType,
+            StockType = _stockType
+        };
     }
 }
