@@ -2,10 +2,10 @@
 
 public class FedExWeightBuilder
 {
-    private string _units;
+    private string? _units;
     private double _value;
 
-    public FedExWeightBuilder WithUnits(string value)
+    public FedExWeightBuilder WithUnits(string? value)
     {
         _units = value;
         return this;
@@ -17,8 +17,13 @@ public class FedExWeightBuilder
         return this;
     }
 
-    public FedExWeight Build()
+    public FedExWeight? Build()
     {
-        return new FedExWeight { Units = _units, Value = _value };
+        return new FedExWeight
+        {
+            Units = _units,
+            Value = _value
+            
+        };
     }
 }

@@ -2,9 +2,9 @@
 
 public class FedExShippingPaymentBuilder
 {
-    private string _paymentType;
+    private string? _paymentType;
 
-    public FedExShippingPaymentBuilder WithPaymentType(string value)
+    public FedExShippingPaymentBuilder WithPaymentType(string? value)
     {
         _paymentType = value;
         return this;

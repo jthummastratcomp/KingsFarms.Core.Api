@@ -2,11 +2,18 @@
 
 public class FedExPackageItemBuilder
 {
-    private FedExWeight _weight;
+    private FedExDimension? _dimension;
+    private FedExWeight? _weight;
 
-    public FedExPackageItemBuilder WithWeight(FedExWeight value)
+    public FedExPackageItemBuilder WithWeight(FedExWeight? value)
     {
         _weight = value;
+        return this;
+    }
+
+    public FedExPackageItemBuilder WithDimension(FedExDimension? value)
+    {
+        _dimension = value;
         return this;
     }
 

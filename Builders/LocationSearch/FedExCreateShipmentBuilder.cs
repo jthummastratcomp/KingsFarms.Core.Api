@@ -2,24 +2,24 @@
 
 public class FedExCreateShipmentBuilder
 {
-    private FedExAccountNumber _accountNumber;
-    private string _labelOptions;
-    private FedExRequestedShipment _requestedShipment;
+    private FedExAccountNumber? _accountNumber;
+    private string? _labelOptions;
+    private FedExRequestedShipment? _requestedShipment;
 
 
-    public FedExCreateShipmentBuilder WithRequestedShipment(FedExRequestedShipment requestedShipment)
+    public FedExCreateShipmentBuilder WithRequestedShipment(FedExRequestedShipment? requestedShipment)
     {
         _requestedShipment = requestedShipment;
         return this;
     }
 
-    public FedExCreateShipmentBuilder WithLabelOptions(string labelOptions)
+    public FedExCreateShipmentBuilder WithLabelOptions(string? labelOptions)
     {
         _labelOptions = labelOptions;
         return this;
     }
 
-    public FedExCreateShipmentBuilder WithAccountNumber(FedExAccountNumber accountNumber)
+    public FedExCreateShipmentBuilder WithAccountNumber(FedExAccountNumber? accountNumber)
     {
         _accountNumber = accountNumber;
         return this;
@@ -29,8 +29,8 @@ public class FedExCreateShipmentBuilder
     {
         return new FedExCreateShipment
         {
-            RequestedShipment = _requestedShipment,
             LabelOptions = _labelOptions,
+            RequestedShipment = _requestedShipment,
             AccountNumber = _accountNumber
         };
     }
