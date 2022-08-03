@@ -4,5 +4,5 @@ namespace KingsFarms.Core.Api.Services.Interfaces;
 
 public interface IFieldOperationService
 {
-    List<HarvestViewModel> GetHarvestInfo(int harvestYear);
+    List<HarvestViewModel> GetHarvestData(int harvestYear);
 }

@@ -20,7 +20,7 @@ public class DashboardController : ControllerBase
     public List<DashboardViewModel> GetDashboard()
     {
         _logger.Information("GetDashboard");
-        //var list = _harvestService.GetHarvestInfo();
+        //var list = _harvestService.GetHarvestData();
 
         var list = new List<DashboardViewModel>
         {

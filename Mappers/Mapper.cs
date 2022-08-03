@@ -89,7 +89,7 @@ namespace KingsFarms.Core.Api.Mappers
                 PlantedDate = viewModel.PlantedDateDisplay,
                 PlantsCount = viewModel.PlantsCount,
                 Harvests = viewModel.Harvests.ToArray(),
-                FieldOperations = viewModel.FieldOperations.ToArray()
+                //FieldOperations = viewModel.FieldOperations.ToArray()
                 //Address = new AddressViewModel()
                 //{
                 //    Street = company.CustomerCommunicationAddr.Line1,

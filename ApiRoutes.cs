@@ -17,7 +17,7 @@ public static class ApiRoutes
     public const string CustomerYearlyShipmentsBills = "api/customer/{customerId}/yearlyShipmentsBills";
     public const string CustomerWeeklyShipments = "api/customer/{customerId}/weeklyShipments";
     public const string AllCustomersWeeklyShipmentsForGraph = "shipments/weekly/graph";
-    public const string HarvestWeeks = "api/harvest/weeks";
+    
     public const string LoadInvoicesForWeek = "api/invoices/{week}/load";
     public const string GenerateInvoicesForWeek = "api/invoices/{week}/generate";
 
@@ -30,7 +30,9 @@ public static class ApiRoutes
     public const string FieldOperations = "api/operation/field";
 
     //HARVEST
-    public const string HarvestInfo = "api/harvest/info/{year}";
+    public const string HarvestWeeks = "api/harvest/weeks";
+    public const string HarvestData = "api/harvest/data/{year}";
+    public const string HarvestYearTotal = "api/harvest/total/{year}";
 
     //BEDS
     public const string BedInfo = "api/beds/info";
@@ -52,6 +54,6 @@ public static class ApiRoutes
     public const string FedExLocationInfo = "api/fedex/location/info";
     public const string ValidatedAddress = "api/fedex/validate/address";
     public const string CreateShipment = "api/fedex/shipment/create";
-    public const string CreateShipmentJson = "api/fedex/shipment/create/{json}";
+    public const string CreateShipmentRequest = "api/fedex/shipment/create/{request}";
 
 }
