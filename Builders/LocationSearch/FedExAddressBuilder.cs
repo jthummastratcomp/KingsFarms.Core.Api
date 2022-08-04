@@ -2,37 +2,37 @@
 
 public class FedExAddressBuilder
 {
-    private readonly List<string> _streetLines = new();
-    private string _city;
+    private readonly List<string?> _streetLines = new();
+    private string? _city;
     private string _countryCode;
-    private string _postalCode;
-    private string _state;
+    private string? _postalCode;
+    private string? _state;
 
-    public FedExAddressBuilder WithStreetLine1(string value)
+    public FedExAddressBuilder WithStreetLine1(string? value)
     {
         _streetLines.Add(value);
         return this;
     }
 
-    public FedExAddressBuilder WithStreetLine2(string value)
+    public FedExAddressBuilder WithStreetLine2(string? value)
     {
         _streetLines.Add(value);
         return this;
     }
 
-    public FedExAddressBuilder WithCity(string value)
+    public FedExAddressBuilder WithCity(string? value)
     {
         _city = value;
         return this;
     }
 
-    public FedExAddressBuilder WithState(string value)
+    public FedExAddressBuilder WithState(string? value)
     {
         _state = value;
         return this;
     }
 
-    public FedExAddressBuilder WithPostalCode(string value)
+    public FedExAddressBuilder WithPostalCode(string? value)
     {
         _postalCode = value;
         return this;

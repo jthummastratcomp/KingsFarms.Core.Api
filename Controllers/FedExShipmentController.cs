@@ -10,18 +10,25 @@ namespace KingsFarms.Core.Api.Controllers;
 [ApiController]
 public class FedExShipmentController : ControllerBase
 {
-    private readonly IFedexLocationService _locationService;
+    private readonly IFedexShipmentService _shipmentService;
 
-    public FedExShipmentController(IFedexLocationService locationService)
+
+    public FedExShipmentController(IFedexShipmentService shipmentService)
     {
-        _locationService = locationService;
+        _shipmentService = shipmentService;
     }
 
-    [HttpGet(ApiRoutes.CreateShipmentRequest, Name = "CreateShipmentJson")]
-    public IQueryResult CreateShipment(CreateShipmentRequest request)
+    [HttpPost(ApiRoutes.CreateShipmentRequest)]
+    public SearchDto CreateShipment(CreateShipmentRequest request)
+    //public string? CreateShipment(CreateShipmentRequest request)
     {
-        //var data = _locationService.CreateShipment(json);
+        //var json = JsonConvert.SerializeObject(request);
 
-        return new QueryResult<List<FedexLocationViewModel>> { Data = null, Status = new SuccessResult() };
+        var data = _shipmentService.CreateShipment(request);
+        
+        var trackingNumber = data?.Output?.Shipments?[0]?.TrackingNumberMaster;
+        var labelUrl = data?.Output?.Shipments?[0]?.PieceResponses?[0]?.packageDocuments?[0].url;
+
+        return new SearchDto() { Id = trackingNumber, Data = labelUrl };
     }
 }
