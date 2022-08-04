@@ -22,13 +22,22 @@ public class HarvestController : ControllerBase
         _logger = logger;
     }
 
-    [HttpGet(ApiRoutes.HarvestInfo)]
+    [HttpGet(ApiRoutes.HarvestData)]
     public IQueryResult GetHarvestInfo(int year)
     {
-        _logger.Information("GetHarvestInfo");
-        var list = _harvestService.GetHarvestInfo(year);
+        _logger.Information("GetHarvestData");
+        var list = _harvestService.GetHarvestData(year);
 
         return new QueryResult<List<HarvestViewModel>> { Data = list, Status = new SuccessResult() };
+    }
+
+    [HttpGet(ApiRoutes.HarvestYearTotal)]
+    public int GetHarvestYearTotal(int year)
+    {
+        _logger.Information("GetHarvestYearTotal");
+        var total = _harvestService.GetHarvestYearTotal(year);
+
+        return total;
     }
 
     [HttpGet(ApiRoutes.HarvestWeeks, Name = "GetHarvestWeeks")]

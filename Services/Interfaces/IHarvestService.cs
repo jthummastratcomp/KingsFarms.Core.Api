@@ -4,6 +4,7 @@ namespace KingsFarms.Core.Api.Services.Interfaces
 {
     public interface IHarvestService
     {
-        List<HarvestViewModel> GetHarvestInfo(int harvestYear);
+        List<HarvestViewModel> GetHarvestData(int harvestYear);
+        int GetHarvestYearTotal(int year);
     }
 }

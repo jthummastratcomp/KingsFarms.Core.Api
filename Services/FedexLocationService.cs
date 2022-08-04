@@ -1,4 +1,5 @@
 ﻿using KingsFarms.Core.Api.Builders.LocationSearch;
+using KingsFarms.Core.Api.Requests;
 using KingsFarms.Core.Api.Services.Endpoints;
 using KingsFarms.Core.Api.Services.Extensions;
 using KingsFarms.Core.Api.Services.Interfaces;
@@ -64,27 +65,27 @@ public class FedexLocationService : IFedexLocationService
         return new List<FedexLocationViewModel> { new() { BedNumber = resp.Content } };
     }
 
-    public CreateShipmentResponse? CreateShipment(string? json = null)
-    {
-        var buildJson = string.IsNullOrEmpty(json) ? JsonConvert.SerializeObject(FedExShipmentBuilder.BuildShipment()) : json;
+    //public CreateShipmentResponse? CreateShipment(CreateShipmentRequest? shipmentRequest)
+    //{
+    //    var buildJson = JsonConvert.SerializeObject(FedExShipmentBuilder.BuildShipment(shipmentRequest));
 
-        var client = new RestClient(new RestClientOptions(_url));
-        var request = new RestRequest(FedExEndpoints.FedExCreateShipmentEndPoint)
-            .AddHeaderAuthorization(_tokenService.GetAccessToken())
-            .AddHeaderLocale()
-            .AddHeaderContentTypeJson()
-            .AddBody(buildJson);
+    //    var client = new RestClient(new RestClientOptions(_url));
+    //    var request = new RestRequest(FedExEndpoints.FedExCreateShipmentEndPoint)
+    //        .AddHeaderAuthorization(_tokenService.GetAccessToken())
+    //        .AddHeaderLocale()
+    //        .AddHeaderContentTypeJson()
+    //        .AddBody(buildJson);
 
-        var resp = client.Post(request);
+    //    var resp = client.Post(request);
 
-        if (resp.Content != null)
-        {
-            var des = JsonConvert.DeserializeObject<CreateShipmentResponse>(resp.Content);
-            return des;
-        }
+    //    if (resp.Content != null)
+    //    {
+    //        var des = JsonConvert.DeserializeObject<CreateShipmentResponse>(resp.Content);
+    //        return des;
+    //    }
 
-        return null;
-    }
+    //    return null;
+    //}
 
     
 }

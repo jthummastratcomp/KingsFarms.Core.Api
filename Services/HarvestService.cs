@@ -4,6 +4,7 @@ using Azure.Storage.Blobs.Specialized;
 using KingsFarms.Core.Api.Helpers;
 using KingsFarms.Core.Api.Services.Interfaces;
 using KingsFarms.Core.Api.ViewModels;
+using LazyCache;
 using OfficeOpenXml;
 using ILogger = Serilog.ILogger;
 
@@ -16,18 +17,49 @@ public class HarvestService : IHarvestService
     private readonly string _harvestFile;
     private readonly ILogger _logger;
 
-    public HarvestService(ILogger logger, string azStoreConnStr, string azStoreContName, string harvestFile)
+    private IAppCache _appCache;
+
+    public HarvestService(ILogger logger, IAppCache appCache, string azStoreConnStr, string azStoreContName,
+        string harvestFile)
     {
         _logger = logger;
         _azStoreConnStr = azStoreConnStr;
         _azStoreContName = azStoreContName;
         _harvestFile = harvestFile;
+        _appCache = appCache;
     }
 
-    public List<HarvestViewModel> GetHarvestInfo(int harvestYear)
+    public List<HarvestViewModel> GetHarvestData(int harvestYear)
     {
         //var harvestYear = Utils.ParseToInteger(year);
 
+        //List<HarvestViewModel> HarvestViewModelGetter() => GetHarvestDataForYear(harvestYear);
+        //var x = _appCache.GetOrAdd("HarvestViewModel.Get", HarvestViewModelGetter);
+        //return x;
+
+        return GetHarvestDataForYear(harvestYear);
+    }
+
+    public int GetHarvestYearTotal(int harvestYear)
+    {
+        //List<HarvestViewModel> HarvestViewModels() => GetHarvestDataForYear(harvestYear);
+        //var x = _appCache.GetOrAdd("HarvestViewModel.Get", HarvestViewModels);
+
+        //return x;
+
+        var list = GetHarvestDataForYear(harvestYear);
+
+        var total = list.Sum(x => x.TotalHarvest);
+
+
+        //if(harvestYear == 2020) total = list.Sum(x => x.Total20Harvest);
+        //if (harvestYear == 2021) total = list.Sum(x => x.Total21Harvest);
+        //if (harvestYear == 2022) total = list.Sum(x => x.Total22Harvest);
+        return total;
+    }
+
+    private List<HarvestViewModel> GetHarvestDataForYear(int harvestYear)
+    {
         var list = new List<HarvestViewModel>();
 
         var client = new BlobServiceClient(_azStoreConnStr);
@@ -40,10 +72,10 @@ public class HarvestService : IHarvestService
 
             using var package = new ExcelPackage(memoryStream);
             var dtHarvest = GetHarvestWorksheetData(package, harvestYear);
-            if(dtHarvest != null) list = GetHarvestViewModels(dtHarvest, harvestYear);
+            if (dtHarvest != null) list = GetHarvestViewModels(dtHarvest, harvestYear);
         }
 
-        _logger.Information("GetHarvestInfo returning {@Count}", list.Count);
+        _logger.Information("GetHarvestData returning {@Count}", list.Count);
         return list;
     }
 
@@ -58,7 +90,6 @@ public class HarvestService : IHarvestService
         };
     }
 
-
     private static List<HarvestViewModel> GetHarvestViewModels(DataTable table, int year)
     {
         var list = new List<HarvestViewModel>();
@@ -69,12 +100,12 @@ public class HarvestService : IHarvestService
             var harvestDate = Utils.ParseToDateTime(dataRow[1].ToString());
             if (!harvestDate.HasValue) continue;
 
-            list.Add(new HarvestViewModel { HarvestDate = harvestDate.GetValueOrDefault(), BedHarvests = GetHarvestsForWeek(dataRow, year) });
+            list.Add(new HarvestViewModel(harvestDate.GetValueOrDefault())
+                { BedHarvests = GetHarvestsForWeek(dataRow, year) });
         }
 
         return list;
     }
-
 
     private static List<HarvestBedViewModel> GetHarvestsForWeek(DataRow row, int year)
     {
@@ -86,9 +117,12 @@ public class HarvestService : IHarvestService
             var qty = Utils.ParseToInteger(row[col].ToString());
             if (qty <= 0) continue;
             var model = new HarvestBedViewModel { BedNumber = $"Bed {col - 4}" };
-            if (year == 2020) model.HarvestQty20 = qty;
-            if (year == 2021) model.HarvestQty21 = qty;
-            if (year == 2022) model.HarvestQty22 = qty;
+            //if (year == 2020) model.HarvestQty20 = qty;
+            //if (year == 2021) model.HarvestQty21 = qty;
+            //if (year == 2022) model.HarvestQty22 = qty;
+
+            model.HarvestQty = qty;
+
             list.Add(model);
         }
 

@@ -16,7 +16,8 @@ public class FieldOperationService : IFieldOperationService
     private readonly string _fieldOperationsFile;
     private readonly ILogger _logger;
 
-    public FieldOperationService(ILogger logger, string azStoreConnStr, string azStoreContName, string fieldOperationsFile)
+    public FieldOperationService(ILogger logger, string azStoreConnStr, string azStoreContName,
+        string fieldOperationsFile)
     {
         _logger = logger;
         _azStoreConnStr = azStoreConnStr;
@@ -24,7 +25,7 @@ public class FieldOperationService : IFieldOperationService
         _fieldOperationsFile = fieldOperationsFile;
     }
 
-    public List<HarvestViewModel> GetHarvestInfo(int harvestYear)
+    public List<HarvestViewModel> GetHarvestData(int harvestYear)
     {
         //var harvestYear = Utils.ParseToInteger(year);
 
@@ -40,10 +41,10 @@ public class FieldOperationService : IFieldOperationService
 
             using var package = new ExcelPackage(memoryStream);
             var dtHarvest = GetHarvestWorksheetData(package, harvestYear);
-            if(dtHarvest != null) list = GetHarvestViewModels(dtHarvest, harvestYear);
+            if (dtHarvest != null) list = GetHarvestViewModels(dtHarvest, harvestYear);
         }
 
-        _logger.Information("GetHarvestInfo returning {@Count}", list.Count);
+        _logger.Information("GetHarvestData returning {@Count}", list.Count);
         return list;
     }
 
@@ -69,7 +70,8 @@ public class FieldOperationService : IFieldOperationService
             var harvestDate = Utils.ParseToDateTime(dataRow[1].ToString());
             if (!harvestDate.HasValue) continue;
 
-            list.Add(new HarvestViewModel { HarvestDate = harvestDate.GetValueOrDefault(), BedHarvests = GetHarvestsForWeek(dataRow, year) });
+            list.Add(new HarvestViewModel(harvestDate.GetValueOrDefault())
+                { BedHarvests = GetHarvestsForWeek(dataRow, year) });
         }
 
         return list;
@@ -86,9 +88,10 @@ public class FieldOperationService : IFieldOperationService
             var qty = Utils.ParseToInteger(row[col].ToString());
             if (qty <= 0) continue;
             var model = new HarvestBedViewModel { BedNumber = $"Bed {col - 4}" };
-            if (year == 2020) model.HarvestQty20 = qty;
-            if (year == 2021) model.HarvestQty21 = qty;
-            if (year == 2022) model.HarvestQty22 = qty;
+            //if (year == 2020) model.HarvestQty20 = qty;
+            //if (year == 2021) model.HarvestQty21 = qty;
+            //if (year == 2022) model.HarvestQty22 = qty;
+            model.HarvestQty = qty;
             list.Add(model);
         }
 

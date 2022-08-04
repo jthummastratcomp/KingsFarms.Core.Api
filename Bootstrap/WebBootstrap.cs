@@ -2,6 +2,7 @@
 using KingsFarms.Core.Api.Services;
 using KingsFarms.Core.Api.Services.Interfaces;
 using Serilog;
+using FedexShipmentService = KingsFarms.Core.Api.Services.FedexShipmentService;
 
 namespace KingsFarms.Core.Api.Bootstrap
 {
@@ -84,46 +85,9 @@ namespace KingsFarms.Core.Api.Bootstrap
             builder.RegisterType<FedexLocationService>().As<IFedexLocationService>()
                 .WithParameter("url", fedexUrl);
 
-
-            //Bind<ILogger>().ToMethod(x => new LoggerConfiguration()
-            //    //.WriteTo.File(logFile)
-            //    .Enrich.WithProperty("App", "HotTowellette")
-            //    .WriteTo.Seq(seqLogUrl)
-            //    //.WriteTo.AzureBlobStorage(azStoreConnStr,storageContainerName: "hottowellettewevlogs",storageFileName:logFile)
-            //    .CreateLogger());
-
-            //Bind<IIntuitDataService>().To<IntuitDataService>().InRequestScope(); //.InSingletonScope();
-            //Bind<IAdminService>().To<AdminService>();
-            //Bind<ICustomerService>().To<CustomerService>();
-            //Bind<ICustomerLoadService>().To<CustomerLoadService>();
-            //Bind<IInvoiceService>().To<InvoiceService>();
-            //Bind<IInvoiceLoadService>().To<InvoiceLoadService>();
-            //Bind<IInvoiceLoadLoopService>().To<InvoiceLoadLoopService>();
-            //Bind<IWeeklyOrdersService>().To<WeeklyOrdersService>()
-            //    .WithConstructorArgument("azStoreConnStr", azStoreConnStr)
-            //    .WithConstructorArgument("azStoreContName", azStoreContName)
-            //    .WithConstructorArgument("weeklyOrdersFile", weeklyOrdersFile);
-            //Bind<IGenerateWeeklyOrdersService>().To<GenerateWeeklyOrdersService>();
-
-            //Bind<IHarvestService>().To<HarvestService>()
-            //    .WithConstructorArgument("azStoreConnStr", azStoreConnStr)
-            //    .WithConstructorArgument("azStoreContName", azStoreContName)
-            //    .WithConstructorArgument("harvestFile", harvestFile);
-
-            //Bind<ICosmosDbService>().To<CosmosDbService>()
-            //    .WithConstructorArgument("cosmosDbUri", cosmosDbUri)
-            //    .WithConstructorArgument("cosmosDbKey", cosmosDbKey);
-            //Bind<IBedHarvestFieldOpsService>().To<BedHarvestFieldOpsService>()
-            //    .WithConstructorArgument("cosmosDbDatabase", cosmosDbDatabaseId)
-            //    .WithConstructorArgument("cosmosDbContainer", cosmosDbContainer_Beds);
-            //Bind<IFieldOperationsService>().To<FieldOperationsService>()
-            //    .WithConstructorArgument("cosmosDbDatabase", cosmosDbDatabaseId)
-            //    .WithConstructorArgument("cosmosDbContainer", cosmosDbContainer_Beds);
-
-            //Bind<ICacheProvider>().To<MemoryCacheProvider>().WithConstructorArgument("cacheTimeoutMinutes", 20); //.InSingletonScope()
-
-            //Bind<ICacheInterceptor>().To<CacheInterceptor>();
-            ////Bind<ICacheExpireInterceptor>().To<CacheExpireInterceptor>();
+            builder.RegisterType<FedexShipmentService>().As<IFedexShipmentService>()
+                .WithParameter("url", fedexUrl);
+            
         }
     }
 }

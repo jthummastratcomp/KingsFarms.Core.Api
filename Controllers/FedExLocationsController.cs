@@ -32,19 +32,11 @@ public class FedExLocationsController : ControllerBase
         return new QueryResult<List<FedexLocationViewModel>> { Data = data, Status = new SuccessResult() };
     }
 
-    [HttpGet(ApiRoutes.CreateShipment, Name = "CreateShipment")]
-    public IQueryResult CreateShipment()
-    {
-        var data = _locationService.CreateShipment();
-
-        return new QueryResult<CreateShipmentResponse?> { Data = data, Status = new SuccessResult() };
-    }
-
-    //[HttpGet(ApiRoutes.CreateShipmentJson, Name = "CreateShipmentJson")]
-    //public IQueryResult CreateShipmentJson(string json)
+    //[HttpGet(ApiRoutes.CreateShipment, Name = "CreateShipment")]
+    //public IQueryResult CreateShipment()
     //{
-    //    var data = _locationService.CreateShipment(json);
+    //    var data = _locationService.CreateShipment();
 
-    //    return new QueryResult<List<FedexLocationViewModel>> { Data = data, Status = new SuccessResult() };
+    //    return new QueryResult<CreateShipmentResponse?> { Data = data, Status = new SuccessResult() };
     //}
 }

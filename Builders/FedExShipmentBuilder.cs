@@ -1,23 +1,33 @@
 ﻿using KingsFarms.Core.Api.Builders.LocationSearch;
+using KingsFarms.Core.Api.Requests;
 
 namespace KingsFarms.Core.Api.Services;
 
 public static class FedExShipmentBuilder
 {
-    public static FedExCreateShipment? BuildShipment()
+    //public static FedExCreateShipment? BuildShipment()
+    //{
+    //    return new FedExCreateShipmentBuilder()
+    //        .WithLabelOptions(FedExLabelOptions.URL_ONLY)
+    //        .WithRequestedShipment(BuildRequestedShipment())
+    //        .WithAccountNumber(BuildShipmentAccountNumber())
+    //        .Build();
+    //}
+
+    public static FedExCreateShipment? BuildShipment(CreateShipmentRequest? request)
     {
         return new FedExCreateShipmentBuilder()
             .WithLabelOptions(FedExLabelOptions.URL_ONLY)
-            .WithRequestedShipment(BuildRequestedShipment())
+            .WithRequestedShipment(BuildRequestedShipment(request))
             .WithAccountNumber(BuildShipmentAccountNumber())
             .Build();
     }
 
-    private static FedExRequestedShipment? BuildRequestedShipment()
+    private static FedExRequestedShipment? BuildRequestedShipment(CreateShipmentRequest? request)
     {
         return new FedExRequestedShipmentBuilder()
             .WithShipper(BuildShipmentShipper())
-            .WithRecipient(BuildShipmentRecipient())
+            .WithRecipient(BuildShipmentRecipient(request?.To))
             //.WithShipDate(DateTime.Today.ToString("d"))
             .WithServiceType(FedExServiceType.GROUND)
             .WithPackagingType(FedExPackagingType.YOUR_PACKAGING)
@@ -68,19 +78,19 @@ public static class FedExShipmentBuilder
             .Build();
     }
 
-    private static FedExShipperRecipient BuildShipmentRecipient()
+    private static FedExShipperRecipient BuildShipmentRecipient(ShipmentContactRequest? contact)
     {
         return new FedExShipperRecipientBuilder()
             .WithContact(new FedExContactBuilder()
-                .WithPersonName("Jay")
+                .WithPersonName(contact != null ? contact.PersonName : "Jay")
                 .WithPhone("15138850368")
-                .WithCompanyName("Some Comp")
+                .WithCompanyName(contact != null ? contact.CompanyName : "Some Comp")
                 .Build())
             .WithAddress(new FedExAddressBuilder()
-                .WithStreetLine1("4029 Melampy Creek Ln")
-                .WithCity("Mason")
-                .WithState("OH")
-                .WithPostalCode("45040")
+                .WithStreetLine1(contact != null ? contact.Street : "4029 Melampy Creek Ln")
+                .WithCity(contact != null ? contact.City : "Mason")
+                .WithState(contact != null ? contact.State : "OH")
+                .WithPostalCode(contact != null ? contact.ZipCode : "45040")
                 .WithCountryCode("US")
                 .Build())
             .Build();

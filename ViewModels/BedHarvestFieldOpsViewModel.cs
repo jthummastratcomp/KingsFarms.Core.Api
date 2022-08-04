@@ -16,7 +16,7 @@ public class BedHarvestFieldOpsViewModel
     public string PlantedDateDisplay => PlantedDate.ToString("yyyy/MM");
 
     public List<BedHarvestViewModel> Harvests { get; set; }
-    public List<BedFieldOpsViewModel> FieldOperations { get; set; }
+    //public List<BedFieldOpsViewModel> FieldOperations { get; set; }
 
     public string HarvestsDisplay
     {
@@ -33,20 +33,20 @@ public class BedHarvestFieldOpsViewModel
         }
     }
 
-    public string FieldOperationsDisplay
-    {
-        get
-        {
-            if (FieldOperations == null || FieldOperations.Count == 0) return string.Empty;
-            var list = FieldOperations.ToList();
-            if (!Utils.HasRows(list)) return string.Empty;
+    //public string FieldOperationsDisplay
+    //{
+    //    get
+    //    {
+    //        if (FieldOperations == null || FieldOperations.Count == 0) return string.Empty;
+    //        var list = FieldOperations.ToList();
+    //        if (!Utils.HasRows(list)) return string.Empty;
 
-            var builder = new StringBuilder();
-            foreach (var model in list) builder.Append($"OperationDate:{model.OperationDateDisplay},WorkType:{model.WorkTypeDisplay};");
+    //        var builder = new StringBuilder();
+    //        foreach (var model in list) builder.Append($"OperationDate:{model.OperationDateDisplay},WorkType:{model.WorkTypeDisplay};");
 
-            return builder.ToString();
-        }
-    }
+    //        return builder.ToString();
+    //    }
+    //}
 
     //todo be refactor
     public int HarvestQty20_21 { get; set; }
@@ -66,5 +66,6 @@ public class BedHarvestFieldOpsViewModel
     //[JsonProperty(PropertyName = "partitionKey")]
     public string PartitionKey { get; set; }
 
-    public string Display => $"BedNumber:{BedNumber},Section:{Section},PlantedDate:{PlantedDate},PlantsCount:{PlantsCount},{HarvestsDisplay},{FieldOperations}";
+    //public string Display => $"BedNumber:{BedNumber},Section:{Section},PlantedDate:{PlantedDate},PlantsCount:{PlantsCount},{HarvestsDisplay},{FieldOperations}";
+    public string Display => $"BedNumber:{BedNumber},Section:{Section},PlantedDate:{PlantedDate},PlantsCount:{PlantsCount},{HarvestsDisplay}";
 }
