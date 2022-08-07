@@ -1,6 +1,7 @@
 ﻿using System.Data;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Specialized;
+using KingsFarms.Core.Api.Enums;
 using KingsFarms.Core.Api.Helpers;
 using KingsFarms.Core.Api.Services.Interfaces;
 using KingsFarms.Core.Api.ViewModels;
@@ -58,6 +59,34 @@ public class HarvestService : IHarvestService
         return total;
     }
 
+    public int GetHarvestStatusTotal(DashboardStatusEnum status)
+    {
+        //return status switch
+        //{
+        //    DashboardStatusEnum.CurrentYear => GetHarvestYearTotal(DateTime.Today.Year),
+        //    DashboardStatusEnum.LastYear => GetHarvestYearTotal(DateTime.Today.AddYears(-1).Year),
+        //    _ => AllYearsHarvestTotal()
+        //};
+
+        var list = new List<HarvestViewModel>();
+        for (var year = 2020; year <= DateTime.Today.Year; year++) list.AddRange(GetHarvestDataForYear(year));
+
+        return status switch
+        {
+            DashboardStatusEnum.CurrentYear => list.Where(x=>x.HarvestDate.Year == DateTime.Today.Year).Sum(x=>x.TotalHarvest),
+            DashboardStatusEnum.LastYear => list.Where(x => x.HarvestDate.Year == DateTime.Today.AddYears(-1).Year).Sum(x=>x.TotalHarvest),
+            _ => list.Sum(x => x.TotalHarvest)
+        };
+    }
+
+    //private int AllYearsHarvestTotal()
+    //{
+    //    var total = 0;
+    //    for (var year = 2020; year <= DateTime.Today.Year; year++) total += GetHarvestYearTotal(year);
+
+    //    return total;
+    //}
+
     private List<HarvestViewModel> GetHarvestDataForYear(int harvestYear)
     {
         var list = new List<HarvestViewModel>();
@@ -75,7 +104,7 @@ public class HarvestService : IHarvestService
             if (dtHarvest != null) list = GetHarvestViewModels(dtHarvest, harvestYear);
         }
 
-        _logger.Information("GetHarvestData returning {@Count}", list.Count);
+        _logger.Information("GetHarvestData for {@Year} returning {@Count}", harvestYear, list.Count);
         return list;
     }
 
