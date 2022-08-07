@@ -18,6 +18,14 @@ public class FedExShipmentController : ControllerBase
         _shipmentService = shipmentService;
     }
 
+    [HttpGet(ApiRoutes.CreateShipment, Name = "CreateShipment")]
+    public IQueryResult CreateShipment()
+    {
+        var data = _shipmentService.CreateShipment(null);
+
+        return new QueryResult<CreateShipmentResponse?> { Data = data, Status = new SuccessResult() };
+    }
+
     [HttpPost(ApiRoutes.CreateShipmentRequest)]
     public SearchDto CreateShipment(CreateShipmentRequest request)
     //public string? CreateShipment(CreateShipmentRequest request)

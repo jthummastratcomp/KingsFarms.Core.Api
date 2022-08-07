@@ -1,4 +1,5 @@
-﻿using KingsFarms.Core.Api.ViewModels;
+﻿using KingsFarms.Core.Api.Enums;
+using KingsFarms.Core.Api.ViewModels;
 
 namespace KingsFarms.Core.Api.Services.Interfaces
 {
@@ -6,5 +7,6 @@ namespace KingsFarms.Core.Api.Services.Interfaces
     {
         List<HarvestViewModel> GetHarvestData(int harvestYear);
         int GetHarvestYearTotal(int year);
+        int GetHarvestStatusTotal(DashboardStatusEnum status);
     }
 }

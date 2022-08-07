@@ -1,3 +1,5 @@
+using System.ComponentModel;
+using KingsFarms.Core.Api.Enums;
 using KingsFarms.Core.Api.Results;
 using KingsFarms.Core.Api.Services.Interfaces;
 using KingsFarms.Core.Api.ViewModels;
@@ -32,12 +34,21 @@ public class HarvestController : ControllerBase
     }
 
     [HttpGet(ApiRoutes.HarvestYearTotal)]
-    public int GetHarvestYearTotal(int year)
+    public IQueryResult GetHarvestYearTotal(int year)
     {
         _logger.Information("GetHarvestYearTotal");
         var total = _harvestService.GetHarvestYearTotal(year);
 
-        return total;
+        return new QueryResult<int> { Data = total, Status = new SuccessResult() };
+    }
+
+    [HttpGet(ApiRoutes.HarvestStatusTotal)]
+    public IQueryResult GetHarvestStatusTotal(string status)
+    {
+        _logger.Information("GetHarvestStatusTotal");
+        var total = _harvestService.GetHarvestStatusTotal(status.GetEnum<DashboardStatusEnum>());
+
+        return new QueryResult<int> { Data = total, Status = new SuccessResult() };
     }
 
     [HttpGet(ApiRoutes.HarvestWeeks, Name = "GetHarvestWeeks")]
@@ -45,4 +56,7 @@ public class HarvestController : ControllerBase
     {
         return _ordersService.GetInvoiceWeeksListForYear();
     }
+
+
+
 }

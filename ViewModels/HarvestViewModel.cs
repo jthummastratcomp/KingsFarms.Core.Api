@@ -11,7 +11,7 @@ public class HarvestViewModel
 
     public List<HarvestBedViewModel> BedHarvests { get; set; }
     public int HarvestYear { get; set; }
-    private DateTime HarvestDate { get; }
+    public DateTime HarvestDate { get; }
     public string HarvestDateDisplay => HarvestDate.ToString("MM/dd/yyyy");
     public int TotalHarvest => !Utils.HasRows(BedHarvests) ? 0 : BedHarvests.Sum(x => x.HarvestQty);
 
