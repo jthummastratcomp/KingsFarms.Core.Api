@@ -31,8 +31,10 @@ public static class ApiRoutes
 
     //HARVEST
     public const string HarvestWeeks = "api/harvest/weeks";
-    public const string HarvestData = "api/harvest/data/{year}";
-    public const string HarvestYearTotal = "api/harvest/{year}/yearTotal";
+    public const string HarvestDataBySeason = "api/harvest/data/{season}";
+    public const string HarvestDataByCalendar = "api/harvest/calendar/{calendar}";
+    public const string HarvestYearTotalBySeason = "api/harvest/{season}/yearTotal";
+    public const string HarvestYearTotalByCalendar = "api/harvest/calendar/{calendar}/total";
     public const string HarvestStatusTotal = "api/harvest/{status}/statusTotal";
 
     //BEDS

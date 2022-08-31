@@ -44,7 +44,7 @@ public class FieldOperationService : IFieldOperationService
             if (dtHarvest != null) list = GetHarvestViewModels(dtHarvest, harvestYear);
         }
 
-        _logger.Information("GetHarvestData returning {@Count}", list.Count);
+        _logger.Information("GetHarvestDataBySeason returning {@Count}", list.Count);
         return list;
     }
 

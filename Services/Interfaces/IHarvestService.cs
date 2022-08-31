@@ -5,8 +5,10 @@ namespace KingsFarms.Core.Api.Services.Interfaces
 {
     public interface IHarvestService
     {
-        List<HarvestViewModel> GetHarvestData(int harvestYear);
-        int GetHarvestYearTotal(int year);
+        List<HarvestViewModel> GetHarvestDataBySeason(int harvestYear);
+        List<HarvestViewModel> GetHarvestDataByCalendar(int calendarYear);
+        int GetHarvestYearTotalBySeason(int year);
+        int GetHarvestYearTotalByCalendar(int calendarYear);
         int GetHarvestStatusTotal(DashboardStatusEnum status);
     }
 }

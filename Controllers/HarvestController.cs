@@ -24,32 +24,41 @@ public class HarvestController : ControllerBase
         _logger = logger;
     }
 
-    [HttpGet(ApiRoutes.HarvestData)]
-    public IQueryResult GetHarvestInfo(int year)
+    [HttpGet(ApiRoutes.HarvestDataBySeason)]
+    public IQueryResult GetHarvestInfo(int season)
     {
-        _logger.Information("GetHarvestData");
-        var list = _harvestService.GetHarvestData(year);
+        _logger.Information("GetHarvestDataBySeason");
+        var list = _harvestService.GetHarvestDataBySeason(season);
 
         return new QueryResult<List<HarvestViewModel>> { Data = list, Status = new SuccessResult() };
     }
 
-    [HttpGet(ApiRoutes.HarvestYearTotal)]
-    public int GetHarvestYearTotal(int year)
+    [HttpGet(ApiRoutes.HarvestDataByCalendar)]
+    public IQueryResult GetHarvestDataByCalendar(int calendar)
     {
-        _logger.Information("GetHarvestYearTotal");
-        var total = _harvestService.GetHarvestYearTotal(year);
+        _logger.Information("HarvestDataByCalendar");
+        var list = _harvestService.GetHarvestDataByCalendar(calendar);
+
+        return new QueryResult<List<HarvestViewModel>> { Data = list, Status = new SuccessResult() };
+    }
+
+    [HttpGet(ApiRoutes.HarvestYearTotalBySeason)]
+    public int GetHarvestYearTotal(int season)
+    {
+        _logger.Information("GetHarvestYearTotalBySeason");
+        var total = _harvestService.GetHarvestYearTotalBySeason(season);
 
         return total;
     }
 
-    //[HttpGet(ApiRoutes.HarvestStatusTotal)]
-    //public IQueryResult GetHarvestStatusTotal(string status)
-    //{
-    //    _logger.Information("GetHarvestStatusTotal");
-    //    var total = _harvestService.GetHarvestStatusTotal(status.GetEnum<DashboardStatusEnum>());
+    [HttpGet(ApiRoutes.HarvestYearTotalByCalendar)]
+    public int GetHarvestYearTotalCalendar(int calendar)
+    {
+        _logger.Information("GetHarvestYearTotalByCalendar");
+        var total = _harvestService.GetHarvestYearTotalByCalendar(calendar);
 
-    //    return new QueryResult<int> { Data = total, Status = new SuccessResult() };
-    //}
+        return total;
+    }
 
     [HttpGet(ApiRoutes.HarvestStatusTotal)]
     public int GetHarvestStatusTotal(string status)
