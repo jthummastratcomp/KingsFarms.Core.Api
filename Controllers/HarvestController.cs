@@ -34,21 +34,30 @@ public class HarvestController : ControllerBase
     }
 
     [HttpGet(ApiRoutes.HarvestYearTotal)]
-    public IQueryResult GetHarvestYearTotal(int year)
+    public int GetHarvestYearTotal(int year)
     {
         _logger.Information("GetHarvestYearTotal");
         var total = _harvestService.GetHarvestYearTotal(year);
 
-        return new QueryResult<int> { Data = total, Status = new SuccessResult() };
+        return total;
     }
 
+    //[HttpGet(ApiRoutes.HarvestStatusTotal)]
+    //public IQueryResult GetHarvestStatusTotal(string status)
+    //{
+    //    _logger.Information("GetHarvestStatusTotal");
+    //    var total = _harvestService.GetHarvestStatusTotal(status.GetEnum<DashboardStatusEnum>());
+
+    //    return new QueryResult<int> { Data = total, Status = new SuccessResult() };
+    //}
+
     [HttpGet(ApiRoutes.HarvestStatusTotal)]
-    public IQueryResult GetHarvestStatusTotal(string status)
+    public int GetHarvestStatusTotal(string status)
     {
         _logger.Information("GetHarvestStatusTotal");
         var total = _harvestService.GetHarvestStatusTotal(status.GetEnum<DashboardStatusEnum>());
 
-        return new QueryResult<int> { Data = total, Status = new SuccessResult() };
+        return total;
     }
 
     [HttpGet(ApiRoutes.HarvestWeeks, Name = "GetHarvestWeeks")]

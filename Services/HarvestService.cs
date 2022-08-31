@@ -32,60 +32,30 @@ public class HarvestService : IHarvestService
 
     public List<HarvestViewModel> GetHarvestData(int harvestYear)
     {
-        //var harvestYear = Utils.ParseToInteger(year);
-
-        //List<HarvestViewModel> HarvestViewModelGetter() => GetHarvestDataForYear(harvestYear);
-        //var x = _appCache.GetOrAdd("HarvestViewModel.Get", HarvestViewModelGetter);
-        //return x;
-
         return GetHarvestDataForYear(harvestYear);
     }
 
     public int GetHarvestYearTotal(int harvestYear)
     {
-        //List<HarvestViewModel> HarvestViewModels() => GetHarvestDataForYear(harvestYear);
-        //var x = _appCache.GetOrAdd("HarvestViewModel.Get", HarvestViewModels);
-
-        //return x;
-
         var list = GetHarvestDataForYear(harvestYear);
-
         var total = list.Sum(x => x.TotalHarvest);
 
-
-        //if(harvestYear == 2020) total = list.Sum(x => x.Total20Harvest);
-        //if (harvestYear == 2021) total = list.Sum(x => x.Total21Harvest);
-        //if (harvestYear == 2022) total = list.Sum(x => x.Total22Harvest);
         return total;
     }
 
     public int GetHarvestStatusTotal(DashboardStatusEnum status)
     {
-        //return status switch
-        //{
-        //    DashboardStatusEnum.CurrentYear => GetHarvestYearTotal(DateTime.Today.Year),
-        //    DashboardStatusEnum.LastYear => GetHarvestYearTotal(DateTime.Today.AddYears(-1).Year),
-        //    _ => AllYearsHarvestTotal()
-        //};
-
         var list = new List<HarvestViewModel>();
         for (var year = 2020; year <= DateTime.Today.Year; year++) list.AddRange(GetHarvestDataForYear(year));
 
         return status switch
         {
-            DashboardStatusEnum.CurrentYear => list.Where(x=>x.HarvestDate.Year == DateTime.Today.Year).Sum(x=>x.TotalHarvest),
-            DashboardStatusEnum.LastYear => list.Where(x => x.HarvestDate.Year == DateTime.Today.AddYears(-1).Year).Sum(x=>x.TotalHarvest),
+            DashboardStatusEnum.CurrentYear => list.Where(x => x.HarvestDate.Year == DateTime.Today.Year).Sum(x => x.TotalHarvest),
+            DashboardStatusEnum.LastYear => list.Where(x => x.HarvestDate.Year == DateTime.Today.AddYears(-1).Year).Sum(x => x.TotalHarvest),
             _ => list.Sum(x => x.TotalHarvest)
         };
     }
 
-    //private int AllYearsHarvestTotal()
-    //{
-    //    var total = 0;
-    //    for (var year = 2020; year <= DateTime.Today.Year; year++) total += GetHarvestYearTotal(year);
-
-    //    return total;
-    //}
 
     private List<HarvestViewModel> GetHarvestDataForYear(int harvestYear)
     {
@@ -145,12 +115,11 @@ public class HarvestService : IHarvestService
         {
             var qty = Utils.ParseToInteger(row[col].ToString());
             if (qty <= 0) continue;
-            var model = new HarvestBedViewModel { BedNumber = $"Bed {col - 4}" };
-            //if (year == 2020) model.HarvestQty20 = qty;
-            //if (year == 2021) model.HarvestQty21 = qty;
-            //if (year == 2022) model.HarvestQty22 = qty;
-
-            model.HarvestQty = qty;
+            var model = new HarvestBedViewModel
+            {
+                BedNumber = $"Bed {col - 4}",
+                HarvestQty = qty
+            };
 
             list.Add(model);
         }
