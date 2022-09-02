@@ -47,7 +47,8 @@ public static class ApiRoutes
     public const string ManureAllMonths = "api/manure/month/all";
     public const string ManureForFarm = "api/manure/farm/{farm}";
     public const string ManureAllFarms = "api/manure/farm/all";
-    
+    public const string ManureFarms = "api/manure/farms";
+    public const string ManureFarmsLoads = "api/manure/farms/loads";
 
     //DASHBOARD
     public const string Dashboard = "api/dashboard";
@@ -58,5 +59,5 @@ public static class ApiRoutes
     public const string ValidatedAddress = "api/fedex/validate/address";
     public const string CreateShipment = "api/fedex/shipment/create";
     public const string CreateShipmentRequest = "api/fedex/shipment/createrequest";
-
+    
 }

@@ -46,6 +46,44 @@ public class HorseManureService : IHorseManureService
         return list;
     }
 
+    public List<ManureLoadViewModel> GetManureLoads()
+    {
+        var list = new List<ManureLoadViewModel>();
+
+        var client = new BlobServiceClient(_azStoreConnStr);
+        var container = client.GetBlobContainerClient(_azStoreContName);
+        var blob = container.GetBlockBlobClient(_horseManureFile);
+
+        using (var memoryStream = new MemoryStream())
+        {
+            blob.DownloadTo(memoryStream);
+
+            using var package = new ExcelPackage(memoryStream);
+            AddManureLoadForMonth(package, list, MonthEnum.January);
+            AddManureLoadForMonth(package, list, MonthEnum.February);
+            AddManureLoadForMonth(package, list, MonthEnum.March);
+            AddManureLoadForMonth(package, list, MonthEnum.April);
+            AddManureLoadForMonth(package, list, MonthEnum.May);
+            AddManureLoadForMonth(package, list, MonthEnum.June);
+            AddManureLoadForMonth(package, list, MonthEnum.July);
+            AddManureLoadForMonth(package, list, MonthEnum.August);
+            AddManureLoadForMonth(package, list, MonthEnum.September);
+            AddManureLoadForMonth(package, list, MonthEnum.October);
+            AddManureLoadForMonth(package, list, MonthEnum.November);
+            AddManureLoadForMonth(package, list, MonthEnum.December);
+            
+        }
+
+        _logger.Information("GetManureInfo returning {@Count}", list.Count);
+        return list;
+    }
+
+    private static void AddManureLoadForMonth(ExcelPackage package, List<ManureLoadViewModel> list, MonthEnum loadMonth)
+    {
+        var dtHarvest = GetManureLoadWorksheetData(package, loadMonth);
+        if (dtHarvest != null) list.AddRange(GetManureLoadViewModels(dtHarvest));
+    }
+
     private static DataTable? GetManureLoadWorksheetData(ExcelPackage package, MonthEnum loadMonth)
     {
         return loadMonth switch

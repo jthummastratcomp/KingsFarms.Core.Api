@@ -27,8 +27,8 @@ public class ManureController : ControllerBase
     public IQueryResult GetManureForMonth(MonthEnum month)
     {
         _logger.Information("GetManureForMonth");
-        
-        return new QueryResult<List<ManureLoadViewModel>> { Data = GetManureLoadsForMonth(month), Status = new SuccessResult() };
+
+        return new QueryResult<List<ManureLoadViewModel>> { Data = _manureService.GetManureLoadForMonth(month), Status = new SuccessResult() };
     }
 
     [HttpGet(ApiRoutes.ManureAllMonths, Name = "ManureAllMonths")]
@@ -36,26 +36,9 @@ public class ManureController : ControllerBase
     {
         _logger.Information("GetManureAllMonths");
 
-        var list = GetManureLoadsAllMonths();
+        var list = _manureService.GetManureLoads();
 
         return new QueryResult<List<ManureLoadViewModel>> { Data = list, Status = new SuccessResult() };
-    }
-
-    private List<ManureLoadViewModel> GetManureLoadsAllMonths()
-    {
-        var list = GetManureLoadsForMonth(MonthEnum.January);
-        list.AddRange(GetManureLoadsForMonth(MonthEnum.February));
-        list.AddRange(GetManureLoadsForMonth(MonthEnum.March));
-        list.AddRange(GetManureLoadsForMonth(MonthEnum.April));
-        list.AddRange(GetManureLoadsForMonth(MonthEnum.May));
-        list.AddRange(GetManureLoadsForMonth(MonthEnum.June));
-        list.AddRange(GetManureLoadsForMonth(MonthEnum.July));
-        list.AddRange(GetManureLoadsForMonth(MonthEnum.August));
-        list.AddRange(GetManureLoadsForMonth(MonthEnum.September));
-        list.AddRange(GetManureLoadsForMonth(MonthEnum.October));
-        list.AddRange(GetManureLoadsForMonth(MonthEnum.November));
-        list.AddRange(GetManureLoadsForMonth(MonthEnum.December));
-        return list;
     }
 
     [HttpGet(ApiRoutes.ManureForFarm, Name = "ManureForFarm")]
@@ -63,17 +46,40 @@ public class ManureController : ControllerBase
     {
         _logger.Information("GetManureForFarm");
 
-        var list = GetManureLoadsAllMonths();
+        var list = _manureService.GetManureLoads();
 
         list = list.Where(x => x.Loads.ContainsKey(farm)).ToList();
 
         return new QueryResult<List<ManureLoadViewModel>> { Data = list, Status = new SuccessResult() };
     }
-    
 
-    private List<ManureLoadViewModel> GetManureLoadsForMonth(MonthEnum month)
+    [HttpGet(ApiRoutes.ManureFarms, Name = "ManureFarms")]
+    public IQueryResult GetManureFarms()
     {
-        var list = _manureService.GetManureLoadForMonth(month);
-        return list;
+        return new QueryResult<List<string>> { Data = GetFarmsList(), Status = new SuccessResult() };
+    }
+
+    private List<string> GetFarmsList()
+    {
+        var farmsList = new List<string>();
+        var list = _manureService.GetManureLoads();
+
+        foreach (var viewModel in list) farmsList.AddRange(viewModel.Loads.Keys.ToList());
+
+        return farmsList.Distinct().ToList();
+    }
+
+    [HttpGet(ApiRoutes.ManureFarmsLoads, Name = "ManureFarmsLoads")]
+    public IQueryResult GetManureFarmLoads()
+    {
+        var farmLoads = new Dictionary<string, int>();
+        var list = _manureService.GetManureLoads();
+
+        foreach (var loads in list.Select(viewModel => viewModel.Loads))
+        foreach (var (farm, value) in loads)
+            if (farmLoads.ContainsKey(farm)) farmLoads[farm] += value;
+            else farmLoads.Add(farm, value);
+
+        return new QueryResult<Dictionary<string, int>> { Data = farmLoads, Status = new SuccessResult() };
     }
 }
