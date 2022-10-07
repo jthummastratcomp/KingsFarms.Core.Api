@@ -1,6 +1,4 @@
-﻿using KingsFarms.Core.Api.Builders.LocationSearch;
-
-namespace KingsFarms.Core.Api.Services;
+﻿namespace KingsFarms.Core.Api.Builders.LocationSearch;
 
 public class FedExDimensionBuilder
 {

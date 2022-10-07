@@ -87,7 +87,14 @@ namespace KingsFarms.Core.Api.Bootstrap
 
             builder.RegisterType<FedexShipmentService>().As<IFedexShipmentService>()
                 .WithParameter("url", fedexUrl);
-            
+
+            builder.RegisterType<PrepareInvoiceService>().As<IPrepareInvoiceService>();
+            builder.RegisterType<InvoiceNumberGeneratorService>().As<IInvoiceNumberGeneratorService>();
+            builder.RegisterType<UsdaQueueService>().As<IUsdaQueueService>();
+            builder.RegisterType<UsdaMemoService>().As<IUsdaMemoService>();
+            builder.RegisterType<ApplyInvoiceInfoService>().As<IApplyInvoiceInfoService>();
+            builder.RegisterType<InvoiceInfoService>().As<IInvoiceInfoService>();
+
         }
     }
 }

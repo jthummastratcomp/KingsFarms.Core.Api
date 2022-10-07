@@ -2,6 +2,11 @@
 {
     public class ShipmentsBillViewModel
     {
+        public ShipmentsBillViewModel()
+        {
+            Bill = new InvoiceBillViewModel();
+            ShipMethod = new ShipmentMethod();
+        }
         public int Year { get; set; }
         public int NumberOfShipments { get; set; }
         public decimal ShippedQuantity { get; set; }

@@ -1,7 +1,7 @@
 ﻿using KingsFarms.Core.Api.Builders.LocationSearch;
 using KingsFarms.Core.Api.Requests;
 
-namespace KingsFarms.Core.Api.Services;
+namespace KingsFarms.Core.Api.Builders;
 
 public static class FedExShipmentBuilder
 {
