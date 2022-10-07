@@ -16,7 +16,7 @@ public class FedExLocationsController : ControllerBase
         _locationService = locationService;
     }
 
-    [HttpGet(ApiRoutes.FedExLocationInfo, Name = "FedExLocationInfo")]
+    [HttpGet(CoreApiRoutes.FedExLocationInfo, Name = "FedExLocationInfo")]
     public IQueryResult GetFedExLocationInfo()
     {
         var data = _locationService.GetLocations();
@@ -24,7 +24,7 @@ public class FedExLocationsController : ControllerBase
         return new QueryResult<List<FedexLocationViewModel>> { Data = data, Status = new SuccessResult() };
     }
 
-    [HttpGet(ApiRoutes.ValidatedAddress, Name = "ValidatedAddress")]
+    [HttpGet(CoreApiRoutes.ValidatedAddress, Name = "ValidatedAddress")]
     public IQueryResult GetValidatedAddress()
     {
         var data = _locationService.ValidateAddress();
