@@ -14,17 +14,17 @@ public class HarvestController : ControllerBase
     private readonly IHarvestService _harvestService;
 
     private readonly ILogger _logger;
-    private readonly IWeeklyOrdersService _ordersService;
+    
 
 
-    public HarvestController(IWeeklyOrdersService ordersService, IHarvestService harvestService, ILogger logger)
+    public HarvestController( IHarvestService harvestService, ILogger logger)
     {
-        _ordersService = ordersService;
+    
         _harvestService = harvestService;
         _logger = logger;
     }
 
-    [HttpGet(ApiRoutes.HarvestDataBySeason)]
+    [HttpGet(CoreApiRoutes.HarvestDataBySeason)]
     public IQueryResult GetHarvestInfo(int season)
     {
         _logger.Information("GetHarvestDataBySeason");
@@ -33,7 +33,7 @@ public class HarvestController : ControllerBase
         return new QueryResult<List<HarvestViewModel>> { Data = list, Status = new SuccessResult() };
     }
 
-    [HttpGet(ApiRoutes.HarvestDataByCalendar)]
+    [HttpGet(CoreApiRoutes.HarvestDataByCalendar)]
     public IQueryResult GetHarvestDataByCalendar(int calendar)
     {
         _logger.Information("HarvestDataByCalendar");
@@ -42,7 +42,7 @@ public class HarvestController : ControllerBase
         return new QueryResult<List<HarvestViewModel>> { Data = list, Status = new SuccessResult() };
     }
 
-    [HttpGet(ApiRoutes.HarvestYearTotalBySeason)]
+    [HttpGet(CoreApiRoutes.HarvestYearTotalBySeason)]
     public int GetHarvestYearTotal(int season)
     {
         _logger.Information("GetHarvestYearTotalBySeason");
@@ -51,7 +51,7 @@ public class HarvestController : ControllerBase
         return total;
     }
 
-    [HttpGet(ApiRoutes.HarvestYearTotalByCalendar)]
+    [HttpGet(CoreApiRoutes.HarvestYearTotalByCalendar)]
     public int GetHarvestYearTotalCalendar(int calendar)
     {
         _logger.Information("GetHarvestYearTotalByCalendar");
@@ -60,7 +60,7 @@ public class HarvestController : ControllerBase
         return total;
     }
 
-    [HttpGet(ApiRoutes.HarvestStatusTotal)]
+    [HttpGet(CoreApiRoutes.HarvestStatusTotal)]
     public int GetHarvestStatusTotal(string status)
     {
         _logger.Information("GetHarvestStatusTotal");
@@ -68,12 +68,7 @@ public class HarvestController : ControllerBase
 
         return total;
     }
-
-    [HttpGet(ApiRoutes.HarvestWeeks, Name = "GetHarvestWeeks")]
-    public IEnumerable<SearchDto> GetHarvestWeeks()
-    {
-        return _ordersService.GetInvoiceWeeksListForYear();
-    }
+    
 
 
 

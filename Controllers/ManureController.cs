@@ -23,7 +23,7 @@ public class ManureController : ControllerBase
     }
 
 
-    [HttpGet(ApiRoutes.ManureForMonth, Name = "ManureForMonth")]
+    [HttpGet(CoreApiRoutes.ManureForMonth, Name = "ManureForMonth")]
     public IQueryResult GetManureForMonth(MonthEnum month)
     {
         _logger.Information("GetManureForMonth");
@@ -31,7 +31,7 @@ public class ManureController : ControllerBase
         return new QueryResult<List<ManureLoadViewModel>> { Data = _manureService.GetManureLoadForMonth(month), Status = new SuccessResult() };
     }
 
-    [HttpGet(ApiRoutes.ManureAllMonths, Name = "ManureAllMonths")]
+    [HttpGet(CoreApiRoutes.ManureAllMonths, Name = "ManureAllMonths")]
     public IQueryResult GetManureAllMonths()
     {
         _logger.Information("GetManureAllMonths");
@@ -41,7 +41,7 @@ public class ManureController : ControllerBase
         return new QueryResult<List<ManureLoadViewModel>> { Data = list, Status = new SuccessResult() };
     }
 
-    [HttpGet(ApiRoutes.ManureForFarm, Name = "ManureForFarm")]
+    [HttpGet(CoreApiRoutes.ManureForFarm, Name = "ManureForFarm")]
     public IQueryResult GetManureForFarm(string farm)
     {
         _logger.Information("GetManureForFarm");
@@ -53,7 +53,7 @@ public class ManureController : ControllerBase
         return new QueryResult<List<ManureLoadViewModel>> { Data = list, Status = new SuccessResult() };
     }
 
-    [HttpGet(ApiRoutes.ManureFarms, Name = "ManureFarms")]
+    [HttpGet(CoreApiRoutes.ManureFarms, Name = "ManureFarms")]
     public IQueryResult GetManureFarms()
     {
         return new QueryResult<List<string>> { Data = GetFarmsList(), Status = new SuccessResult() };
@@ -69,7 +69,7 @@ public class ManureController : ControllerBase
         return farmsList.Distinct().ToList();
     }
 
-    [HttpGet(ApiRoutes.ManureFarmsLoads, Name = "ManureFarmsLoads")]
+    [HttpGet(CoreApiRoutes.ManureFarmsLoads, Name = "ManureFarmsLoads")]
     public IQueryResult GetManureFarmLoads()
     {
         var farmLoads = new Dictionary<string, int>();

@@ -215,6 +215,7 @@ public static class Utils
         var weeksList = new List<SearchDto>();
 
         var firstMonday = GetFirstMondayOfYear(year);
+        firstMonday = firstMonday.AddDays(-2); //TODO: need to properly start with either Saturday or Monday based on year
         var weekNumber = 1;
         var nextMonday = AddToWeeksList(weeksList, weekNumber, firstMonday);
         while (nextMonday.Year == DateTime.Today.Year)

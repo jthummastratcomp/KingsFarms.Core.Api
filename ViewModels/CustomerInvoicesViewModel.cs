@@ -27,5 +27,6 @@
 
         public DateTime LastPaymentDate { get; set; }
         public int CustomerId { get; set; }
+        public string Memo { get; set; }
     }
 }

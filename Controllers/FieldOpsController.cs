@@ -24,7 +24,7 @@ public class FieldOpsController : ControllerBase
         _logger = logger;
     }
 
-   [HttpGet(ApiRoutes.BedInfoHarvestFieldOps)]
+   [HttpGet(CoreApiRoutes.BedInfoHarvestFieldOps)]
     public async Task<IQueryResult> GetBedInfoWithHarvestAndFieldOps() //todo split to 3 separate methods
     {
         _logger.Information("GetBedInfoWithHarvestAndFieldOps");
@@ -33,7 +33,7 @@ public class FieldOpsController : ControllerBase
         return new QueryResult<List<BedHarvestFieldOpsViewModel>> { Data = list, Status = new SuccessResult() };
     }
 
-    [HttpGet(ApiRoutes.FieldOperations)]
+    [HttpGet(CoreApiRoutes.FieldOperations)]
     public async Task<IQueryResult> GetFieldOperations()
     {
         _logger.Information("GetFieldOperations");

@@ -16,7 +16,7 @@ public class DashboardController : ControllerBase
     }
 
 
-    [HttpGet(ApiRoutes.Dashboard)]
+    [HttpGet(CoreApiRoutes.Dashboard)]
     public List<DashboardViewModel> GetDashboard()
     {
         _logger.Information("GetDashboard");

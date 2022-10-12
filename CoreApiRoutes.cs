@@ -1,6 +1,6 @@
 namespace KingsFarms.Core.Api;
 
-public static class ApiRoutes
+public static class CoreApiRoutes
 {
     public const string ReportsServiceUrl = "api/admin/reportsServiceUrl";
 
@@ -17,8 +17,11 @@ public static class ApiRoutes
     public const string CustomerYearlyShipmentsBills = "api/customer/{customerId}/yearlyShipmentsBills";
     public const string CustomerWeeklyShipments = "api/customer/{customerId}/weeklyShipments";
     public const string AllCustomersWeeklyShipmentsForGraph = "shipments/weekly/graph";
-    
-    public const string LoadInvoicesForWeek = "api/invoices/{week}/load";
+    public const string GetCustomersFromOrdersFile = "api/customers/file";
+
+    //INVOICES
+    public const string LoadInvoicesForWeek = "api/orders/{week}/{company}/load";
+    public const string GetInvoiceWeeksListForYear = "api/orders/weeks/{year}";
     public const string GenerateInvoicesForWeek = "api/invoices/{week}/generate";
 
     //ADMIN
@@ -59,5 +62,7 @@ public static class ApiRoutes
     public const string ValidatedAddress = "api/fedex/validate/address";
     public const string CreateShipment = "api/fedex/shipment/create";
     public const string CreateShipmentRequest = "api/fedex/shipment/createrequest";
-    
+
+    //USDA
+    public const string UpdateUsdaInfo = "api/usda/inspection/update";
 }
