@@ -25,7 +25,7 @@ public class BedController : ControllerBase
 
    
 
-    [HttpGet(ApiRoutes.BedInfo, Name = "GetBedsInfo")]
+    [HttpGet(CoreApiRoutes.BedInfo, Name = "GetBedsInfo")]
     public IQueryResult GetBedsInfo()
     {
         _logger.Information("GetBedInfo");
