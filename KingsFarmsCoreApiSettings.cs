@@ -14,6 +14,7 @@ public class KingsFarmsCoreApiSettings
     public string azStoreConnStr { get; set; }
     public string azStoreContName { get; set; }
     public string weeklyOrdersFile { get; set; }
+    public string weeklyOrdersUsdaFile { get; set; }
     public string harvestFile { get; set; }
     public string horseManureFile { get; set; }
     public string fieldOperationsFile { get; set; }

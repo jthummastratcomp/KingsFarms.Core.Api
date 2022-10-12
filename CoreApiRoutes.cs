@@ -62,5 +62,7 @@ public static class CoreApiRoutes
     public const string ValidatedAddress = "api/fedex/validate/address";
     public const string CreateShipment = "api/fedex/shipment/create";
     public const string CreateShipmentRequest = "api/fedex/shipment/createrequest";
-    
+
+    //USDA
+    public const string UpdateUsdaInfo = "api/usda/inspection/update";
 }
