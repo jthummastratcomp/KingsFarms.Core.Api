@@ -2,6 +2,7 @@ namespace KingsFarms.Core.Api;
 
 public class KingsFarmsCoreApiSettings
 {
+    public string azStoreLotAssignmentsContainer { get; set; }
     public string seqLogUrl { get; set; }
     public string logFile { get; set; }
 

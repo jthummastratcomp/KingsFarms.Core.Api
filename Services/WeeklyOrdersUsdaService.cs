@@ -1,0 +1,74 @@
+﻿using System.Data;
+using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Specialized;
+using KingsFarms.Core.Api.Enums;
+using KingsFarms.Core.Api.Helpers;
+using KingsFarms.Core.Api.Mappers;
+using KingsFarms.Core.Api.Services.Interfaces;
+using KingsFarms.Core.Api.ViewModels;
+using OfficeOpenXml;
+
+namespace KingsFarms.Core.Api.Services;
+
+public class WeeklyOrdersUsdaService : IWeeklyOrdersUsdaService
+{
+    private readonly string _azStoreConnStr;
+    private readonly string _azStoreContName;
+    private readonly IHarvestService _harvestService;
+    private readonly IPrepareUsdaInvoiceService _prepareUsdaInvoiceService;
+    private readonly string _weeklyOrdersUsdaFile;
+
+    public WeeklyOrdersUsdaService(string azStoreConnStr, string azStoreContName, string weeklyOrdersUsdaFile,  IPrepareUsdaInvoiceService prepareUsdaInvoiceService)
+    {
+        _azStoreConnStr = azStoreConnStr;
+        _azStoreContName = azStoreContName;
+        _weeklyOrdersUsdaFile = weeklyOrdersUsdaFile;
+        _prepareUsdaInvoiceService = prepareUsdaInvoiceService;
+    }
+
+   
+    public List<CustomerInvoicesViewModel> LoadInvoicesForWeek(string? week, CompanyEnum company)
+    {
+        var list = new List<CustomerInvoicesViewModel>();
+
+        var weekDate = Utils.ParseToDateTime(week);
+        if (!weekDate.HasValue) return list;
+
+        var weekOfYear = GetWeekOfYearForInvoicesFromSheet(weekDate.GetValueOrDefault());
+        var currentColumnInDt = weekOfYear + 2;
+
+        var year = weekDate.GetValueOrDefault().Year;
+
+        var client = new BlobServiceClient(_azStoreConnStr);
+        var container = client.GetBlobContainerClient(_azStoreContName);
+        var blob = container.GetBlockBlobClient(_weeklyOrdersUsdaFile);
+
+        DataTable dtKings, dtMansi, dtCustomer;
+
+        using (var memoryStream = new MemoryStream())
+        {
+            blob.DownloadTo(memoryStream);
+
+            using var package = new ExcelPackage(memoryStream);
+
+            var kingsTab = package.Workbook.Worksheets["KINGS"];
+            var mansiTab = package.Workbook.Worksheets["MANSI"];
+            var customerTab = package.Workbook.Worksheets["ALL CUSTOMERS"];
+
+            dtKings = EpplusUtils.ExcelPackageToDataTable(kingsTab);
+            dtMansi = EpplusUtils.ExcelPackageToDataTable(mansiTab);
+            dtCustomer = EpplusUtils.ExcelPackageToDataTable(customerTab);
+        }
+
+        return _prepareUsdaInvoiceService.CustomerInvoicesViewModels(company, dtCustomer, dtKings, dtMansi, list, year, weekDate.GetValueOrDefault(), currentColumnInDt);
+    }
+    
+    private static int GetWeekOfYearForInvoicesFromSheet(DateTime weekDate)
+    {
+        var weekOfYear = Utils.GetWeekOfYear(weekDate);
+        var firstMondayOfYear = Utils.GetFirstMondayOfYear(DateTime.Today.Year);
+        var firstWeekOfYear = Utils.GetWeekOfYear(firstMondayOfYear);
+        if (firstWeekOfYear > 1) weekOfYear -= 1;
+        return weekOfYear;
+    }
+}

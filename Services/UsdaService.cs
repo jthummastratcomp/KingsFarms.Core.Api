@@ -1,155 +1,96 @@
-﻿using System.Data;
+﻿using System.Drawing;
 using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
-using KingsFarms.Core.Api.Enums;
-using KingsFarms.Core.Api.Helpers;
 using KingsFarms.Core.Api.Services.Interfaces;
 using KingsFarms.Core.Api.ViewModels;
 using OfficeOpenXml;
+using OfficeOpenXml.Style;
+using ILogger = Serilog.ILogger;
 
 namespace KingsFarms.Core.Api.Services;
 
 public class UsdaService : IUsdaService
 {
-    private readonly Serilog.ILogger _logger;
     private readonly string _azStoreConnStr;
     private readonly string _azStoreContName;
+    private readonly ILogger _logger;
     private readonly string _weeklyOrdersUsdaFile;
 
-    public UsdaService(Serilog.ILogger logger, string azStoreConnStr, string azStoreContName, string weeklyOrdersUsdaFile)
+    public UsdaService(ILogger logger, string azStoreConnStr, string azStoreContName)
     {
         _logger = logger;
         _azStoreConnStr = azStoreConnStr;
         _azStoreContName = azStoreContName;
-        _weeklyOrdersUsdaFile = weeklyOrdersUsdaFile;
-    }
-    
-    //[CacheTimeout]
-    public List<BedHarvestFieldOpsViewModel> GetBedsInfo()
-    {
-        var list = new List<BedHarvestFieldOpsViewModel>();
-
-        var client = new BlobServiceClient(_azStoreConnStr);
-        var container = client.GetBlobContainerClient(_azStoreContName);
-        var blob = container.GetBlockBlobClient(_weeklyOrdersUsdaFile);
-
-        using (var memoryStream = new MemoryStream())
-        {
-            blob.DownloadTo(memoryStream);
-
-            using (var package = new ExcelPackage(memoryStream))
-            {
-                var harvest20_21 = package.Workbook.Worksheets["2020_2021_HARVEST"];
-                var harvest21_22 = package.Workbook.Worksheets["2021_2022_HARVEST"];
-                var harvest22_23 = package.Workbook.Worksheets["2022_2023_HARVEST"];
-
-                var dtHarvest20_21 = EpplusUtils.ExcelPackageToDataTable(harvest20_21);
-                var dtHarvest21_22 = EpplusUtils.ExcelPackageToDataTable(harvest21_22);
-                var dtHarvest22_23 = EpplusUtils.ExcelPackageToDataTable(harvest22_23);
-
-                var dataRow = dtHarvest22_23.Rows[1];
-                 
-                for (var col = 5; col < 56; col++)
-                {
-                    var bedNumber = col - 4;
-                    var plantsCount = Utils.ParseToInteger(dataRow[col].ToString());
-                    list.Add(new BedHarvestFieldOpsViewModel
-                    {
-                        Id = $"Bed.{bedNumber}",
-                        BedNumber = $"Bed {bedNumber}",
-                        PlantsCount = plantsCount,
-                        Section = GetBedSection(bedNumber),
-                        PlantedDate = GetPlantedDate(bedNumber),
-                        HarvestQty20_21 = bedNumber > 28 ? 0 : GetHarvestQuantityForBed(dtHarvest20_21, col),
-                        HarvestQty21_22 = bedNumber > 51 ? 0 : GetHarvestQuantityForBed(dtHarvest21_22, col),
-                        HarvestQty22_23 = bedNumber > 51 ? 0 : GetHarvestQuantityForBed(dtHarvest22_23, col),
-                        
-                    });
-                }
-
-                var total = new BedHarvestFieldOpsViewModel()
-                {
-                    Id = "Total",
-                    BedNumber = "Total",
-                    PlantsCount = list.Sum(x=>x.PlantsCount),
-                    Section = GetBedSection(0),
-                    HarvestQty20_21 = list.Sum(x=>x.HarvestQty20_21),
-                    HarvestQty21_22 = list.Sum(x => x.HarvestQty21_22),
-                    HarvestQty22_23 = list.Sum(x => x.HarvestQty22_23)
-
-                };
-                list.Add(total);
-            }
-        }
-        _logger.Information("GetBedInfo returning {@Count}", list.Count);
-        return list;
     }
 
-
-    //[CacheTimeout]
-    public List<BedHarvestFieldOpsViewModel> GetBedsInfoGrouped()
-    {
-        var groupedList = GetBedsGroupedBySection(GetBedsInfo());
-
-        var list = new List<BedHarvestFieldOpsViewModel>();
-
-        foreach (var byYearGroup in groupedList)
-            list.Add(new BedHarvestFieldOpsViewModel
-            {
-                Section = byYearGroup.Key,
-                BedNumber = byYearGroup.Count().ToString(),
-                PlantsCount = byYearGroup.Sum(x => x.PlantsCount),
-                PlantedDate = byYearGroup.First().PlantedDate,
-                HarvestQty20_21 = byYearGroup.Sum(x => x.HarvestQty20_21),
-                HarvestQty21_22 = byYearGroup.Sum(x => x.HarvestQty21_22),
-                HarvestQty22_23 = byYearGroup.Sum(x => x.HarvestQty22_23)
-            });
-
-        _logger.Information("GetBedInfoGrouped returning {@Count}", list.Count);
-        return list.OrderBy(x => x.Section).ToList();
-    }
-
-    private static IEnumerable<IGrouping<SectionEnum, BedHarvestFieldOpsViewModel>> GetBedsGroupedBySection(IEnumerable<BedHarvestFieldOpsViewModel> list)
-    {
-        return from bed in list
-            group bed by bed.Section
-            into listBySection
-            orderby listBySection.Key
-            select listBySection;
-    }
-
-    private static SectionEnum GetBedSection(int bedNumber)
-    {
-        if (bedNumber >= 1 && bedNumber <= 11) return SectionEnum.MidWest;
-        if (bedNumber >= 12 && bedNumber <= 22) return SectionEnum.SouthWest;
-        if (bedNumber >= 23 && bedNumber <= 28) return SectionEnum.SouthEastOne;
-        if (bedNumber >= 29 && bedNumber <= 37) return SectionEnum.SouthEastTwo;
-        if (bedNumber >= 38 && bedNumber <= 45) return SectionEnum.MidEastTwo;
-        if (bedNumber >= 46 && bedNumber <= 51) return SectionEnum.MidEastOne;
-        return SectionEnum.None;
-    }
-
-    private static DateTime GetPlantedDate(int bedNumber)
-    {
-        if (bedNumber >= 1 && bedNumber <= 11) return new DateTime(2018, 9, 1);
-        if (bedNumber >= 12 && bedNumber <= 22) return new DateTime(2018, 9, 1);
-        if (bedNumber >= 23 && bedNumber <= 28) return new DateTime(2019, 10, 1);
-        if (bedNumber >= 29 && bedNumber <= 37) return new DateTime(2020, 12, 1);
-        if (bedNumber >= 38 && bedNumber <= 45) return new DateTime(2021, 1, 1);
-        if (bedNumber >= 46 && bedNumber <= 51) return new DateTime(2021, 1, 1);
-        return DateTime.MinValue;
-    }
-        
-    private static int GetHarvestQuantityForBed(DataTable table, int bedNumber)
-    {
-        var qty = 0;
-        for (var row = 5; row < 70; row++) qty += Utils.ParseToInteger(table.Rows[row][bedNumber].ToString());
-
-        return qty;
-    }
 
     public string UpdateUsdaInfo(UsdaBedLotInfoViewModel viewModel)
     {
-        throw new NotImplementedException();
+        var day = viewModel.Week.ToString("yyyyMMdd");
+        var fileName = $"{day}-lot-assign.xlsx";
+
+        var client = new BlobServiceClient(_azStoreConnStr);
+        var container = client.GetBlobContainerClient(_azStoreContName);
+
+        container.CreateIfNotExists(PublicAccessType.Blob);
+
+        var blob = container.GetBlockBlobClient(fileName);
+
+        using var package = new ExcelPackage();
+
+        var lotTab = package.Workbook.Worksheets.Add("Lot");
+
+        lotTab.Cells["A1"].Value = "Lot Assignments";
+        lotTab.Cells["A1:E1"].Merge = true;
+        lotTab.Cells["A1:E1"].Style.Font.Bold = true;
+        lotTab.Cells["A1:E1"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+        lotTab.Cells["A1:E1"].Style.Font.Size = 25;
+        lotTab.Cells["A1:E1"].EntireRow.Height = 35;
+
+        lotTab.Cells["A3"].Value = viewModel.Week.ToString("MM/dd/yyyy");
+        lotTab.Cells["A3:E3"].Merge = true;
+        lotTab.Cells["A3:E3"].Style.Font.Bold = true;
+        lotTab.Cells["A3:E3"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+        lotTab.Cells["A3:E3"].Style.Font.Size = 16;
+        lotTab.Cells["A3:E3"].EntireRow.Height = 25;
+
+        lotTab.Cells["A5"].Value = "CUSTOMER";
+        lotTab.Cells["A5"].EntireColumn.Width = 15;
+        lotTab.Cells["B5"].Value = "HARVEST DT";
+        lotTab.Cells["B5"].EntireColumn.Width = 15;
+        lotTab.Cells["B5"].EntireColumn.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+        lotTab.Cells["C5"].Value = "BED #";
+        lotTab.Cells["C5"].EntireColumn.Width = 15;
+        lotTab.Cells["C5"].EntireColumn.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+        lotTab.Cells["D5"].Value = "LOT #";
+        lotTab.Cells["D5"].EntireColumn.Width = 15;
+        lotTab.Cells["D5"].EntireColumn.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+        lotTab.Cells["E5"].Value = "QUANTITY";
+        lotTab.Cells["E5"].EntireColumn.Width = 15;
+        lotTab.Cells["E5"].EntireColumn.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+        lotTab.Cells["A5:E5"].Style.Font.Bold = true;
+        lotTab.Cells["A5:E5"].Style.Font.Size = 12;
+        lotTab.Cells["A5:E5"].Style.Fill.PatternType = ExcelFillStyle.Solid;
+        lotTab.Cells["A5:E5"].Style.Fill.BackgroundColor.SetColor(Color.Bisque);
+
+        int row = 6;
+        foreach (var lotInfo in viewModel.LineItems)
+        {
+            lotTab.Cells[$"A{row}"].Value = lotInfo.Customer;
+            lotTab.Cells[$"B{row}"].Value = lotInfo.HarvestDate.ToString("MM/dd/yyyy");
+            lotTab.Cells[$"C{row}"].Value = lotInfo.Bed;
+            lotTab.Cells[$"D{row}"].Value = lotInfo.Lots;
+            lotTab.Cells[$"E{row}"].Value = lotInfo.Quantity;
+            row++;
+        }
+        
+
+        using var stream = blob.OpenWrite(true);
+
+        package.SaveAs(stream);
+
+
+        return string.Empty;
     }
 }

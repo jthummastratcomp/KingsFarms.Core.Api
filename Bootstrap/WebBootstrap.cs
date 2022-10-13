@@ -29,6 +29,7 @@ namespace KingsFarms.Core.Api.Bootstrap
 
             var azStoreConnStr = _hotTowelCoreApiSettings.azStoreConnStr;
             var azStoreContName = _hotTowelCoreApiSettings.azStoreContName;
+            var azStoreLotAssignmentsContainer = _hotTowelCoreApiSettings.azStoreLotAssignmentsContainer;
             var weeklyOrdersFile = _hotTowelCoreApiSettings.weeklyOrdersFile;
             var weeklyOrdersUsdaFile = _hotTowelCoreApiSettings.weeklyOrdersUsdaFile;
             var harvestFile = _hotTowelCoreApiSettings.harvestFile;
@@ -45,6 +46,11 @@ namespace KingsFarms.Core.Api.Bootstrap
                 .WithParameter("azStoreConnStr", azStoreConnStr)
                 .WithParameter("azStoreContName", azStoreContName)
                 .WithParameter("weeklyOrdersFile", weeklyOrdersFile);
+
+            builder.RegisterType<WeeklyOrdersUsdaService>().As<IWeeklyOrdersUsdaService>()
+                .WithParameter("azStoreConnStr", azStoreConnStr)
+                .WithParameter("azStoreContName", azStoreContName)
+                .WithParameter("weeklyOrdersUsdaFile", weeklyOrdersUsdaFile);
 
             builder.RegisterType<HarvestService>().As<IHarvestService>()
                 .WithParameter("azStoreConnStr", azStoreConnStr)
@@ -68,8 +74,7 @@ namespace KingsFarms.Core.Api.Bootstrap
 
             builder.RegisterType<UsdaService>().As<IUsdaService>()
                 .WithParameter("azStoreConnStr", azStoreConnStr)
-                .WithParameter("azStoreContName", azStoreContName)
-                .WithParameter("weeklyOrdersUsdaFile", weeklyOrdersUsdaFile);
+                .WithParameter("azStoreContName", azStoreLotAssignmentsContainer);
 
             builder.RegisterType<CosmosDbService>().As<ICosmosDbService>()
                 .WithParameter("cosmosDbUri", cosmosDbUri)
@@ -94,10 +99,12 @@ namespace KingsFarms.Core.Api.Bootstrap
             builder.RegisterType<FedexShipmentService>().As<IFedexShipmentService>()
                 .WithParameter("url", fedexUrl);
 
-            builder.RegisterType<PrepareInvoiceService>().As<IPrepareInvoiceService>();
+            //builder.RegisterType<PrepareInvoiceService>().As<IPrepareInvoiceService>();
+            builder.RegisterType<PrepareUsdaInvoiceService>().As<IPrepareUsdaInvoiceService>();
             builder.RegisterType<InvoiceNumberGeneratorService>().As<IInvoiceNumberGeneratorService>();
-            builder.RegisterType<UsdaQueueService>().As<IUsdaQueueService>();
-            builder.RegisterType<UsdaMemoService>().As<IUsdaMemoService>();
+            //builder.RegisterType<UsdaQueueService>().As<IUsdaQueueService>();
+            //builder.RegisterType<UsdaMemoService>().As<IUsdaMemoService>();
+            builder.RegisterType<UsdaNewMemoService>().As<IUsdaMemoService>();
             builder.RegisterType<ApplyInvoiceInfoService>().As<IApplyInvoiceInfoService>();
             builder.RegisterType<InvoiceInfoService>().As<IInvoiceInfoService>();
 

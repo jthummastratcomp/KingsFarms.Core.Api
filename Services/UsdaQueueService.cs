@@ -6,7 +6,7 @@ namespace KingsFarms.Core.Api.Services;
 
 public class UsdaQueueService : IUsdaQueueService
 {
-    public Queue<SearchDto> GetQueues( DateTime weekDate, List<HarvestViewModel> harvestList, List<PrepareInvoicesViewModel> prepList)
+    public Queue<SearchDto>? GetQueues( DateTime weekDate, List<HarvestViewModel> harvestList, List<PrepareInvoicesViewModel> prepList)
     {
         var bedPools = GetBedPoolsFromHarvest(weekDate, harvestList);
 
@@ -36,13 +36,13 @@ public class UsdaQueueService : IUsdaQueueService
         return list;
     }
 
-    private Queue<SearchDto> GetBoxLotQueues(Dictionary<string, int> bedPools, List<PrepareInvoicesViewModel> prepList)
+    private Queue<SearchDto>? GetBoxLotQueues(Dictionary<string, int> bedPools, List<PrepareInvoicesViewModel> prepList)
     {
         return Utils.HasRows(bedPools) ? GetBoxLots(bedPools, prepList) : new Queue<SearchDto>();
     }
 
 
-    private static Queue<SearchDto> GetBoxLots(Dictionary<string, int> pools, List<PrepareInvoicesViewModel> prepList)
+    private static Queue<SearchDto>? GetBoxLots(Dictionary<string, int> pools, List<PrepareInvoicesViewModel> prepList)
     {
         var box12Total = prepList.Where(x => x.BoxSize == 12).Select(x => x.WeekQty).Sum() / 12;
         var box10Total = prepList.Where(x => x.BoxSize == 10).Select(x => x.WeekQty).Sum() / 10;

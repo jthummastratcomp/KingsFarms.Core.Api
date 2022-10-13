@@ -13,7 +13,7 @@ public class ApplyInvoiceInfoService : IApplyInvoiceInfoService
         _memoService = memoService;
         _invoiceInfoService = invoiceInfoService;
     }
-    public List<CustomerInvoicesViewModel> GetCustomerInvoicesViewModels(List<PrepareInvoicesViewModel> prepList, List<CustomerDashboardViewModel> customerList, List<SearchDto> invoiceNumbersList, Queue<SearchDto> queue)
+    public List<CustomerInvoicesViewModel> GetCustomerInvoicesViewModels(List<PrepareInvoicesViewModel> prepList, List<CustomerDashboardViewModel> customerList, List<SearchDto> invoiceNumbersList, Queue<SearchDto>? queue)
     {
         var list = new List<CustomerInvoicesViewModel>();
         foreach (var viewModel in prepList)

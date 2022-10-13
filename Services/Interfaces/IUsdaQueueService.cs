@@ -5,5 +5,5 @@ namespace KingsFarms.Core.Api.Services.Interfaces;
 
 public interface IUsdaQueueService
 {
-    Queue<SearchDto> GetQueues(DateTime weekDate, List<HarvestViewModel> harvestList, List<PrepareInvoicesViewModel> prepList);
+    Queue<SearchDto>? GetQueues(DateTime weekDate, List<HarvestViewModel> harvestList, List<PrepareInvoicesViewModel> prepList);
 }

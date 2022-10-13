@@ -11,10 +11,12 @@ public class WeeklyOrdersController : ControllerBase
 {
     private readonly ILogger _logger;
     private readonly IWeeklyOrdersService _ordersService;
+    private readonly IWeeklyOrdersUsdaService _ordersUsdaService;
 
-    public WeeklyOrdersController(IWeeklyOrdersService ordersService, IHarvestService harvestService, ILogger logger)
+    public WeeklyOrdersController(IWeeklyOrdersService ordersService, IWeeklyOrdersUsdaService ordersUsdaService, ILogger logger)
     {
         _ordersService = ordersService;
+        _ordersUsdaService = ordersUsdaService;
         _logger = logger;
     }
 
@@ -27,7 +29,8 @@ public class WeeklyOrdersController : ControllerBase
     [HttpGet(CoreApiRoutes.LoadInvoicesForWeek)]
     public List<CustomerInvoicesViewModel> LoadInvoicesForWeek(string week, CompanyEnum company)
     {
-        return _ordersService.LoadInvoicesForWeek(week, company);
+        //return _ordersService.LoadInvoicesForWeek(week, company);
+        return _ordersUsdaService.LoadInvoicesForWeek(week, company);
     }
     
 }
