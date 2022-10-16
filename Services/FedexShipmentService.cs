@@ -39,6 +39,5 @@ public class FedexShipmentService : IFedexShipmentService
 
         var des = JsonConvert.DeserializeObject<CreateShipmentResponse>(resp.Content);
         return des;
-
     }
 }

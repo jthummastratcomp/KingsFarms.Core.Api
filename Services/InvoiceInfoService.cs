@@ -5,7 +5,7 @@ namespace KingsFarms.Core.Api.Services;
 
 public class InvoiceInfoService : IInvoiceInfoService
 {
-    public  CustomerInvoicesViewModel PrepareInvoice(DateTime weekDate, int weekQty, CustomerDashboardViewModel viewModel, string newInvoiceNumber, string usdaMemo)
+    public CustomerInvoicesViewModel PrepareInvoice(DateTime weekDate, int weekQty, CustomerDashboardViewModel viewModel, string newInvoiceNumber, string usdaMemo)
     {
         var model = new CustomerInvoicesViewModel
         {

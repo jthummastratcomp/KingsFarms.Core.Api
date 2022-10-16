@@ -21,6 +21,8 @@ public static class CoreApiRoutes
 
     //INVOICES
     public const string LoadInvoicesForWeek = "api/orders/{week}/{company}/load";
+    public const string LoadInvoicesForWeekJay = "api/orders/{week}/{company}/loadJay";
+    public const string LoadInvoicesForWeekLots = "api/orders/{week}/{company}/loadLots";
     public const string GetInvoiceWeeksListForYear = "api/orders/weeks/{year}";
     public const string GenerateInvoicesForWeek = "api/invoices/{week}/generate";
 
@@ -64,5 +66,8 @@ public static class CoreApiRoutes
     public const string CreateShipmentRequest = "api/fedex/shipment/createrequest";
 
     //USDA
+    public const string GetUsdaInfo = "api/usda/inspection/get";
     public const string UpdateUsdaInfo = "api/usda/inspection/update";
+    public const string CreateUsdaInfo = "api/usda/inspection/create";
+    public const string DeleteUsdaInfo = "api/usda/inspection/delete";
 }

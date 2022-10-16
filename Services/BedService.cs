@@ -6,24 +6,25 @@ using KingsFarms.Core.Api.Helpers;
 using KingsFarms.Core.Api.Services.Interfaces;
 using KingsFarms.Core.Api.ViewModels;
 using OfficeOpenXml;
+using ILogger = Serilog.ILogger;
 
 namespace KingsFarms.Core.Api.Services;
 
 public class BedService : IBedService
 {
-    private readonly Serilog.ILogger _logger;
     private readonly string _azStoreConnStr;
     private readonly string _azStoreContName;
     private readonly string _harvestFile;
+    private readonly ILogger _logger;
 
-    public BedService(Serilog.ILogger logger, string azStoreConnStr, string azStoreContName, string harvestFile)
+    public BedService(ILogger logger, string azStoreConnStr, string azStoreContName, string harvestFile)
     {
         _logger = logger;
         _azStoreConnStr = azStoreConnStr;
         _azStoreContName = azStoreContName;
         _harvestFile = harvestFile;
     }
-    
+
     //[CacheTimeout]
     public List<BedHarvestFieldOpsViewModel> GetBedsInfo()
     {
@@ -48,7 +49,7 @@ public class BedService : IBedService
                 var dtHarvest22_23 = EpplusUtils.ExcelPackageToDataTable(harvest22_23);
 
                 var dataRow = dtHarvest22_23.Rows[1];
-                 
+
                 for (var col = 5; col < 56; col++)
                 {
                     var bedNumber = col - 4;
@@ -62,25 +63,24 @@ public class BedService : IBedService
                         PlantedDate = GetPlantedDate(bedNumber),
                         HarvestQty20_21 = bedNumber > 28 ? 0 : GetHarvestQuantityForBed(dtHarvest20_21, col),
                         HarvestQty21_22 = bedNumber > 51 ? 0 : GetHarvestQuantityForBed(dtHarvest21_22, col),
-                        HarvestQty22_23 = bedNumber > 51 ? 0 : GetHarvestQuantityForBed(dtHarvest22_23, col),
-                        
+                        HarvestQty22_23 = bedNumber > 51 ? 0 : GetHarvestQuantityForBed(dtHarvest22_23, col)
                     });
                 }
 
-                var total = new BedHarvestFieldOpsViewModel()
+                var total = new BedHarvestFieldOpsViewModel
                 {
                     Id = "Total",
                     BedNumber = "Total",
-                    PlantsCount = list.Sum(x=>x.PlantsCount),
+                    PlantsCount = list.Sum(x => x.PlantsCount),
                     Section = GetBedSection(0),
-                    HarvestQty20_21 = list.Sum(x=>x.HarvestQty20_21),
+                    HarvestQty20_21 = list.Sum(x => x.HarvestQty20_21),
                     HarvestQty21_22 = list.Sum(x => x.HarvestQty21_22),
                     HarvestQty22_23 = list.Sum(x => x.HarvestQty22_23)
-
                 };
                 list.Add(total);
             }
         }
+
         _logger.Information("GetBedInfo returning {@Count}", list.Count);
         return list;
     }
@@ -139,7 +139,7 @@ public class BedService : IBedService
         if (bedNumber >= 46 && bedNumber <= 51) return new DateTime(2021, 1, 1);
         return DateTime.MinValue;
     }
-        
+
     private static int GetHarvestQuantityForBed(DataTable table, int bedNumber)
     {
         var qty = 0;
@@ -147,5 +147,4 @@ public class BedService : IBedService
 
         return qty;
     }
-                             
 }

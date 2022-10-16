@@ -3,7 +3,7 @@ using KingsFarms.Core.Api.ViewModels;
 
 namespace KingsFarms.Core.Api.Services.Interfaces;
 
-public interface IWeeklyOrdersUsdaService
+public interface IWeeklyOrdersUsdaLotsService
 {
     List<CustomerInvoicesViewModel> LoadInvoicesForWeek(string? week, CompanyEnum company);
 }

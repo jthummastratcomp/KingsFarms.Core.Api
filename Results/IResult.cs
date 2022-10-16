@@ -1,10 +1,9 @@
-﻿namespace KingsFarms.Core.Api.Results
+﻿namespace KingsFarms.Core.Api.Results;
+
+public interface IResult
 {
-    public interface IResult
-    {
-        int Id { get; }
-        string Message { get; }
-        object Data { get; }
-        ResultType ResultType { get; }
-    }
+    int Id { get; }
+    string Message { get; }
+    object Data { get; }
+    ResultType ResultType { get; }
 }

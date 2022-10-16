@@ -1,14 +1,13 @@
-﻿namespace KingsFarms.Core.Api.ViewModels
-{
-    public class AddressViewModel
-    {
-        public string Display => $"{FirstLineDisplay} {LastLineDisplay}";
-        public string? FirstLineDisplay => Street;
-        public string LastLineDisplay => $"{City}, {State} {Zip}";
+﻿namespace KingsFarms.Core.Api.ViewModels;
 
-        public string? Street { get; set; }
-        public string? City { get; set; }
-        public string? State { get; set; }
-        public string? Zip { get; set; }
-    }
+public class AddressViewModel
+{
+    public string Display => $"{FirstLineDisplay} {LastLineDisplay}";
+    public string? FirstLineDisplay => Street;
+    public string LastLineDisplay => $"{City}, {State} {Zip}";
+
+    public string? Street { get; set; }
+    public string? City { get; set; }
+    public string? State { get; set; }
+    public string? Zip { get; set; }
 }

@@ -6,5 +6,4 @@ public class FedExLabelSpecification
 {
     [JsonProperty("labelStockType")] public string? StockType { get; init; }
     [JsonProperty("imageType")] public string? ImageType { get; init; }
-    
 }

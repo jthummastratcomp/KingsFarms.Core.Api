@@ -5,14 +5,15 @@ namespace KingsFarms.Core.Api.Services;
 
 public class ApplyInvoiceInfoService : IApplyInvoiceInfoService
 {
-    private readonly IUsdaMemoService _memoService;
     private readonly IInvoiceInfoService _invoiceInfoService;
+    private readonly IUsdaMemoService _memoService;
 
     public ApplyInvoiceInfoService(IUsdaMemoService memoService, IInvoiceInfoService invoiceInfoService)
     {
         _memoService = memoService;
         _invoiceInfoService = invoiceInfoService;
     }
+
     public List<CustomerInvoicesViewModel> GetCustomerInvoicesViewModels(List<PrepareInvoicesViewModel> prepList, List<CustomerDashboardViewModel> customerList, List<SearchDto> invoiceNumbersList, Queue<SearchDto>? queue)
     {
         var list = new List<CustomerInvoicesViewModel>();
@@ -31,6 +32,4 @@ public class ApplyInvoiceInfoService : IApplyInvoiceInfoService
 
         return list;
     }
-
-    
 }

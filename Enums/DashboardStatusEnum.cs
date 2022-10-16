@@ -1,11 +1,10 @@
 ﻿using System.ComponentModel;
 
-namespace KingsFarms.Core.Api.Enums
+namespace KingsFarms.Core.Api.Enums;
+
+public enum DashboardStatusEnum
 {
-    public enum DashboardStatusEnum
-    {
-        [Description("All Years")] AllYears,
-        [Description("Current Year")] CurrentYear,
-        [Description("Last Year")] LastYear
-    }
+    [Description("All Years")] AllYears,
+    [Description("Current Year")] CurrentYear,
+    [Description("Last Year")] LastYear
 }

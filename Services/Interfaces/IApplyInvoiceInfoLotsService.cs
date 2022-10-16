@@ -2,7 +2,7 @@
 
 namespace KingsFarms.Core.Api.Services.Interfaces;
 
-public interface IApplyInvoiceInfoService
+public interface IApplyInvoiceInfoLotsService
 {
     List<CustomerInvoicesViewModel> GetCustomerInvoicesViewModels(List<PrepareInvoicesViewModel> prepList,
         List<CustomerDashboardViewModel> customersList, List<SearchDto> invoiceNumbersList, Queue<SearchDto>? queues);

@@ -2,29 +2,28 @@ using KingsFarms.Core.Api.Results;
 using KingsFarms.Core.Api.Services.Interfaces;
 using KingsFarms.Core.Api.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using ILogger = Serilog.ILogger;
 
 namespace KingsFarms.Core.Api.Controllers;
 
 [ApiController]
 public class FieldOpsController : ControllerBase
 {
-    
-    private readonly Serilog.ILogger _logger;
-   
     private readonly IBedHarvestFieldOpsService _bedHarvestFieldOpsService;
     private readonly IFieldOperationsService _fieldOperationsService;
 
+    private readonly ILogger _logger;
 
-    public FieldOpsController(IBedHarvestFieldOpsService bedHarvestFieldOpsService, IFieldOperationsService fieldOperationsService, 
-        Serilog.ILogger logger)
+
+    public FieldOpsController(IBedHarvestFieldOpsService bedHarvestFieldOpsService, IFieldOperationsService fieldOperationsService,
+        ILogger logger)
     {
-       
         _bedHarvestFieldOpsService = bedHarvestFieldOpsService;
         _fieldOperationsService = fieldOperationsService;
         _logger = logger;
     }
 
-   [HttpGet(CoreApiRoutes.BedInfoHarvestFieldOps)]
+    [HttpGet(CoreApiRoutes.BedInfoHarvestFieldOps)]
     public async Task<IQueryResult> GetBedInfoWithHarvestAndFieldOps() //todo split to 3 separate methods
     {
         _logger.Information("GetBedInfoWithHarvestAndFieldOps");

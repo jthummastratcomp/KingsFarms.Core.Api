@@ -52,6 +52,4 @@ public class InvoiceNumberGeneratorService : IInvoiceNumberGeneratorService
 
         return newInvoiceNumber;
     }
-
-
 }

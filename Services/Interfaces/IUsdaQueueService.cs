@@ -1,5 +1,4 @@
 ﻿using KingsFarms.Core.Api.ViewModels;
-using System.Diagnostics.CodeAnalysis;
 
 namespace KingsFarms.Core.Api.Services.Interfaces;
 

@@ -6,7 +6,7 @@ namespace KingsFarms.Core.Api.Services;
 
 public class UsdaQueueService : IUsdaQueueService
 {
-    public Queue<SearchDto>? GetQueues( DateTime weekDate, List<HarvestViewModel> harvestList, List<PrepareInvoicesViewModel> prepList)
+    public Queue<SearchDto>? GetQueues(DateTime weekDate, List<HarvestViewModel> harvestList, List<PrepareInvoicesViewModel> prepList)
     {
         var bedPools = GetBedPoolsFromHarvest(weekDate, harvestList);
 
@@ -24,7 +24,7 @@ public class UsdaQueueService : IUsdaQueueService
         var list = new Dictionary<string, int>();
         if (harvestViewModel == null) return list;
 
-        var bedsHarvested = harvestViewModel.BedHarvests.OrderByDescending(x=>x.BedNumber).ToList();
+        var bedsHarvested = harvestViewModel.BedHarvests.OrderByDescending(x => x.BedNumber).ToList();
         if (!Utils.HasRows(bedsHarvested)) return list;
 
         foreach (var viewModel in bedsHarvested)
@@ -102,11 +102,8 @@ public class UsdaQueueService : IUsdaQueueService
                     bedHarvestQty -= 5;
 
                     box5++;
-                    continue;
                 }
             }
-
-
         }
 
         var list = new Queue<SearchDto>();
@@ -121,7 +118,4 @@ public class UsdaQueueService : IUsdaQueueService
 
         return list;
     }
-
-
-   
 }

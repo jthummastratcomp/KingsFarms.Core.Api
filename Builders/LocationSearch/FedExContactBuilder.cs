@@ -26,8 +26,11 @@ public class FedExContactBuilder
 
     public FedExContact Build()
     {
-        return new FedExContact { Phone = _phone,
+        return new FedExContact
+        {
+            Phone = _phone,
             PersonName = _personName,
-            CompanyName = _companyName };
+            CompanyName = _companyName
+        };
     }
 }

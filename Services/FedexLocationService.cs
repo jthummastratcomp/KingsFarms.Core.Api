@@ -1,5 +1,4 @@
 ﻿using KingsFarms.Core.Api.Builders.LocationSearch;
-using KingsFarms.Core.Api.Requests;
 using KingsFarms.Core.Api.Services.Endpoints;
 using KingsFarms.Core.Api.Services.Extensions;
 using KingsFarms.Core.Api.Services.Interfaces;
@@ -86,15 +85,12 @@ public class FedexLocationService : IFedexLocationService
 
     //    return null;
     //}
-
-    
 }
 
 public class CreateShipmentResponse
 {
     [JsonProperty("transactionId")] public string? TransId { get; set; }
     [JsonProperty("output")] public CreateShipmentResponseOutput? Output { get; set; }
-    
 }
 
 public class CreateShipmentResponseOutput
@@ -118,12 +114,14 @@ public class TransactionShipment
     [JsonProperty("serviceCategory")] public string? ServiceCategory { get; init; }
     [JsonProperty("masterTrackingNumber")] public string? TrackingNumberMaster { get; init; }
     [JsonProperty("alerts")] public List<ShipmentAlert>? Alerts { get; set; }
+
     [JsonProperty("pieceResponses")] public List<PieceResponse>? PieceResponses { get; init; }
+
     //[JsonProperty("shipmentDocuments")] public List<ShipmentDocuments>? ShipmentDocuments { get; init; }
     //[JsonProperty("packageDocuments")] public List<ShipmentDocuments>? PackageDocuments { get; init; }
-    [JsonProperty("completedShipmentDetail")] public CompletedShipmentDetail? CompletedShipmentDetail { get; init; }
+    [JsonProperty("completedShipmentDetail")]
+    public CompletedShipmentDetail? CompletedShipmentDetail { get; init; }
     //[JsonProperty("shipmentAdvisoryDetails")] public ShipmentAdvisoryDetail? ShipmentAdvisoryDetail { get; init; }
-
 }
 
 //public class ShipmentAdvisoryDetail
@@ -141,15 +139,19 @@ public class CompletedShipmentDetail
     [JsonProperty("carrierCode")] public string? carrierCode { get; init; }
     [JsonProperty("packagingDescription")] public string? packagingDescription { get; init; }
     [JsonProperty("usDomestic")] public bool? usDomestic { get; init; }
-    [JsonProperty("exportComplianceStatement")] public string? exportComplianceStatement { get; init; }
+
+    [JsonProperty("exportComplianceStatement")]
+    public string? exportComplianceStatement { get; init; }
+
     [JsonProperty("serviceType")] public string? ServiceType { get; init; }
 
     [JsonProperty("masterTrackingId")] public TrackingId? masterTrackingId { get; init; }
     [JsonProperty("serviceDescription")] public ServiceDescription? serviceDescription { get; init; }
     [JsonProperty("operationalDetail")] public OperationalDetail? operationalDetail { get; init; }
     [JsonProperty("shipmentRating")] public ShipmentRating? shipmentRating { get; init; }
-    [JsonProperty("completedPackageDetails")] public List<CompletedPackageDetails>? completedPackageDetails { get; init; }
 
+    [JsonProperty("completedPackageDetails")]
+    public List<CompletedPackageDetails>? completedPackageDetails { get; init; }
 }
 
 public class CompletedPackageDetails
@@ -176,7 +178,10 @@ public class PackageRateDetails
     [JsonProperty("minimumChargeType")] public string? minimumChargeType { get; init; }
     [JsonProperty("billingWeight")] public FedExWeight? billingWeight { get; init; }
     [JsonProperty("baseCharge")] public double? baseCharge { get; init; }
-    [JsonProperty("totalFreightDiscounts")] public double? totalFreightDiscounts { get; init; }
+
+    [JsonProperty("totalFreightDiscounts")]
+    public double? totalFreightDiscounts { get; init; }
+
     [JsonProperty("netFreight")] public double? netFreight { get; init; }
     [JsonProperty("totalSurcharges")] public double? totalSurcharges { get; init; }
     [JsonProperty("netFedExCharge")] public double? netFedExCharge { get; init; }
@@ -211,7 +216,10 @@ public class ShipmentRateDetails
     [JsonProperty("fuelSurchargePercent")] public double? fuelSurchargePercent { get; init; }
     [JsonProperty("totalBillingWeight")] public FedExWeight? totalBillingWeight { get; init; }
     [JsonProperty("totalBaseCharge")] public double? totalBaseCharge { get; init; }
-    [JsonProperty("totalFreightDiscounts")] public double? totalFreightDiscounts { get; init; }
+
+    [JsonProperty("totalFreightDiscounts")]
+    public double? totalFreightDiscounts { get; init; }
+
     [JsonProperty("totalNetFreight")] public double? totalNetFreight { get; init; }
     [JsonProperty("totalSurcharges")] public double? totalSurcharges { get; init; }
     [JsonProperty("totalNetFedExCharge")] public double? totalNetFedExCharge { get; init; }
@@ -219,9 +227,16 @@ public class ShipmentRateDetails
     [JsonProperty("totalNetCharge")] public double? totalNetCharge { get; init; }
     [JsonProperty("totalRebates")] public double? totalRebates { get; init; }
     [JsonProperty("totalDutiesAndTaxes")] public double? totalDutiesAndTaxes { get; init; }
-    [JsonProperty("totalAncillaryFeesAndTaxes")] public double? totalAncillaryFeesAndTaxes { get; init; }
-    [JsonProperty("totalDutiesTaxesAndFees")] public double? totalDutiesTaxesAndFees { get; init; }
-    [JsonProperty("totalNetChargeWithDutiesAndTaxes")] public double? totalNetChargeWithDutiesAndTaxes { get; init; }
+
+    [JsonProperty("totalAncillaryFeesAndTaxes")]
+    public double? totalAncillaryFeesAndTaxes { get; init; }
+
+    [JsonProperty("totalDutiesTaxesAndFees")]
+    public double? totalDutiesTaxesAndFees { get; init; }
+
+    [JsonProperty("totalNetChargeWithDutiesAndTaxes")]
+    public double? totalNetChargeWithDutiesAndTaxes { get; init; }
+
     [JsonProperty("surcharges")] public List<Surcharges>? surcharges { get; init; }
     [JsonProperty("freightDiscounts")] public List<FreightDiscount>? freightDiscounts { get; init; }
     [JsonProperty("taxes")] public List<Taxes>? taxes { get; init; }
@@ -240,14 +255,15 @@ public class OperationalDetail
 {
     [JsonProperty("barcodes")] public Barcodes? barcodes { get; init; }
     [JsonProperty("astraHandlingText")] public string? astraHandlingText { get; init; }
-    [JsonProperty("operationalInstructions")] public List<OperationalInstruction>? operationalInstructions { get; init; }
 
+    [JsonProperty("operationalInstructions")]
+    public List<OperationalInstruction>? operationalInstructions { get; init; }
 }
 
 public class Barcodes
 {
-        [JsonProperty("binaryBarcodes")] public List<Barcode>? binaryBarcodes { get; init; }
-        [JsonProperty("stringBarcodes")] public List<Barcode>? stringBarcodes { get; init; }
+    [JsonProperty("binaryBarcodes")] public List<Barcode>? binaryBarcodes { get; init; }
+    [JsonProperty("stringBarcodes")] public List<Barcode>? stringBarcodes { get; init; }
 }
 
 public class Barcode
@@ -290,18 +306,30 @@ public class ShipmentDocuments
     [JsonProperty("alerts")] public List<ShipmentAlert>? Alerts { get; set; }
 }
 
-public class PieceResponse  
+public class PieceResponse
 {
     [JsonProperty("netChargeAmount")] public double? netChargeAmount { get; init; }
-    [JsonProperty("acceptanceTrackingNumber")] public string? acceptanceTrackingNumber { get; init; }
+
+    [JsonProperty("acceptanceTrackingNumber")]
+    public string? acceptanceTrackingNumber { get; init; }
+
     [JsonProperty("serviceCategory")] public string? serviceCategory { get; init; }
-    [JsonProperty("listCustomerTotalCharge")] public string? listCustomerTotalCharge { get; init; }
+
+    [JsonProperty("listCustomerTotalCharge")]
+    public string? listCustomerTotalCharge { get; init; }
+
     [JsonProperty("deliveryTimestamp")] public string? deliveryTimestamp { get; init; }
     [JsonProperty("trackingIdType")] public string? trackingIdType { get; init; }
-    [JsonProperty("additionalChargesDiscount")] public double? additionalChargesDiscount { get; init; }
+
+    [JsonProperty("additionalChargesDiscount")]
+    public double? additionalChargesDiscount { get; init; }
+
     [JsonProperty("netListRateAmount")] public double? netListRateAmount { get; init; }
     [JsonProperty("baseRateAmount")] public double? baseRateAmount { get; init; }
-    [JsonProperty("packageSequenceNumber")] public double? packageSequenceNumber { get; init; }
+
+    [JsonProperty("packageSequenceNumber")]
+    public double? packageSequenceNumber { get; init; }
+
     [JsonProperty("netDiscountAmount")] public double? netDiscountAmount { get; init; }
     [JsonProperty("codcollectionAmount")] public double? codcollectionAmount { get; init; }
     [JsonProperty("acceptanceType")] public string? acceptanceType { get; init; }
@@ -309,7 +337,6 @@ public class PieceResponse
     [JsonProperty("masterTrackingNumber")] public string? TrackingNumberMaster { get; init; }
     [JsonProperty("customerReferences")] public List<CustomerReferences>? customerReferences { get; init; }
     [JsonProperty("packageDocuments")] public List<PackageDocuments>? packageDocuments { get; init; }
-
 }
 
 public class PackageDocuments
@@ -322,6 +349,8 @@ public class PackageDocuments
 
 public class CustomerReferences
 {
-    [JsonProperty("customerReferenceType")] public string? customerReferenceType { get; init; }
+    [JsonProperty("customerReferenceType")]
+    public string? customerReferenceType { get; init; }
+
     [JsonProperty("value")] public string? value { get; init; }
 }

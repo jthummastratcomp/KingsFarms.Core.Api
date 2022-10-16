@@ -1,9 +1,8 @@
 ﻿using KingsFarms.Core.Api.ViewModels;
 
-namespace KingsFarms.Core.Api.Services.Interfaces
+namespace KingsFarms.Core.Api.Services.Interfaces;
+
+public interface IBedHarvestFieldOpsService
 {
-    public interface IBedHarvestFieldOpsService
-    {
-        Task<List<BedHarvestFieldOpsViewModel>> GetOrAddBedInfoToCosmosDbAsync();
-    }
+    Task<List<BedHarvestFieldOpsViewModel>> GetOrAddBedInfoToCosmosDbAsync();
 }

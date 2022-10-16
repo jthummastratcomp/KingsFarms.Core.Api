@@ -1,5 +1,4 @@
 using KingsFarms.Core.Api.Results;
-using KingsFarms.Core.Api.Services;
 using KingsFarms.Core.Api.Services.Interfaces;
 using KingsFarms.Core.Api.ViewModels;
 using Microsoft.AspNetCore.Mvc;
@@ -31,6 +30,4 @@ public class FedExLocationsController : ControllerBase
 
         return new QueryResult<List<FedexLocationViewModel>> { Data = data, Status = new SuccessResult() };
     }
-
-   
 }

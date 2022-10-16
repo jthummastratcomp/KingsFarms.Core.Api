@@ -1,7 +1,6 @@
-﻿namespace KingsFarms.Core.Api.Results
+﻿namespace KingsFarms.Core.Api.Results;
+
+public interface ICommandResult
 {
-    public interface ICommandResult
-    {
-        IResult Status { get; set; }
-    }
+    IResult Status { get; set; }
 }

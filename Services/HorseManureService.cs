@@ -71,7 +71,6 @@ public class HorseManureService : IHorseManureService
             AddManureLoadForMonth(package, list, MonthEnum.October);
             AddManureLoadForMonth(package, list, MonthEnum.November);
             AddManureLoadForMonth(package, list, MonthEnum.December);
-            
         }
 
         _logger.Information("GetManureInfo returning {@Count}", list.Count);
@@ -108,11 +107,11 @@ public class HorseManureService : IHorseManureService
     private static List<ManureLoadViewModel> GetManureLoadViewModels(DataTable table)
     {
         var list = new List<ManureLoadViewModel>();
-        
+
         var farms = GetFarms(table);
 
 
-        for (var row = 4; row < table.Rows.Count; row++) 
+        for (var row = 4; row < table.Rows.Count; row++)
         {
             var dataRow = table.Rows[row];
 
@@ -128,7 +127,7 @@ public class HorseManureService : IHorseManureService
                 if (farmLoadQty > 0) manureLoad.AddFarmLoad(farm, farmLoadQty);
             }
 
-            if(Utils.HasRows(manureLoad.Loads)) list.Add(manureLoad);
+            if (Utils.HasRows(manureLoad.Loads)) list.Add(manureLoad);
         }
 
         return list;
@@ -137,7 +136,7 @@ public class HorseManureService : IHorseManureService
     private static List<string> GetFarms(DataTable table)
     {
         var farms = new List<string>();
-        for (var col = 1; col < table.Columns.Count; col++) 
+        for (var col = 1; col < table.Columns.Count; col++)
         {
             var farm = GetFarmName(table, col);
 
@@ -155,5 +154,4 @@ public class HorseManureService : IHorseManureService
 
         return farm;
     }
-    
 }

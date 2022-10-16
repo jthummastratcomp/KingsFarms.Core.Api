@@ -28,15 +28,15 @@ public class FedExShipmentController : ControllerBase
 
     [HttpPost(CoreApiRoutes.CreateShipmentRequest)]
     public SearchDto CreateShipment(CreateShipmentRequest request)
-    //public string? CreateShipment(CreateShipmentRequest request)
+        //public string? CreateShipment(CreateShipmentRequest request)
     {
         //var json = JsonConvert.SerializeObject(request);
 
         var data = _shipmentService.CreateShipment(request);
-        
+
         var trackingNumber = data?.Output?.Shipments?[0]?.TrackingNumberMaster;
         var labelUrl = data?.Output?.Shipments?[0]?.PieceResponses?[0]?.packageDocuments?[0].url;
 
-        return new SearchDto() { Id = trackingNumber, Data = labelUrl };
+        return new SearchDto { Id = trackingNumber, Data = labelUrl };
     }
 }

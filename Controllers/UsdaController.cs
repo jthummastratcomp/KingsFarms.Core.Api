@@ -1,4 +1,3 @@
-using KingsFarms.Core.Api.Results;
 using KingsFarms.Core.Api.Services.Interfaces;
 using KingsFarms.Core.Api.ViewModels;
 using Microsoft.AspNetCore.Mvc;
@@ -16,12 +15,16 @@ public class UsdaController : ControllerBase
         _usdaService = usdaService;
     }
 
-   
+
     [HttpPost(CoreApiRoutes.UpdateUsdaInfo)]
     public string UpdateUsdaInfo(UsdaBedLotInfoViewModel usdaInfoViewModel)
     {
-
         return _usdaService.UpdateUsdaInfo(usdaInfoViewModel);
     }
-    
+
+    [HttpPost(CoreApiRoutes.CreateUsdaInfo)]
+    public string CreateUsdaInfo(UsdaBedLotInfoViewModel usdaInfoViewModel)
+    {
+        return _usdaService.UpdateUsdaInfo(usdaInfoViewModel);
+    }
 }

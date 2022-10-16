@@ -1,9 +1,8 @@
 ﻿using KingsFarms.Core.Api.ViewModels;
 
-namespace KingsFarms.Core.Api.Services.Interfaces
+namespace KingsFarms.Core.Api.Services.Interfaces;
+
+public interface IFieldOperationsService
 {
-    public interface IFieldOperationsService
-    {
-        Task<List<BedHarvestFieldOpsViewModel>> GetBedsFieldOpsAsync();
-    }
+    Task<List<BedHarvestFieldOpsViewModel>> GetBedsFieldOpsAsync();
 }

@@ -21,21 +21,25 @@ public static class RestRequestExtensions
         request.AddHeader("Content-Type", "application/json");
         return request;
     }
+
     public static RestRequest AddHeaderContentTypeUrlEncoded(this RestRequest request)
     {
         request.AddHeader("Content-Type", "application/x-www-form-urlencoded");
         return request;
     }
+
     public static RestRequest AddParameterGrantTypeClientCredentials(this RestRequest request)
     {
         request.AddParameter("grant_type", "client_credentials");
         return request;
     }
+
     public static RestRequest AddParameterClientId(this RestRequest request, string clientId)
     {
         request.AddParameter("client_id", clientId);
         return request;
     }
+
     public static RestRequest AddParameterClientSecret(this RestRequest request, string clientSecret)
     {
         request.AddParameter("client_secret", clientSecret);

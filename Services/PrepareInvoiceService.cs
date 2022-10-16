@@ -1,5 +1,4 @@
 ﻿using System.Data;
-using System.Diagnostics.CodeAnalysis;
 using KingsFarms.Core.Api.Enums;
 using KingsFarms.Core.Api.Helpers;
 using KingsFarms.Core.Api.Mappers;
@@ -10,10 +9,10 @@ namespace KingsFarms.Core.Api.Services;
 
 public class PrepareInvoiceService : IPrepareInvoiceService
 {
-    private readonly IHarvestService _harvestService;
     private readonly IInvoiceNumberGeneratorService _generatorService;
-    private readonly IUsdaQueueService _queueService;
+    private readonly IHarvestService _harvestService;
     private readonly IApplyInvoiceInfoService _invoiceInfoService;
+    private readonly IUsdaQueueService _queueService;
 
     public PrepareInvoiceService(IHarvestService harvestService, IInvoiceNumberGeneratorService generatorService, IUsdaQueueService queueService, IApplyInvoiceInfoService invoiceInfoService)
     {
@@ -22,6 +21,7 @@ public class PrepareInvoiceService : IPrepareInvoiceService
         _queueService = queueService;
         _invoiceInfoService = invoiceInfoService;
     }
+
     public List<CustomerInvoicesViewModel> CustomerInvoicesViewModels(CompanyEnum company, DataTable dtCustomer, DataTable dtKings, DataTable dtMansi, List<CustomerInvoicesViewModel> list, int year, DateTime weekDate, int currentColumnInDt)
     {
         var customersList = Mapper.MapToCustomerDashboardViewModelList(dtCustomer);
@@ -51,7 +51,6 @@ public class PrepareInvoiceService : IPrepareInvoiceService
         return list;
     }
 
-    
 
     private static List<PrepareInvoicesViewModel> PrepareInvoicesViewModels(DateTime weekDate, int currentColumnInDt, DataTable dtSource, List<CustomerDashboardViewModel> customersList)
     {

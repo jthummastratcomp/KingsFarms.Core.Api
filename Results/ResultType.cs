@@ -1,8 +1,7 @@
-﻿namespace KingsFarms.Core.Api.Results
+﻿namespace KingsFarms.Core.Api.Results;
+
+public enum ResultType
 {
-    public enum ResultType
-    {
-        Success = 0,
-        Fail = 1
-    }
+    Success = 0,
+    Fail = 1
 }

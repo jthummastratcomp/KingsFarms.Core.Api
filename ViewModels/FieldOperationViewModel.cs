@@ -1,17 +1,15 @@
 ﻿using KingsFarms.Core.Api.Enums;
 
-namespace KingsFarms.Core.Api.ViewModels
+namespace KingsFarms.Core.Api.ViewModels;
+
+public class FieldOperationViewModel
 {
-    public class FieldOperationViewModel
-    {
-        public FieldOperationEnum Type { get; set; }
-        public DateTime OperationDate { get; set; }
-    }
+    public FieldOperationEnum Type { get; set; }
+    public DateTime OperationDate { get; set; }
+}
 
-    public class FieldOperationCosmosDbModel
-    {
-        public string Type { get; set; }
-        public string OperationDate { get; set; }
-
-    }
+public class FieldOperationCosmosDbModel
+{
+    public string Type { get; set; }
+    public string OperationDate { get; set; }
 }

@@ -1,15 +1,14 @@
 ﻿using Newtonsoft.Json;
 
-namespace KingsFarms.Core.Api.ViewModels
-{
-    public class BedFieldOpsCosmosDbModel
-    {
-        public string? OperationDate { get; set; }
-        public string WorkType { get; set; }
+namespace KingsFarms.Core.Api.ViewModels;
 
-        public override string ToString()
-        {
-            return JsonConvert.SerializeObject(this);
-        }
+public class BedFieldOpsCosmosDbModel
+{
+    public string? OperationDate { get; set; }
+    public string WorkType { get; set; }
+
+    public override string ToString()
+    {
+        return JsonConvert.SerializeObject(this);
     }
 }

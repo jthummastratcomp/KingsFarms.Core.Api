@@ -1,10 +1,9 @@
-﻿namespace KingsFarms.Core.Api.Enums
+﻿namespace KingsFarms.Core.Api.Enums;
+
+public enum FertilizerEnum
 {
-    public enum FertilizerEnum
-    {
-        TenTenTen,
-        IronSulphate,
-        Manganese,
-        Magnesium
-    }
+    TenTenTen,
+    IronSulphate,
+    Manganese,
+    Magnesium
 }

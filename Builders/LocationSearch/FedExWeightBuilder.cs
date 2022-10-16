@@ -23,7 +23,6 @@ public class FedExWeightBuilder
         {
             Units = _units,
             Value = _value
-            
         };
     }
 }

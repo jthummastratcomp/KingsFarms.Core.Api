@@ -1,36 +1,36 @@
 ﻿using KingsFarms.Core.Api.Services.Interfaces;
 using Microsoft.Azure.Cosmos;
+using ILogger = Serilog.ILogger;
 
-namespace KingsFarms.Core.Api.Services
+namespace KingsFarms.Core.Api.Services;
+
+public class CosmosDbService : ICosmosDbService
 {
-    public class CosmosDbService : ICosmosDbService
+    private readonly CosmosClient _cosmosClient;
+    private readonly ILogger _logger;
+
+    public CosmosDbService(string cosmosDbUri, string cosmosDbKey, ILogger logger)
     {
-        private readonly Serilog.ILogger _logger;
-        private readonly CosmosClient _cosmosClient;
-        public CosmosDbService(string cosmosDbUri, string cosmosDbKey, Serilog.ILogger logger)
-        {
-            _logger = logger;
-            _cosmosClient = new CosmosClient(cosmosDbUri, cosmosDbKey, new CosmosClientOptions { ApplicationName = "CosmosDBKings" });
-        }
+        _logger = logger;
+        _cosmosClient = new CosmosClient(cosmosDbUri, cosmosDbKey, new CosmosClientOptions { ApplicationName = "CosmosDBKings" });
+    }
 
-        public async Task<Database> GetOrCreateCosmosDbDatabaseAsync(string databaseId)
-        {
-            _logger.Information("GetOrCreateCosmosDbDatabaseAsync");
-            var response = await _cosmosClient.CreateDatabaseIfNotExistsAsync(databaseId);
-            _logger.Information("GetOrCreateCosmosDbDatabaseAsync completed");
-            _logger.Information("CreateDatabaseIfNotExistsAsync {@RequestCharge}", response.RequestCharge);
-            return response.Database;
-        }
+    public async Task<Database> GetOrCreateCosmosDbDatabaseAsync(string databaseId)
+    {
+        _logger.Information("GetOrCreateCosmosDbDatabaseAsync");
+        var response = await _cosmosClient.CreateDatabaseIfNotExistsAsync(databaseId);
+        _logger.Information("GetOrCreateCosmosDbDatabaseAsync completed");
+        _logger.Information("CreateDatabaseIfNotExistsAsync {@RequestCharge}", response.RequestCharge);
+        return response.Database;
+    }
 
-        public async Task<Container> GetOrCreateCosmosDbContainerAsync(string databaseId, string containerId)
-        {
-            var database = await GetOrCreateCosmosDbDatabaseAsync(databaseId);
+    public async Task<Container> GetOrCreateCosmosDbContainerAsync(string databaseId, string containerId)
+    {
+        var database = await GetOrCreateCosmosDbDatabaseAsync(databaseId);
 
-            _logger.Information("GetOrCreateCosmosDbContainerAsync");
-            var response = await database.CreateContainerIfNotExistsAsync(containerId, "/partitionKey");
-            _logger.Information("CreateContainerIfNotExistsAsync {@RequestCharge}", response.RequestCharge);
-            return response.Container;
-
-        }
+        _logger.Information("GetOrCreateCosmosDbContainerAsync");
+        var response = await database.CreateContainerIfNotExistsAsync(containerId, "/partitionKey");
+        _logger.Information("CreateContainerIfNotExistsAsync {@RequestCharge}", response.RequestCharge);
+        return response.Container;
     }
 }

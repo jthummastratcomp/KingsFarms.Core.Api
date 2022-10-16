@@ -74,7 +74,7 @@ public class UsdaService : IUsdaService
         lotTab.Cells["A5:E5"].Style.Fill.PatternType = ExcelFillStyle.Solid;
         lotTab.Cells["A5:E5"].Style.Fill.BackgroundColor.SetColor(Color.Bisque);
 
-        int row = 6;
+        var row = 6;
         foreach (var lotInfo in viewModel.LineItems)
         {
             lotTab.Cells[$"A{row}"].Value = lotInfo.Customer;
@@ -84,12 +84,10 @@ public class UsdaService : IUsdaService
             lotTab.Cells[$"E{row}"].Value = lotInfo.Quantity;
             row++;
         }
-        
 
         using var stream = blob.OpenWrite(true);
 
         package.SaveAs(stream);
-
 
         return string.Empty;
     }

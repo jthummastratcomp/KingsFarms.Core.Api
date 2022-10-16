@@ -102,7 +102,7 @@ public class FedExRequestedShipmentBuilder
             BlockInsightVisibility = _blockInsightVisibility,
             ShippingPayment = _payment,
             LabelSpec = _labelSpecification,
-            PackageCount = _packageCount,
+            PackageCount = _packageCount
         };
     }
 }

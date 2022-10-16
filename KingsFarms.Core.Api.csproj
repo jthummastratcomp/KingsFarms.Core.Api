@@ -8,9 +8,17 @@
 
   <ItemGroup>
     <Compile Remove="Cache\**" />
+    <Compile Remove="Services\Helpers\**" />
+    <Compile Remove="Services\Strategy\**" />
     <Content Remove="Cache\**" />
+    <Content Remove="Services\Helpers\**" />
+    <Content Remove="Services\Strategy\**" />
     <EmbeddedResource Remove="Cache\**" />
+    <EmbeddedResource Remove="Services\Helpers\**" />
+    <EmbeddedResource Remove="Services\Strategy\**" />
     <None Remove="Cache\**" />
+    <None Remove="Services\Helpers\**" />
+    <None Remove="Services\Strategy\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -44,11 +52,6 @@
     <PackageReference Include="RestSharp" Version="108.0.1" />
     <PackageReference Include="Serilog.Sinks.Seq" Version="5.1.1" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Services\Helpers\" />
-    <Folder Include="Services\Strategy\" />
   </ItemGroup>
 
 </Project>

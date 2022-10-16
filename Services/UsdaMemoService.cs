@@ -7,7 +7,7 @@ namespace KingsFarms.Core.Api.Services;
 
 public class UsdaMemoService : IUsdaMemoService
 {
-    public  string GetUsdaMemo(Queue<SearchDto>? queue, PrepareInvoicesViewModel viewModel)
+    public string GetUsdaMemo(Queue<SearchDto>? queue, PrepareInvoicesViewModel viewModel)
     {
         if (queue == null) return string.Empty;
 
@@ -88,6 +88,4 @@ public class UsdaMemoService : IUsdaMemoService
 
         return sb.ToString().Replace(",", string.Empty).Replace("[", string.Empty).Replace("]", string.Empty).Replace(" ", string.Empty).Trim();
     }
-
-
 }

@@ -1,4 +1,3 @@
-using System.ComponentModel;
 using KingsFarms.Core.Api.Enums;
 using KingsFarms.Core.Api.Results;
 using KingsFarms.Core.Api.Services.Interfaces;
@@ -14,12 +13,10 @@ public class HarvestController : ControllerBase
     private readonly IHarvestService _harvestService;
 
     private readonly ILogger _logger;
-    
 
 
-    public HarvestController( IHarvestService harvestService, ILogger logger)
+    public HarvestController(IHarvestService harvestService, ILogger logger)
     {
-    
         _harvestService = harvestService;
         _logger = logger;
     }
@@ -68,8 +65,4 @@ public class HarvestController : ControllerBase
 
         return total;
     }
-    
-
-
-
 }

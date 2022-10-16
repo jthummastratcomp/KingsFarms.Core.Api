@@ -6,6 +6,7 @@ public class PrepareInvoicesViewModel
     {
         UsdaInfo = new UsdaInfoDto();
     }
+
     public string CustomerKey { get; set; }
     public int WeekQty { get; set; }
     public int BoxSize { get; set; }

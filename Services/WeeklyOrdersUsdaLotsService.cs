@@ -1,4 +1,5 @@
 ﻿using System.Data;
+using Azure;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Specialized;
 using KingsFarms.Core.Api.Enums;
@@ -9,20 +10,21 @@ using OfficeOpenXml;
 
 namespace KingsFarms.Core.Api.Services;
 
-public class WeeklyOrdersUsdaService : IWeeklyOrdersUsdaService
+public class WeeklyOrdersUsdaLotsService : IWeeklyOrdersUsdaLotsService
 {
     private readonly string _azStoreConnStr;
     private readonly string _azStoreContName;
     private readonly IHarvestService _harvestService;
-    private readonly IPrepareUsdaInvoiceService _prepareUsdaInvoiceService;
-    private readonly string _weeklyOrdersUsdaFile;
+    private readonly IPrepareUsdaLotsInvoiceService _prepareUsdaLotsInvoiceService;
+    private readonly string _weeklyOrdersFile;
 
-    public WeeklyOrdersUsdaService(string azStoreConnStr, string azStoreContName, string weeklyOrdersUsdaFile, IPrepareUsdaInvoiceService prepareUsdaInvoiceService)
+    public WeeklyOrdersUsdaLotsService(string azStoreConnStr, string azStoreContName, string weeklyOrdersFile,
+        IPrepareUsdaLotsInvoiceService prepareUsdaLotsInvoiceService)
     {
         _azStoreConnStr = azStoreConnStr;
         _azStoreContName = azStoreContName;
-        _weeklyOrdersUsdaFile = weeklyOrdersUsdaFile;
-        _prepareUsdaInvoiceService = prepareUsdaInvoiceService;
+        _weeklyOrdersFile = weeklyOrdersFile;
+        _prepareUsdaLotsInvoiceService = prepareUsdaLotsInvoiceService;
     }
 
 
@@ -37,12 +39,15 @@ public class WeeklyOrdersUsdaService : IWeeklyOrdersUsdaService
         var currentColumnInDt = weekOfYear + 2;
 
         var year = weekDate.GetValueOrDefault().Year;
+        var month = weekDate.GetValueOrDefault().Month;
+        var day = weekDate.GetValueOrDefault().Day;
 
         var client = new BlobServiceClient(_azStoreConnStr);
         var container = client.GetBlobContainerClient(_azStoreContName);
-        var blob = container.GetBlockBlobClient(_weeklyOrdersUsdaFile);
+        var blob = container.GetBlockBlobClient(_weeklyOrdersFile);
+        var blobLot = container.GetBlockBlobClient($"{year}-{month}-{day}-lot-assign.xlsx");
 
-        DataTable dtKings, dtMansi, dtCustomer;
+        DataTable dtKings, dtMansi, dtCustomer, dtLot;
 
         using (var memoryStream = new MemoryStream())
         {
@@ -59,7 +64,26 @@ public class WeeklyOrdersUsdaService : IWeeklyOrdersUsdaService
             dtCustomer = EpplusUtils.ExcelPackageToDataTable(customerTab);
         }
 
-        return _prepareUsdaInvoiceService.CustomerInvoicesViewModels(company, dtCustomer, dtKings, dtMansi, list, year, weekDate.GetValueOrDefault(), currentColumnInDt);
+        try
+        {
+            using (var memoryStream = new MemoryStream())
+            {
+                blobLot.DownloadTo(memoryStream);
+
+                using var package = new ExcelPackage(memoryStream);
+
+                var lotTab = package.Workbook.Worksheets["LOT"];
+
+                dtLot = EpplusUtils.ExcelPackageToDataTable(lotTab);
+            }
+        }
+        catch (RequestFailedException ex)
+        {
+            dtLot = new DataTable();
+        }
+
+
+        return _prepareUsdaLotsInvoiceService.CustomerInvoicesViewModels(company, dtCustomer, dtKings, dtMansi, list, year, weekDate.GetValueOrDefault(), currentColumnInDt, dtLot);
     }
 
     private static int GetWeekOfYearForInvoicesFromSheet(DateTime weekDate)

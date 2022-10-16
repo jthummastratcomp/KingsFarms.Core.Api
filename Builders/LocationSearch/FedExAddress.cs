@@ -8,5 +8,5 @@ public record FedExAddress
     [JsonProperty("countryCode")] public string CountryCode { get; init; } = "US";
     [JsonProperty("city")] public string? City { get; init; } = "Cincinnati";
     [JsonProperty("stateOrProvinceCode")] public string? State { get; init; } = "OH";
-    [JsonProperty("streetLines")] public List<string?> StreetLines { get; init; } = new List<string?>() { "4029 Melampy Creek", "Apt 103" };
+    [JsonProperty("streetLines")] public List<string?> StreetLines { get; init; } = new() { "4029 Melampy Creek", "Apt 103" };
 }

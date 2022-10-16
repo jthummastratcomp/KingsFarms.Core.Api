@@ -52,7 +52,7 @@ public class HarvestService : IHarvestService
     public int GetHarvestYearTotalByCalendar(int calendarYear)
     {
         var list = GetAllHarvestData();
-        var total = list.Where(x=>x.HarvestDate.Year == calendarYear).Sum(x => x.TotalHarvest);
+        var total = list.Where(x => x.HarvestDate.Year == calendarYear).Sum(x => x.TotalHarvest);
 
         return total;
     }

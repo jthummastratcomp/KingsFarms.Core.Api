@@ -13,12 +13,12 @@ public class UsdaNewMemoService : IUsdaMemoService
             || string.IsNullOrEmpty(viewModel.UsdaInfo.Lot)) return string.Empty;
 
         const string permit = "2022-064";
-        var week = $"{viewModel.UsdaInfo.HarvestDate}{viewModel.Week.Year:D2}";
-        var usdaBed = viewModel.UsdaInfo.Bed;
+        var week = $"{viewModel.UsdaInfo.HarvestDate}{viewModel.Week:yy}";
+        var usdaBed = Utils.ParseToInteger(viewModel.UsdaInfo.Bed).ToString("D2");
         var usdaBlock = GetBlock(usdaBed);
         var usdaLot = viewModel.UsdaInfo.Lot;
 
-        return $"USDA #: {permit}-{week}-{usdaBlock}-{usdaBed}-{usdaLot}-FL";
+        return $"USDA#: {permit}-{week}-{usdaBlock}-{usdaBed}-{usdaLot}-FL";
     }
 
     private static string GetBlock(string bed)
