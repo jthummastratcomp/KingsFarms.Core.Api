@@ -1,4 +1,5 @@
 using KingsFarms.Core.Api.Enums;
+using KingsFarms.Core.Api.Helpers;
 using KingsFarms.Core.Api.Services.Interfaces;
 using KingsFarms.Core.Api.ViewModels;
 using Microsoft.AspNetCore.Mvc;
@@ -46,5 +47,17 @@ public class WeeklyOrdersController : ControllerBase
     public List<CustomerInvoicesViewModel> LoadInvoicesForWeekLots(string week, CompanyEnum company)
     {
         return _ordersUsdaLotsService.LoadInvoicesForWeek(week, company);
+    }
+
+    [HttpGet(CoreApiRoutes.FirstMondayOfYear)]
+    public DateTime FirstMondayOfYear(int year)
+    {
+        return Utils.GetFirstMondayOfYear(year);
+    }
+
+    [HttpGet(CoreApiRoutes.FirstSaturdayOfYear)]
+    public DateTime FirstSaturdayOfYear(int year)
+    {
+        return Utils.GetFirstSaturdayOfYear(year);
     }
 }

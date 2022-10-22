@@ -32,4 +32,23 @@ public class ApplyInvoiceInfoService : IApplyInvoiceInfoService
 
         return list;
     }
+
+    public List<CustomerInvoicesViewModel> GetCustomerInvoicesViewModels(List<PrepareInvoicesViewModel> prepList, List<CustomerDashboardViewModel> customerList, List<SearchDto> invoiceNumbersList, List<SearchDto> lots)
+    {
+        var list = new List<CustomerInvoicesViewModel>();
+        foreach (var viewModel in prepList)
+        {
+            var usdaMemo = lots.FirstOrDefault(x => x.Id == viewModel.CustomerKey)?.Data;
+
+            var dto = invoiceNumbersList.FirstOrDefault(x => x.Id == viewModel.CustomerKey);
+            var invoiceNumber = dto == null ? string.Empty : dto.Data;
+
+            var custumerDto = customerList.FirstOrDefault(x => x.CustomerHeader.CustomerKey == viewModel.CustomerKey);
+
+
+            list.Add(_invoiceInfoService.PrepareInvoice(viewModel.Week, viewModel.WeekQty, custumerDto, invoiceNumber, usdaMemo));
+        }
+
+        return list;
+    }
 }

@@ -6,7 +6,7 @@ namespace KingsFarms.Core.Api.Services;
 
 public class UsdaNewMemoService : IUsdaMemoService
 {
-    public string GetUsdaMemo(Queue<SearchDto>? queue1, PrepareInvoicesViewModel viewModel)
+    public string? GetUsdaMemo(Queue<SearchDto>? queue1, PrepareInvoicesViewModel viewModel)
     {
         if (string.IsNullOrEmpty(viewModel.UsdaInfo.HarvestDate)
             || string.IsNullOrEmpty(viewModel.UsdaInfo.Bed)

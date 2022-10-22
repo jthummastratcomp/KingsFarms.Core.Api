@@ -7,7 +7,7 @@ namespace KingsFarms.Core.Api.Services;
 
 public class UsdaMemoService : IUsdaMemoService
 {
-    public string GetUsdaMemo(Queue<SearchDto>? queue, PrepareInvoicesViewModel viewModel)
+    public string? GetUsdaMemo(Queue<SearchDto>? queue, PrepareInvoicesViewModel viewModel)
     {
         if (queue == null) return string.Empty;
 
@@ -78,7 +78,7 @@ public class UsdaMemoService : IUsdaMemoService
         return $"{first}-{last}";
     }
 
-    private static string BuildMemo(Dictionary<string, string> lotsList)
+    private static string? BuildMemo(Dictionary<string, string> lotsList)
     {
         if (!Utils.HasRows(lotsList)) return string.Empty;
 

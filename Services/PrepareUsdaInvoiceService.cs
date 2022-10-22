@@ -22,7 +22,8 @@ public class PrepareUsdaInvoiceService : IPrepareUsdaInvoiceService
         _invoiceInfoService = invoiceInfoService;
     }
 
-    public List<CustomerInvoicesViewModel> CustomerInvoicesViewModels(CompanyEnum company, DataTable dtCustomer, DataTable dtKings, DataTable dtMansi, List<CustomerInvoicesViewModel> list, int year, DateTime weekDate, int currentColumnInDt)
+    public List<CustomerInvoicesViewModel> CustomerInvoicesViewModels(CompanyEnum company, DataTable dtCustomer, DataTable dtKings, DataTable dtMansi, List<CustomerInvoicesViewModel> list, int year, DateTime weekDate, int currentColumnInDt,
+        List<SearchDto> lots)
     {
         var customersList = Mapper.MapToCustomerDashboardViewModelList(dtCustomer);
 
@@ -46,7 +47,7 @@ public class PrepareUsdaInvoiceService : IPrepareUsdaInvoiceService
         //var queues = _queueService.GetQueues(weekDate, harvestList, prepList);
 
         //list = _invoiceInfoService.GetCustomerInvoicesViewModels(prepList, customersList, invoiceNumbersList, queues);
-        list = _invoiceInfoService.GetCustomerInvoicesViewModels(prepList, customersList, invoiceNumbersList, null);
+        list = _invoiceInfoService.GetCustomerInvoicesViewModels(prepList, customersList, invoiceNumbersList, lots);
 
         return list;
     }

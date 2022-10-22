@@ -70,4 +70,8 @@ public static class CoreApiRoutes
     public const string UpdateUsdaInfo = "api/usda/inspection/update";
     public const string CreateUsdaInfo = "api/usda/inspection/create";
     public const string DeleteUsdaInfo = "api/usda/inspection/delete";
+
+    //WEEKS
+    public const string FirstMondayOfYear = "api/orders/{year}/monday";
+    public const string FirstSaturdayOfYear = "api/orders/{year}/saturday";
 }

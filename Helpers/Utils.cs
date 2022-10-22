@@ -199,6 +199,24 @@ public static class Utils
         return dateTime.AddDays(8 - (int)dateTime.DayOfWeek);
     }
 
+    public static DateTime GetFirstSaturdayOfYear(int year)
+    {
+        //var dateTime = new DateTime(year - 1, 12, 30);
+        //return dateTime.AddDays(3 - (int)dateTime.DayOfWeek);
+
+        //var dt = new DateTime(year, 1, 1);
+        //for (var i = 0; i < 7; i++)
+        //    if (dt.DayOfWeek == DayOfWeek.Saturday)
+        //        break;
+
+        //return dt.AddDays(1);
+
+        int day = 0;
+        while ((new DateTime(year, 1, ++day).DayOfWeek != DayOfWeek.Saturday)) ;
+        
+        return  new DateTime(year, 1, day);
+    }
+
     public static int GetWeekOfYear(DateTime invoiceDate)
     {
         var cultureInfo = new CultureInfo("en-US");

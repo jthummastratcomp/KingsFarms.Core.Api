@@ -47,7 +47,7 @@ public class PrepareUsdaLotsInvoiceService : IPrepareUsdaLotsInvoiceService
         //var queues = _queueService.GetQueues(weekDate, harvestList, prepList);
 
         //list = _invoiceInfoService.GetCustomerInvoicesViewModels(prepList, customersList, invoiceNumbersList, queues);
-        list = _invoiceInfoService.GetCustomerInvoicesViewModels(prepList, customersList, invoiceNumbersList, null);
+        list = _invoiceInfoService.GetCustomerInvoicesViewModels(prepList, customersList, invoiceNumbersList, new List<SearchDto>());
 
         return list;
     }

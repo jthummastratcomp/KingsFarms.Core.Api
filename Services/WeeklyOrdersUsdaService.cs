@@ -33,8 +33,9 @@ public class WeeklyOrdersUsdaService : IWeeklyOrdersUsdaService
         var weekDate = Utils.ParseToDateTime(week);
         if (!weekDate.HasValue) return list;
 
-        var weekOfYear = GetWeekOfYearForInvoicesFromSheet(weekDate.GetValueOrDefault());
-        var currentColumnInDt = weekOfYear + 2;
+        //var weekOfYear = GetWeekOfYearForInvoicesFromSheet(weekDate.GetValueOrDefault());
+        //var currentColumnInDt = weekOfYear + 2;
+
 
         var year = weekDate.GetValueOrDefault().Year;
 
@@ -43,6 +44,7 @@ public class WeeklyOrdersUsdaService : IWeeklyOrdersUsdaService
         var blob = container.GetBlockBlobClient(_weeklyOrdersUsdaFile);
 
         DataTable dtKings, dtMansi, dtCustomer;
+        var lots = new List<SearchDto>();
 
         using (var memoryStream = new MemoryStream())
         {
@@ -53,21 +55,54 @@ public class WeeklyOrdersUsdaService : IWeeklyOrdersUsdaService
             var kingsTab = package.Workbook.Worksheets["KINGS"];
             var mansiTab = package.Workbook.Worksheets["MANSI"];
             var customerTab = package.Workbook.Worksheets["ALL CUSTOMERS"];
+            var uniquesTab = package.Workbook.Worksheets["Uniques"];
 
             dtKings = EpplusUtils.ExcelPackageToDataTable(kingsTab);
             dtMansi = EpplusUtils.ExcelPackageToDataTable(mansiTab);
             dtCustomer = EpplusUtils.ExcelPackageToDataTable(customerTab);
+            lots = GetLots(uniquesTab);
         }
 
-        return _prepareUsdaInvoiceService.CustomerInvoicesViewModels(company, dtCustomer, dtKings, dtMansi, list, year, weekDate.GetValueOrDefault(), currentColumnInDt);
+        var currentColumnInDt = GetColumn(dtKings, weekDate.GetValueOrDefault());
+        return _prepareUsdaInvoiceService.CustomerInvoicesViewModels(company, dtCustomer, dtKings, dtMansi, list, year, weekDate.GetValueOrDefault(), currentColumnInDt, lots);
     }
 
-    private static int GetWeekOfYearForInvoicesFromSheet(DateTime weekDate)
+    private static List<SearchDto> GetLots(ExcelWorksheet uniquesTab)
     {
-        var weekOfYear = Utils.GetWeekOfYear(weekDate);
-        var firstMondayOfYear = Utils.GetFirstMondayOfYear(DateTime.Today.Year);
-        var firstWeekOfYear = Utils.GetWeekOfYear(firstMondayOfYear);
-        if (firstWeekOfYear > 1) weekOfYear -= 1;
-        return weekOfYear;
+        var lots = new List<SearchDto>();
+        for (var i = 1; i <= 100; i++)
+        {
+            var lot = EpplusUtils.GetCellValue(uniquesTab, $"K{i}");
+            var customerKey = EpplusUtils.GetCellValue(uniquesTab, $"L{i}");
+
+            if (!string.IsNullOrEmpty(lot) && !string.IsNullOrEmpty(customerKey)) lots.Add(new SearchDto { Id = customerKey, Data = lot });
+        }
+
+        return lots;
     }
+
+    private static int GetColumn(DataTable dtKings, DateTime weekDate)
+    {
+        var row = dtKings.Rows[0];
+        for (var column = 0; column < dtKings.Columns.Count; column++)
+        {
+            var value = row[column].ToString();
+
+            var date = Utils.ParseToDateTime(value);
+            if (!date.HasValue) continue;
+
+            if (date.GetValueOrDefault() == weekDate) return column;
+        }
+
+        return 0;
+    }
+
+    //private static int GetWeekOfYearForInvoicesFromSheet(DateTime weekDate)
+    //{
+    //    var weekOfYear = Utils.GetWeekOfYear(weekDate);
+    //    var firstMondayOfYear = Utils.GetFirstMondayOfYear(DateTime.Today.Year);
+    //    var firstWeekOfYear = Utils.GetWeekOfYear(firstMondayOfYear);
+    //    if (firstWeekOfYear > 1) weekOfYear -= 1;
+    //    return weekOfYear;
+    //}
 }
