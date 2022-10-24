@@ -63,7 +63,13 @@ public class WeeklyOrdersUsdaService : IWeeklyOrdersUsdaService
             lots = GetLots(uniquesTab);
         }
 
-        var currentColumnInDt = GetColumn(dtKings, weekDate.GetValueOrDefault());
+        var dtSource = company is CompanyEnum.Kings or CompanyEnum.KingsSandbox
+            ? dtKings
+            : company == CompanyEnum.Mansi
+                ? dtMansi
+                : null;
+
+        var currentColumnInDt = GetColumn(dtSource, weekDate.GetValueOrDefault());
         return _prepareUsdaInvoiceService.CustomerInvoicesViewModels(company, dtCustomer, dtKings, dtMansi, list, year, weekDate.GetValueOrDefault(), currentColumnInDt, lots);
     }
 
@@ -81,10 +87,12 @@ public class WeeklyOrdersUsdaService : IWeeklyOrdersUsdaService
         return lots;
     }
 
-    private static int GetColumn(DataTable dtKings, DateTime weekDate)
+    private static int GetColumn(DataTable dtSource, DateTime weekDate)
     {
-        var row = dtKings.Rows[0];
-        for (var column = 0; column < dtKings.Columns.Count; column++)
+        if(dtSource == null) return 0;
+
+        var row = dtSource.Rows[0];
+        for (var column = 0; column < dtSource.Columns.Count; column++)
         {
             var value = row[column].ToString();
 

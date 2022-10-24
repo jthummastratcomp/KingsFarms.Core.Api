@@ -13,11 +13,13 @@ public class Mapper
         if (dtCustomer == null || dtCustomer.Rows.Count == 0) return list;
 
         list.AddRange(from DataRow row in dtCustomer.Rows
+            let key = GetRowValue(row, "Customer")
+            where !string.IsNullOrEmpty(key)
             select new CustomerDashboardViewModel
             {
                 CustomerHeader = new CustomerHeaderViewModel
                 {
-                    CustomerKey = GetRowValue(row, "Customer"),
+                    CustomerKey = key,
                     StoreName = GetRowValue(row, "Store Name"),
                     Address = new AddressViewModel
                     {
