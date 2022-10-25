@@ -7,9 +7,9 @@ namespace KingsFarms.Core.Api.Controllers;
 [ApiController]
 public class CustomerController : ControllerBase
 {
-    private readonly IWeeklyOrdersService _ordersService;
+    private readonly IWeeklyOrdersUsdaService _ordersService;
 
-    public CustomerController(ILogger<CustomerController> logger, IWeeklyOrdersService ordersService)
+    public CustomerController(ILogger<CustomerController> logger, IWeeklyOrdersUsdaService ordersService)
     {
         _ordersService = ordersService;
     }

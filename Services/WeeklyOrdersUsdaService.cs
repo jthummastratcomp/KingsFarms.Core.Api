@@ -3,6 +3,7 @@ using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Specialized;
 using KingsFarms.Core.Api.Enums;
 using KingsFarms.Core.Api.Helpers;
+using KingsFarms.Core.Api.Mappers;
 using KingsFarms.Core.Api.Services.Interfaces;
 using KingsFarms.Core.Api.ViewModels;
 using OfficeOpenXml;
@@ -25,6 +26,10 @@ public class WeeklyOrdersUsdaService : IWeeklyOrdersUsdaService
         _prepareUsdaInvoiceService = prepareUsdaInvoiceService;
     }
 
+    public List<SearchDto> GetInvoiceWeeksListForYear(int year)
+    {
+        return Utils.GetWeeksOfYear(year);
+    }
 
     public List<CustomerInvoicesViewModel> LoadInvoicesForWeek(string? week, CompanyEnum company)
     {
@@ -92,7 +97,7 @@ public class WeeklyOrdersUsdaService : IWeeklyOrdersUsdaService
         if(dtSource == null) return 0;
 
         var row = dtSource.Rows[0];
-        for (var column = 0; column < dtSource.Columns.Count; column++)
+        for (var column = 2; column < dtSource.Columns.Count; column++)
         {
             var value = row[column].ToString();
 
@@ -105,6 +110,24 @@ public class WeeklyOrdersUsdaService : IWeeklyOrdersUsdaService
         return 0;
     }
 
+    public List<CustomerDashboardViewModel> GetCustomersFromOrdersFile()
+    {
+        var client = new BlobServiceClient(_azStoreConnStr);
+        var container = client.GetBlobContainerClient(_azStoreContName);
+        var blob = container.GetBlockBlobClient(_weeklyOrdersUsdaFile);
+
+        using var memoryStream = new MemoryStream();
+        blob.DownloadTo(memoryStream);
+
+        using var package = new ExcelPackage(memoryStream);
+        var customerTab = package.Workbook.Worksheets["ALL CUSTOMERS"];
+
+        var dtCustomer = EpplusUtils.ExcelPackageToDataTable(customerTab);
+
+        var customersList = Mapper.MapToCustomerDashboardViewModelList(dtCustomer);
+
+        return customersList;
+    }
     //private static int GetWeekOfYearForInvoicesFromSheet(DateTime weekDate)
     //{
     //    var weekOfYear = Utils.GetWeekOfYear(weekDate);

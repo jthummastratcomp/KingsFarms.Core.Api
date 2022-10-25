@@ -41,7 +41,7 @@ public class InvoiceNumberGeneratorService : IInvoiceNumberGeneratorService
             if (!found) continue;
 
             //loop thru each week up to one week prior to current week
-            for (var col = 2; col < currentColumn; col++)
+            for (var col = 5; col < currentColumn; col += 4)
             {
                 var weekQty = Utils.ParseToInteger(dataRow[col].ToString());
                 if (weekQty > 0) newInvoiceNumber += 1;

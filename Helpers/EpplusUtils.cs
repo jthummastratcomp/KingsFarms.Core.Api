@@ -43,7 +43,7 @@ public static class EpplusUtils
         var currentColumn = 1;
 
         //loop all columns in the sheet and add them to the datatable
-        foreach (var cell in worksheet.Cells[1, 1, 1, worksheet.Dimension.End.Column - 1])
+        foreach (var cell in worksheet.Cells[1, 1, 1, worksheet.Dimension.End.Column - 0])
         {
             var columnName = cell.Text.Trim();
 
@@ -72,7 +72,7 @@ public static class EpplusUtils
         //start adding the contents of the excel file to the datatable
         for (var i = 1; i <= worksheet.Dimension.End.Row; i++)
         {
-            var row = worksheet.Cells[i, 1, i, /*worksheet.Dimension.End.Column-1*/ currentColumn - 1];
+            var row = worksheet.Cells[i, 1, i, /*worksheet.Dimension.End.Column-1*/ currentColumn - 0];
             var newRow = dt.NewRow();
 
             //loop all cells in the row
