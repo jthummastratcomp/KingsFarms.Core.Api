@@ -42,6 +42,10 @@
     <Compile Remove="Services\Interfaces\IInvoiceLoadLoopService.cs" />
     <Compile Remove="Services\Interfaces\IInvoiceLoadService.cs" />
     <Compile Remove="Services\Interfaces\IInvoiceService.cs" />
+    <Compile Remove="Services\Interfaces\IPrepareInvoiceService.cs" />
+    <Compile Remove="Services\Interfaces\IPrepareUsdaLotsInvoiceService.cs" />
+    <Compile Remove="Services\Interfaces\IUsdaMemoService.cs" />
+    <Compile Remove="Services\Interfaces\IUsdaQueueService.cs" />
     <Compile Remove="Services\Interfaces\IUsdaService.cs" />
     <Compile Remove="Services\Interfaces\IWeeklyOrdersService.cs" />
     <Compile Remove="Services\Interfaces\IWeeklyOrdersUsdaLotsService.cs" />
@@ -49,6 +53,11 @@
     <Compile Remove="Services\InvoiceLoadLoopService.cs" />
     <Compile Remove="Services\InvoiceLoadService.cs" />
     <Compile Remove="Services\InvoiceService.cs" />
+    <Compile Remove="Services\PrepareInvoiceService.cs" />
+    <Compile Remove="Services\PrepareUsdaLotsInvoiceService.cs" />
+    <Compile Remove="Services\UsdaMemoService.cs" />
+    <Compile Remove="Services\UsdaNewMemoService.cs" />
+    <Compile Remove="Services\UsdaQueueService.cs" />
     <Compile Remove="Services\UsdaService.cs" />
     <Compile Remove="Services\WeeklyOrdersService.cs" />
     <Compile Remove="Services\WeeklyOrdersUsdaLotsService.cs" />
@@ -57,7 +66,7 @@
   <ItemGroup>
     <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="8.0.0" />
     <PackageReference Include="Azure.Storage.Blobs" Version="12.13.0" />
-    <PackageReference Include="EPPlus" Version="6.0.6" />
+    <PackageReference Include="EPPlus" Version="6.0.8" />
     <PackageReference Include="LazyCache" Version="2.4.0" />
     <PackageReference Include="LazyCache.AspNetCore" Version="2.4.0" />
     <PackageReference Include="Microsoft.Azure.Cosmos" Version="3.29.0" />

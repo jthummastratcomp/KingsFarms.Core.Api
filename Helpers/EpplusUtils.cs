@@ -10,7 +10,7 @@ public static class EpplusUtils
         if (worksheet == null) return string.Empty;
 
         var range = worksheet.Cells[cellAddress];
-
+        var x = range.GetCellValue<string>();
         return range.GetValue<string>();
     }
 
@@ -32,6 +32,7 @@ public static class EpplusUtils
     {
         var dt = new DataTable();
 
+        worksheet.Workbook.Calculate();
 
         //check if the worksheet is completely empty
         if (worksheet.Dimension == null) return dt;

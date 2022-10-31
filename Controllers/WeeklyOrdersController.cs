@@ -11,19 +11,11 @@ namespace KingsFarms.Core.Api.Controllers;
 public class WeeklyOrdersController : ControllerBase
 {
     private readonly ILogger _logger;
-    //private readonly IWeeklyOrdersService _ordersService;
-    //private readonly IWeeklyOrdersUsdaLotsService _ordersUsdaLotsService;
     private readonly IWeeklyOrdersUsdaService _ordersUsdaService;
 
-    public WeeklyOrdersController(
-        //IWeeklyOrdersService ordersService,
-        IWeeklyOrdersUsdaService ordersUsdaService,
-        //IWeeklyOrdersUsdaLotsService ordersUsdaLotsService, 
-        ILogger logger)
+    public WeeklyOrdersController(IWeeklyOrdersUsdaService ordersUsdaService, ILogger logger)
     {
-        //_ordersService = ordersService;
         _ordersUsdaService = ordersUsdaService;
-        //_ordersUsdaLotsService = ordersUsdaLotsService;
         _logger = logger;
     }
 
@@ -33,23 +25,11 @@ public class WeeklyOrdersController : ControllerBase
         return _ordersUsdaService.GetInvoiceWeeksListForYear(year);
     }
 
-    //[HttpGet(CoreApiRoutes.LoadInvoicesForWeek)]
-    //public List<CustomerInvoicesViewModel> LoadInvoicesForWeek(string week, CompanyEnum company)
-    //{
-    //    return _ordersService.LoadInvoicesForWeek(week, company);
-    //}
-
-    [HttpGet(CoreApiRoutes.LoadInvoicesForWeekJay)]
-    public List<CustomerInvoicesViewModel> LoadInvoicesForWeekJay(string week, CompanyEnum company)
+    [HttpGet(CoreApiRoutes.LoadInvoicesForWeek)]
+    public List<CustomerInvoicesViewModel> LoadInvoicesForWeek(string week, CompanyEnum company)
     {
         return _ordersUsdaService.LoadInvoicesForWeek(week, company);
     }
-
-    //[HttpGet(CoreApiRoutes.LoadInvoicesForWeekLots)]
-    //public List<CustomerInvoicesViewModel> LoadInvoicesForWeekLots(string week, CompanyEnum company)
-    //{
-    //    return _ordersUsdaLotsService.LoadInvoicesForWeek(week, company);
-    //}
 
     [HttpGet(CoreApiRoutes.FirstMondayOfYear)]
     public DateTime FirstMondayOfYear(int year)

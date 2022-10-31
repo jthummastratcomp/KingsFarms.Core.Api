@@ -14,7 +14,7 @@ public class CustomerInvoicesViewModel
     public int Id { get; set; }
 
     //public string CustomerKey { get; set; }
-    public string InvoiceNumber { get; set; }
+    public string? InvoiceNumber { get; set; }
     public DateTime InvoiceDate { get; set; }
     public string InvoiceDateDisplay => InvoiceDate.ToString("MM/dd/yyyy");
     public DateTime DueDate { get; set; }

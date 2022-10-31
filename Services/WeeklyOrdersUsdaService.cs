@@ -14,7 +14,6 @@ public class WeeklyOrdersUsdaService : IWeeklyOrdersUsdaService
 {
     private readonly string _azStoreConnStr;
     private readonly string _azStoreContName;
-    private readonly IHarvestService _harvestService;
     private readonly IPrepareUsdaInvoiceService _prepareUsdaInvoiceService;
     private readonly string _weeklyOrdersUsdaFile;
 
@@ -38,9 +37,7 @@ public class WeeklyOrdersUsdaService : IWeeklyOrdersUsdaService
         var weekDate = Utils.ParseToDateTime(week);
         if (!weekDate.HasValue) return list;
 
-        //var weekOfYear = GetWeekOfYearForInvoicesFromSheet(weekDate.GetValueOrDefault());
-        //var currentColumnInDt = weekOfYear + 2;
-
+        if (weekDate.GetValueOrDefault().DayOfWeek != DayOfWeek.Saturday) return list;
 
         var year = weekDate.GetValueOrDefault().Year;
 
@@ -48,8 +45,8 @@ public class WeeklyOrdersUsdaService : IWeeklyOrdersUsdaService
         var container = client.GetBlobContainerClient(_azStoreContName);
         var blob = container.GetBlockBlobClient(_weeklyOrdersUsdaFile);
 
-        DataTable dtKings, dtMansi, dtCustomer;
-        var lots = new List<SearchDto>();
+        DataTable dtKings, dtMansi, dtCustomer, dtUniques;
+        List<SearchDto> lots;
 
         using (var memoryStream = new MemoryStream())
         {
@@ -60,12 +57,14 @@ public class WeeklyOrdersUsdaService : IWeeklyOrdersUsdaService
             var kingsTab = package.Workbook.Worksheets["KINGS"];
             var mansiTab = package.Workbook.Worksheets["MANSI"];
             var customerTab = package.Workbook.Worksheets["ALL CUSTOMERS"];
-            var uniquesTab = package.Workbook.Worksheets["Uniques"];
+            var uniquesTab = package.Workbook.Worksheets["Uniques1"];
 
             dtKings = EpplusUtils.ExcelPackageToDataTable(kingsTab);
             dtMansi = EpplusUtils.ExcelPackageToDataTable(mansiTab);
             dtCustomer = EpplusUtils.ExcelPackageToDataTable(customerTab);
-            lots = GetLots(uniquesTab);
+            //dtUniques = EpplusUtils.ExcelPackageToDataTable(uniquesTab);
+            //lots = GetLots(uniquesTab);
+            //lots = GetLots(uniquesTab);
         }
 
         var dtSource = company is CompanyEnum.Kings or CompanyEnum.KingsSandbox
@@ -75,40 +74,135 @@ public class WeeklyOrdersUsdaService : IWeeklyOrdersUsdaService
                 : null;
 
         var currentColumnInDt = GetColumn(dtSource, weekDate.GetValueOrDefault());
+        lots = GetLots(dtSource, currentColumnInDt);
+
         return _prepareUsdaInvoiceService.CustomerInvoicesViewModels(company, dtCustomer, dtKings, dtMansi, list, year, weekDate.GetValueOrDefault(), currentColumnInDt, lots);
     }
 
-    private static List<SearchDto> GetLots(ExcelWorksheet uniquesTab)
+    private static List<SearchDto> GetLots(DataTable? dtSource, int currentColumnInDt)
     {
-        var lots = new List<SearchDto>();
-        for (var i = 1; i <= 100; i++)
-        {
-            var lot = EpplusUtils.GetCellValue(uniquesTab, $"K{i}");
-            var customerKey = EpplusUtils.GetCellValue(uniquesTab, $"L{i}");
+        List<SearchDto> lots = new List<SearchDto>();
 
-            if (!string.IsNullOrEmpty(lot) && !string.IsNullOrEmpty(customerKey)) lots.Add(new SearchDto { Id = customerKey, Data = lot });
+        if (dtSource == null) return lots;
+
+        foreach (DataRow row in dtSource.Rows)
+        {
+            var customerKey = row[0].ToString();
+            var qty = Utils.ParseToInteger(row[currentColumnInDt].ToString());
+            if(qty == 0) continue;
+
+            var date = Utils.ParseToInteger(row[currentColumnInDt - 3].ToString()).ToString("00/00");
+
+            var inspectDate = Utils.ParseToDateTime($"{date}/{DateTime.Today.Year}");
+            var bed = Utils.ParseToInteger(row[currentColumnInDt - 2].ToString());
+            var lot = row[currentColumnInDt - 1].ToString();
+
+
+            if (!inspectDate.HasValue || bed == 0 || string.IsNullOrEmpty(lot)) continue;
+
+            var key = $"2022-065-{inspectDate.Value.ToString("MMddyy")}-{GetBlock(bed)}-{bed.ToString("00")}-{lot}-FL";
+
+            lots.Add(new SearchDto { Id = customerKey, Data = key });
         }
+
+
 
         return lots;
     }
 
-    private static int GetColumn(DataTable dtSource, DateTime weekDate)
+    private static string GetBlock(int bedNumber)
     {
-        if(dtSource == null) return 0;
-
-        var row = dtSource.Rows[0];
-        for (var column = 2; column < dtSource.Columns.Count; column++)
+        return bedNumber switch
         {
-            var value = row[column].ToString();
+            >= 1 and <= 11 => "74552",
+            >= 12 and <= 22 => "74560",
+            >= 23 and <= 28 => "74558",
+            >= 29 and <= 37 => "74556",
+            >= 38 and <= 51 => "74554",
+            _ => string.Empty
+        };
+    }
 
-            var date = Utils.ParseToDateTime(value);
-            if (!date.HasValue) continue;
+    //private static List<SearchDto> GetLots(ExcelWorksheet uniquesTab)
+    //{
+    //    var lots = new List<SearchDto>();
+    //    for (var i = 1; i <= 100; i++)
+    //    {
+    //        var lot = EpplusUtils.GetCellValue(uniquesTab, $"Z{i}");
+    //        var customerKey = EpplusUtils.GetCellValue(uniquesTab, $"T{i}");
 
-            if (date.GetValueOrDefault() == weekDate) return column;
+    //        //var lot = EpplusUtils.GetCellValue(uniquesTab, $"K{i}");
+    //        //var customerKey = EpplusUtils.GetCellValue(uniquesTab, $"L{i}");
+
+    //        if (!string.IsNullOrEmpty(lot) && !string.IsNullOrEmpty(customerKey)) lots.Add(new SearchDto { Id = customerKey, Data = lot });
+    //    }
+
+    //    return lots;
+    //}
+
+    private static int GetColumn(DataTable? dtSource, DateTime weekDate)
+    {
+        if (dtSource == null) return 0;
+
+        var weekOfYear = DateTime.Parse($"1/1/{DateTime.Today.Year}");
+
+        var columnInDt = PickColumn(weekDate, weekOfYear);
+
+        //if (weekDate.Date == weekOfYear)
+        //{
+        //    weekOfYear = weekOfYear.AddDays(7);
+        //    return 9;
+        //}
+        //if (weekDate.Date == weekOfYear.AddDays(7)) return 13;
+        //if (weekDate.Date == DateTime.Parse($"1/22/{DateTime.Today.Year}")) return 17;
+        //if (weekDate.Date == DateTime.Parse($"1/29/{DateTime.Today.Year}")) return 17;
+        //if (weekDate.Date == DateTime.Parse($"1/22/{DateTime.Today.Year}")) return 17;
+        //if (weekDate.Date == DateTime.Parse($"1/22/{DateTime.Today.Year}")) return 17;
+        //if (weekDate.Date == DateTime.Parse($"1/22/{DateTime.Today.Year}")) return 17;
+
+        //var row = dtSource.Rows[0];
+        //for (var column = 1; column < dtSource.Columns.Count; column += 4)
+        //{
+        //    var value = row[column].ToString();
+
+        //    var date = Utils.ParseToDateTime(value);
+        //    if (!date.HasValue) continue;
+
+        //    if (date.GetValueOrDefault() == weekDate) return column;
+        //}
+
+        return columnInDt;
+    }
+
+    private static int PickColumn(DateTime weekDate, DateTime weekOfYear)
+    {
+        int column = 5;
+        while (weekDate != weekOfYear)
+        {
+            weekOfYear = weekOfYear.AddDays(7);
+            column += 4;
         }
 
-        return 0;
+        return column;
     }
+
+    //private static int GetColumn(DataTable? dtSource, DateTime weekDate)
+    //{
+    //    if(dtSource == null) return 0;
+
+    //    var row = dtSource.Rows[0];
+    //    for (var column = 2; column < dtSource.Columns.Count; column++)
+    //    {
+    //        var value = row[column].ToString();
+
+    //        var date = Utils.ParseToDateTime(value);
+    //        if (!date.HasValue) continue;
+
+    //        if (date.GetValueOrDefault() == weekDate) return column;
+    //    }
+
+    //    return 0;
+    //}
 
     public List<CustomerDashboardViewModel> GetCustomersFromOrdersFile()
     {
@@ -128,12 +222,4 @@ public class WeeklyOrdersUsdaService : IWeeklyOrdersUsdaService
 
         return customersList;
     }
-    //private static int GetWeekOfYearForInvoicesFromSheet(DateTime weekDate)
-    //{
-    //    var weekOfYear = Utils.GetWeekOfYear(weekDate);
-    //    var firstMondayOfYear = Utils.GetFirstMondayOfYear(DateTime.Today.Year);
-    //    var firstWeekOfYear = Utils.GetWeekOfYear(firstMondayOfYear);
-    //    if (firstWeekOfYear > 1) weekOfYear -= 1;
-    //    return weekOfYear;
-    //}
 }

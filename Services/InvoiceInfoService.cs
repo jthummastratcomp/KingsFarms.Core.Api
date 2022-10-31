@@ -5,8 +5,10 @@ namespace KingsFarms.Core.Api.Services;
 
 public class InvoiceInfoService : IInvoiceInfoService
 {
-    public CustomerInvoicesViewModel PrepareInvoice(DateTime weekDate, int weekQty, CustomerDashboardViewModel viewModel, string newInvoiceNumber, string? usdaMemo)
+    public CustomerInvoicesViewModel PrepareInvoice(DateTime weekDate, int weekQty, CustomerDashboardViewModel? viewModel, string? newInvoiceNumber, string? usdaMemo)
     {
+        if (viewModel == null) return new CustomerInvoicesViewModel();
+
         var model = new CustomerInvoicesViewModel
         {
             InvoiceNumber = newInvoiceNumber,
@@ -32,16 +34,16 @@ public class InvoiceInfoService : IInvoiceInfoService
             Memo = string.IsNullOrEmpty(usdaMemo) ? string.Empty : usdaMemo
         };
 
-        if (viewModel.CustomerHeader.CustomerKey == "MYT-DEN")
+        switch (viewModel.CustomerHeader.CustomerKey)
         {
-            model.Bill.ChargesDiscounts = 5.76m;
-            model.Bill.Billed += 5.76m;
-        }
-
-        if (viewModel.CustomerHeader.CustomerKey == "TRI-CHA")
-        {
-            model.Bill.ChargesDiscounts = -30m;
-            model.Bill.Billed -= 30m;
+            case "MYT-DEN":
+                model.Bill.ChargesDiscounts = 5.76m;
+                model.Bill.Billed += 5.76m;
+                break;
+            case "TRI-CHA":
+                model.Bill.ChargesDiscounts = -30m;
+                model.Bill.Billed -= 30m;
+                break;
         }
 
         return model;
