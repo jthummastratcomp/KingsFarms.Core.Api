@@ -18,7 +18,7 @@ public class HarvestService : IHarvestService
     private readonly string _harvestFile;
     private readonly ILogger _logger;
 
-    private IAppCache _appCache;
+    private readonly IAppCache _appCache;
 
     public HarvestService(ILogger logger, IAppCache appCache, string azStoreConnStr, string azStoreContName,
         string harvestFile)
@@ -69,11 +69,29 @@ public class HarvestService : IHarvestService
         };
     }
 
-    private List<HarvestViewModel> GetAllHarvestData()
+    public HarvestDto GetHarvestDataCalendarAll()
     {
-        var list = new List<HarvestViewModel>();
-        for (var year = 2020; year <= DateTime.Today.Year; year++) list.AddRange(GetHarvestDataForYearBySeason(year));
-        return list;
+        return new HarvestDto
+        {
+            ThisYear = GetHarvestYearTotalByCalendar(DateTime.Today.Year),
+            LastYear = GetHarvestYearTotalByCalendar(DateTime.Today.AddYears(-1).Year),
+            AllYears = GetAllHarvestData().Sum(x => x.TotalHarvest)
+        };
+    }
+
+    public HarvestDto GetHarvestDataSeasonAll()
+    {
+        throw new NotImplementedException();
+    }
+
+    private IEnumerable<HarvestViewModel> GetAllHarvestData()
+    {
+        return _appCache.GetOrAdd("GetAllHarvestData", () =>
+        {
+            var list = new List<HarvestViewModel>();
+            for (var year = 2020; year <= DateTime.Today.Year; year++) list.AddRange(GetHarvestDataForYearBySeason(year));
+            return list;
+        }, DateTime.Now.AddHours(2));
     }
 
 

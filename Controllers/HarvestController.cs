@@ -65,4 +65,18 @@ public class HarvestController : ControllerBase
 
         return total;
     }
+
+    [HttpGet(CoreApiRoutes.HarvestDataCalendarAll)]
+    public HarvestDto GetHarvestDataCalendarAll()
+    {
+        _logger.Information("GetHarvestDataCalendarAll");
+        return _harvestService.GetHarvestDataCalendarAll();
+    }
+
+    [HttpGet(CoreApiRoutes.HarvestDataSeasonAll)]
+    public HarvestDto GetHarvestDataSeasonAll()
+    {
+        _logger.Information("GetHarvestDataSeasonAll");
+        return _harvestService.GetHarvestDataSeasonAll();
+    }
 }

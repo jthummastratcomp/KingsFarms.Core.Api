@@ -32,7 +32,7 @@ public static class EpplusUtils
     {
         var dt = new DataTable();
 
-        worksheet.Workbook.Calculate();
+        //worksheet.Workbook.Calculate();
 
         //check if the worksheet is completely empty
         if (worksheet.Dimension == null) return dt;
@@ -77,7 +77,17 @@ public static class EpplusUtils
             var newRow = dt.NewRow();
 
             //loop all cells in the row
-            foreach (var cell in row) newRow[cell.Start.Column - 1] = cell.Text;
+            foreach (var cell in row)
+            {
+                try
+                {
+                    newRow[cell.Start.Column - 1] = cell.Text;
+                }
+                catch
+                {
+                    // ignored
+                }
+            }
 
             dt.Rows.Add(newRow);
         }

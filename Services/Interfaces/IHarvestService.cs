@@ -10,4 +10,6 @@ public interface IHarvestService
     int GetHarvestYearTotalBySeason(int year);
     int GetHarvestYearTotalByCalendar(int calendarYear);
     int GetHarvestStatusTotal(DashboardStatusEnum status);
+    HarvestDto GetHarvestDataCalendarAll();
+    HarvestDto GetHarvestDataSeasonAll();
 }
