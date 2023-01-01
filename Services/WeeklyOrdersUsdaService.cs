@@ -62,7 +62,6 @@ public class WeeklyOrdersUsdaService : IWeeklyOrdersUsdaService
             dtKings = EpplusUtils.ExcelPackageToDataTable(kingsTab);
             dtMansi = EpplusUtils.ExcelPackageToDataTable(mansiTab);
             dtCustomer = EpplusUtils.ExcelPackageToDataTable(customerTab);
-
         }
 
         var dtSource = company is CompanyEnum.Kings or CompanyEnum.KingsSandbox
@@ -72,11 +71,11 @@ public class WeeklyOrdersUsdaService : IWeeklyOrdersUsdaService
                 : null;
 
         var currentColumnInDt = GetColumn(dtSource, weekDate.GetValueOrDefault());
-        lots = GetLots(dtSource, currentColumnInDt);
+        lots = GetLots(dtSource, currentColumnInDt, weekDate.GetValueOrDefault());
 
         return _prepareUsdaInvoiceService.CustomerInvoicesViewModels(company, dtCustomer, dtKings, dtMansi, list, year, weekDate.GetValueOrDefault(), currentColumnInDt, lots);
     }
-    
+
 
     public List<CustomerDashboardViewModel> GetCustomersFromOrdersFile()
     {
@@ -97,7 +96,7 @@ public class WeeklyOrdersUsdaService : IWeeklyOrdersUsdaService
         return customersList;
     }
 
-    private static List<SearchDto> GetLots(DataTable? dtSource, int currentColumnInDt)
+    private static List<SearchDto> GetLots(DataTable? dtSource, int currentColumnInDt, DateTime weekDate)
     {
         var lots = new List<SearchDto>();
 
@@ -108,12 +107,12 @@ public class WeeklyOrdersUsdaService : IWeeklyOrdersUsdaService
             let qty = Utils.ParseToInteger(row[currentColumnInDt].ToString())
             where qty != 0
             let date = Utils.ParseToInteger(row[currentColumnInDt - 3].ToString()).ToString("00/00")
-            let inspectDate = Utils.ParseToDateTime($"{date}/{DateTime.Today.Year}")
+            //let inspectDate = Utils.ParseToDateTime($"{date}/{DateTime.Today.Year}")
+            let inspectDate = Utils.ParseToDateTime($"{date}/{weekDate.Year}")
             let bed = Utils.ParseToInteger(row[currentColumnInDt - 2].ToString())
             let lot = row[currentColumnInDt - 1].ToString()
             where inspectDate.HasValue && bed != 0 && !string.IsNullOrEmpty(lot)
-            let key = @$"Lot# 2022-065-{inspectDate.Value.ToString("MMddyy")}-{GetBlock(bed)}-{bed.ToString("00")}-{lot}-FL
-Compliance# CP2223FTP045"
+            let key = @$"Lot# 2022-065-{inspectDate.Value.ToString("MMddyy")}-{GetBlock(bed)}-{bed.ToString("00")}-{lot}-FL Compliance# CP2223FTP045"
             select new SearchDto { Id = customerKey, Data = key });
 
 
@@ -132,15 +131,17 @@ Compliance# CP2223FTP045"
             _ => string.Empty
         };
     }
-    
+
     private static int GetColumn(DataTable? dtSource, DateTime weekDate)
     {
         if (dtSource == null) return 0;
 
-        var weekOfYear = DateTime.Parse($"1/1/{DateTime.Today.Year}");
+        //var weekOfYear = DateTime.Parse($"1/1/{DateTime.Today.Year}");
+
+        var weekOfYear = DateTime.Parse($"1/1/{weekDate.Year}");
 
         var columnInDt = PickColumn(weekDate, weekOfYear);
-        
+
         return columnInDt;
     }
 

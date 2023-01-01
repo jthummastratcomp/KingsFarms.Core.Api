@@ -35,7 +35,7 @@ public class PrepareUsdaInvoiceService : IPrepareUsdaInvoiceService
 
         var prepList = PrepCustomerInvoicesList(weekDate, currentColumnInDt, dtSource, customersList);
 
-        var invoiceNumbersList = _generatorService.GetInvoiveNumbers(prepList, currentColumnInDt, dtKings, dtMansi);
+        var invoiceNumbersList = _generatorService.GetInvoiceNumbers(prepList, weekDate, currentColumnInDt, dtKings, dtMansi);
 
         list = _invoiceInfoService.GetCustomerInvoicesViewModels(prepList, customersList, invoiceNumbersList, lots);
 
