@@ -10,15 +10,19 @@
     <Compile Remove="Cache\**" />
     <Compile Remove="Services\Helpers\**" />
     <Compile Remove="Services\Strategy\**" />
+    <Compile Remove="Tests\**" />
     <Content Remove="Cache\**" />
     <Content Remove="Services\Helpers\**" />
     <Content Remove="Services\Strategy\**" />
+    <Content Remove="Tests\**" />
     <EmbeddedResource Remove="Cache\**" />
     <EmbeddedResource Remove="Services\Helpers\**" />
     <EmbeddedResource Remove="Services\Strategy\**" />
+    <EmbeddedResource Remove="Tests\**" />
     <None Remove="Cache\**" />
     <None Remove="Services\Helpers\**" />
     <None Remove="Services\Strategy\**" />
+    <None Remove="Tests\**" />
   </ItemGroup>
 
   <ItemGroup>
