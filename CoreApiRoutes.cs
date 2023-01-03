@@ -18,6 +18,11 @@ public static class CoreApiRoutes
     public const string HarvestDataCalendarAll = "api/harvest/calendarall";
     public const string HarvestDataSeasonAll = "api/harvest/seasonall";
 
+    public const string HarvestByYear = "api/harvest/byYear";
+    public const string HarvestByYearByBed = "api/harvest/byYearByBed";
+    public const string HarvestByYearBySection = "api/harvest/byYearBySection";
+    
+
     //BEDS
     public const string BedInfo = "api/beds/info";
     public const string BedInfoGrouped = "api/beds/info/grouped";

@@ -7,6 +7,7 @@ using KingsFarms.Core.Api.Services.Interfaces;
 using KingsFarms.Core.Api.ViewModels;
 using LazyCache;
 using OfficeOpenXml;
+using static System.Collections.Specialized.BitVector32;
 using ILogger = Serilog.ILogger;
 
 namespace KingsFarms.Core.Api.Services;
@@ -44,7 +45,7 @@ public class HarvestService : IHarvestService
     public int GetHarvestYearTotalBySeason(int harvestYear)
     {
         var list = GetHarvestDataForYearBySeason(harvestYear);
-        var total = list.Sum(x => x.TotalHarvest);
+        var total = list.Sum(x => x.HarvestQty);
 
         return total;
     }
@@ -52,7 +53,7 @@ public class HarvestService : IHarvestService
     public int GetHarvestYearTotalByCalendar(int calendarYear)
     {
         var list = GetAllHarvestData();
-        var total = list.Where(x => x.HarvestDate.Year == calendarYear).Sum(x => x.TotalHarvest);
+        var total = list.Where(x => x.HarvestDate.Year == calendarYear).Sum(x => x.HarvestQty);
 
         return total;
     }
@@ -63,9 +64,9 @@ public class HarvestService : IHarvestService
 
         return status switch
         {
-            DashboardStatusEnum.CurrentYear => list.Where(x => x.HarvestDate.Year == DateTime.Today.Year).Sum(x => x.TotalHarvest),
-            DashboardStatusEnum.LastYear => list.Where(x => x.HarvestDate.Year == DateTime.Today.AddYears(-1).Year).Sum(x => x.TotalHarvest),
-            _ => list.Sum(x => x.TotalHarvest)
+            DashboardStatusEnum.CurrentYear => list.Where(x => x.HarvestDate.Year == DateTime.Today.Year).Sum(x => x.HarvestQty),
+            DashboardStatusEnum.LastYear => list.Where(x => x.HarvestDate.Year == DateTime.Today.AddYears(-1).Year).Sum(x => x.HarvestQty),
+            _ => list.Sum(x => x.HarvestQty)
         };
     }
 
@@ -75,13 +76,50 @@ public class HarvestService : IHarvestService
         {
             ThisYear = GetHarvestYearTotalByCalendar(DateTime.Today.Year),
             LastYear = GetHarvestYearTotalByCalendar(DateTime.Today.AddYears(-1).Year),
-            AllYears = GetAllHarvestData().Sum(x => x.TotalHarvest)
+            AllYears = GetAllHarvestData().Sum(x => x.HarvestQty)
         };
     }
 
     public HarvestDto GetHarvestDataSeasonAll()
     {
         throw new NotImplementedException();
+    }
+
+    public List<SectionHarvestViewModel> GetHarvestByYearBySection()
+    {
+        var list = GetAllHarvestData().ToList();
+        if (!Utils.HasRows(list)) return new List<SectionHarvestViewModel>();
+
+
+
+        var sectionHarvests = new List<SectionHarvestViewModel>();
+
+        var harvestYears = list.Select(y => y.HarvestDate.Year).Distinct();
+        foreach (var harvestYear in harvestYears)
+        {
+            var sectionHarvestForYear = new SectionHarvestViewModel() { HarvestYear = harvestYear };
+
+            var harvestsForTheYear = list.Where(x => x.HarvestDate.Year == harvestYear).ToList();
+
+            var groupBySection = harvestsForTheYear.GroupBy(x => x.Section);
+
+            foreach (var groupBy in groupBySection)
+            {
+                var section = groupBy.Key;
+                var sectionHarvest = groupBy.Sum(x => x.HarvestQty);
+
+                if (section == SectionEnum.MidEastOne) sectionHarvestForYear.MidEast1HarvestQty = sectionHarvest;
+                if (section == SectionEnum.MidEastTwo) sectionHarvestForYear.MidEast2HarvestQty = sectionHarvest;
+                if (section == SectionEnum.MidWest) sectionHarvestForYear.MidWestHarvestQty = sectionHarvest;
+                if (section == SectionEnum.SouthEastOne) sectionHarvestForYear.SouthEast1HarvestQty = sectionHarvest;
+                if (section == SectionEnum.SouthEastTwo) sectionHarvestForYear.SouthEast2HarvestQty = sectionHarvest;
+                if (section == SectionEnum.SouthWest) sectionHarvestForYear.SouthWestHarvestQty = sectionHarvest;
+            }
+
+            sectionHarvests.Add(sectionHarvestForYear);
+        }
+        
+        return sectionHarvests;
     }
 
     private IEnumerable<HarvestViewModel> GetAllHarvestData()
@@ -140,26 +178,28 @@ public class HarvestService : IHarvestService
             var harvestDate = Utils.ParseToDateTime(dataRow[1].ToString());
             if (!harvestDate.HasValue) continue;
 
-            list.Add(new HarvestViewModel(harvestDate.GetValueOrDefault())
-                { BedHarvests = GetHarvestsForWeek(dataRow, season) });
+            //list.Add(new HarvestViewModel(harvestDate.GetValueOrDefault())
+            //    { BedHarvests = GetHarvestsForWeek(dataRow, season) });
+
+            list.AddRange(GetHarvestsForWeek(dataRow, season, harvestDate.GetValueOrDefault()));
         }
 
         return list;
     }
-
-    private static List<HarvestBedViewModel> GetHarvestsForWeek(DataRow row, int season)
+    private static List<HarvestViewModel> GetHarvestsForWeek(DataRow row, int season, DateTime harvestDate)
     {
-        var list = new List<HarvestBedViewModel>();
+        var list = new List<HarvestViewModel>();
 
         var colMax = season == 2020 ? 33 : 56;
         for (var col = 5; col < colMax; col++)
         {
             var qty = Utils.ParseToInteger(row[col].ToString());
             if (qty <= 0) continue;
-            var model = new HarvestBedViewModel
+            var model = new HarvestViewModel
             {
-                BedNumber = $"Bed {col - 4}",
-                HarvestQty = qty
+                BedNumber = col - 4,
+                HarvestQty = qty,
+                HarvestDate = harvestDate
             };
 
             list.Add(model);
@@ -167,4 +207,28 @@ public class HarvestService : IHarvestService
 
         return list;
     }
+
+    //private static List<HarvestBedViewModel> GetHarvestsForWeek(DataRow row, int season)
+    //{
+    //    var list = new List<HarvestBedViewModel>();
+
+    //    var colMax = season == 2020 ? 33 : 56;
+    //    for (var col = 5; col < colMax; col++)
+    //    {
+    //        var qty = Utils.ParseToInteger(row[col].ToString());
+    //        if (qty <= 0) continue;
+    //        var model = new HarvestBedViewModel
+    //        {
+    //            BedNumber = $"Bed {col - 4}",
+    //            HarvestQty = qty,
+
+    //        };
+
+    //        list.Add(model);
+    //    }
+
+    //    return list;
+    //}
+
+
 }

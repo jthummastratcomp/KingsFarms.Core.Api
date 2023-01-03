@@ -43,10 +43,10 @@ public class WebBootstrap : Module
             .WithParameter("azStoreContName", azStoreContName)
             .WithParameter("harvestFile", harvestFile);
 
-        builder.RegisterType<FieldOperationService>().As<IFieldOperationService>()
-            .WithParameter("azStoreConnStr", azStoreConnStr)
-            .WithParameter("azStoreContName", azStoreContName)
-            .WithParameter("fieldOperationsFile", fieldOperationsFile);
+        //builder.RegisterType<FieldOperationService>().As<IFieldOperationService>()
+        //    .WithParameter("azStoreConnStr", azStoreConnStr)
+        //    .WithParameter("azStoreContName", azStoreContName)
+        //    .WithParameter("fieldOperationsFile", fieldOperationsFile);
 
         builder.RegisterType<HorseManureService>().As<IHorseManureService>()
             .WithParameter("azStoreConnStr", azStoreConnStr)

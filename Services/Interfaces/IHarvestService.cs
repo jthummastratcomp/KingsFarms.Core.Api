@@ -12,4 +12,5 @@ public interface IHarvestService
     int GetHarvestStatusTotal(DashboardStatusEnum status);
     HarvestDto GetHarvestDataCalendarAll();
     HarvestDto GetHarvestDataSeasonAll();
+    List<SectionHarvestViewModel> GetHarvestByYearBySection();
 }

@@ -79,4 +79,10 @@ public class HarvestController : ControllerBase
         _logger.Information("GetHarvestDataSeasonAll");
         return _harvestService.GetHarvestDataSeasonAll();
     }
+
+    [HttpGet(CoreApiRoutes.HarvestByYearBySection)]
+    public List<SectionHarvestViewModel> GetHarvestByYearBySection()
+    {
+        return _harvestService.GetHarvestByYearBySection();
+    }
 }
