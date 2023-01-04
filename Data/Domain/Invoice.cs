@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore;
 namespace KingsFarms.Core.Api.Data.Domain;
 
 [Index(nameof(InvoiceNumber), IsUnique = true)]
-public class Invoice
+public class Invoice: DomainObject
 {
-    public int Id { get; set; }
+    
     
     [Required] [StringLength(50)] public string? InvoiceNumber { get; set; }
 
@@ -28,4 +28,9 @@ public class Invoice
     public string? Memo { get; set; }
 
     [Required] public Customer? Customer { get; set; }
+}
+
+public class DomainObject
+{
+    public int Id { get; set; }
 }

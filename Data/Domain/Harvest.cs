@@ -1,9 +1,13 @@
-﻿namespace KingsFarms.Core.Api.Data.Domain;
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 
-public class Harvest
+namespace KingsFarms.Core.Api.Data.Domain;
+
+[Index(nameof(HarvestDate))]
+public class Harvest : DomainObject
 {
-    public int Id { get; set; }
-    public DateTime? HarvestDate { get; set; }
-    public int? Quantity { get; set; }
-    public Bed? Bed { get; set; }
+
+    [Required] public DateTime? HarvestDate { get; set; }
+    [Required] public int? Quantity { get; set; }
+    [Required] public Bed? Bed { get; set; }
 }

@@ -1,10 +1,15 @@
-﻿namespace KingsFarms.Core.Api.Data.Domain;
+﻿using KingsFarms.Core.Api.Enums;
+using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 
-public class Bed
+namespace KingsFarms.Core.Api.Data.Domain;
+
+[Index(nameof(Name), IsUnique = true)]
+public class Bed :DomainObject
 {
-    public int Id { get; set; }
-    public string? Name { get; set; }
-    public string? Section { get; set; }
 
-    public List<Harvest>? Harvests { get; set; }
+    [Required] [StringLength(50)] public string? Name { get; set; }
+    [Required] public SectionEnum? Section { get; set; }
+    public int PlantsCount { get; set; }
+    public DateTime PlantedDate { get; set; }
 }

@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace KingsFarms.Core.Api.Data.Migrations
+namespace KingsFarms.Core.Api.data.migrations
 {
     [DbContext(typeof(KingsFarmsDbContext))]
     partial class KingsFarmsDbContextModelSnapshot : ModelSnapshot
@@ -22,6 +22,69 @@ namespace KingsFarms.Core.Api.Data.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("HorseFarm", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Address")
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
+
+                    b.Property<string>("City")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("ContactName")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("Phone")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("Zip")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Name");
+
+                    b.ToTable("HorseFarms");
+                });
+
+            modelBuilder.Entity("HorseFarmLoad", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("HorseFarmId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("LoadDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Qty")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("HorseFarmId");
+
+                    b.HasIndex("LoadDate");
+
+                    b.ToTable("HorseFarmLoads");
+                });
+
             modelBuilder.Entity("KingsFarms.Core.Api.Data.Domain.Bed", b =>
                 {
                     b.Property<int>("Id")
@@ -31,34 +94,25 @@ namespace KingsFarms.Core.Api.Data.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
-                    b.Property<string>("Section")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<DateTime>("PlantedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("PlantsCount")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Section")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Beds");
+                    b.HasIndex("Name")
+                        .IsUnique();
 
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "1",
-                            Section = "MidWest"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "2",
-                            Section = "MidWest"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Name = "3",
-                            Section = "MidWest"
-                        });
+                    b.ToTable("Beds");
                 });
 
             modelBuilder.Entity("KingsFarms.Core.Api.Data.Domain.Customer", b =>
@@ -70,13 +124,16 @@ namespace KingsFarms.Core.Api.Data.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Address")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
 
                     b.Property<string>("City")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("ContactName")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("ContactPhone")
                         .HasColumnType("nvarchar(max)");
@@ -87,21 +144,26 @@ namespace KingsFarms.Core.Api.Data.Migrations
                         .HasColumnType("nvarchar(20)");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("OtherPhone")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("StoreName")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
 
                     b.Property<string>("StorePhone")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Zip")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Zip")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Key")
+                        .IsUnique();
 
                     b.ToTable("Customers");
                 });
@@ -114,40 +176,24 @@ namespace KingsFarms.Core.Api.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("BedId")
+                    b.Property<int>("BedId")
                         .HasColumnType("int");
 
                     b.Property<DateTime?>("HarvestDate")
+                        .IsRequired()
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("Quantity")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("BedId");
 
-                    b.ToTable("Harvests");
+                    b.HasIndex("HarvestDate");
 
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            HarvestDate = new DateTime(2022, 12, 25, 0, 0, 0, 0, DateTimeKind.Local),
-                            Quantity = 230
-                        },
-                        new
-                        {
-                            Id = 2,
-                            HarvestDate = new DateTime(2022, 12, 30, 0, 0, 0, 0, DateTimeKind.Local),
-                            Quantity = 120
-                        },
-                        new
-                        {
-                            Id = 3,
-                            HarvestDate = new DateTime(2023, 1, 4, 0, 0, 0, 0, DateTimeKind.Local),
-                            Quantity = 24
-                        });
+                    b.ToTable("Harvests");
                 });
 
             modelBuilder.Entity("KingsFarms.Core.Api.Data.Domain.Invoice", b =>
@@ -212,11 +258,59 @@ namespace KingsFarms.Core.Api.Data.Migrations
                     b.ToTable("Invoices");
                 });
 
+            modelBuilder.Entity("Shipment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("Boxes")
+                        .IsRequired()
+                        .HasColumnType("int");
+
+                    b.Property<int?>("CustomerId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("Quantity")
+                        .IsRequired()
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("ShipmentDate")
+                        .IsRequired()
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("ShipmentType")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CustomerId");
+
+                    b.HasIndex("ShipmentDate");
+
+                    b.ToTable("Shipments");
+                });
+
+            modelBuilder.Entity("HorseFarmLoad", b =>
+                {
+                    b.HasOne("HorseFarm", "HorseFarm")
+                        .WithMany()
+                        .HasForeignKey("HorseFarmId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("HorseFarm");
+                });
+
             modelBuilder.Entity("KingsFarms.Core.Api.Data.Domain.Harvest", b =>
                 {
                     b.HasOne("KingsFarms.Core.Api.Data.Domain.Bed", "Bed")
-                        .WithMany("Harvests")
-                        .HasForeignKey("BedId");
+                        .WithMany()
+                        .HasForeignKey("BedId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Bed");
                 });
@@ -232,9 +326,13 @@ namespace KingsFarms.Core.Api.Data.Migrations
                     b.Navigation("Customer");
                 });
 
-            modelBuilder.Entity("KingsFarms.Core.Api.Data.Domain.Bed", b =>
+            modelBuilder.Entity("Shipment", b =>
                 {
-                    b.Navigation("Harvests");
+                    b.HasOne("KingsFarms.Core.Api.Data.Domain.Customer", "Customer")
+                        .WithMany()
+                        .HasForeignKey("CustomerId");
+
+                    b.Navigation("Customer");
                 });
 #pragma warning restore 612, 618
         }
