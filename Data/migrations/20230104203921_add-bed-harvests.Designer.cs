@@ -4,6 +4,7 @@ using KingsFarms.Core.Api.Data.Db;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace KingsFarms.Core.Api.Data.Migrations
 {
     [DbContext(typeof(KingsFarmsDbContext))]
-    partial class KingsFarmsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230104203921_add-bed-harvests")]
+    partial class addbedharvests
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
