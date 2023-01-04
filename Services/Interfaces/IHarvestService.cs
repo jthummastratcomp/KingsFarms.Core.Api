@@ -13,4 +13,5 @@ public interface IHarvestService
     HarvestDto GetHarvestDataCalendarAll();
     HarvestDto GetHarvestDataSeasonAll();
     List<SectionHarvestViewModel> GetHarvestByYearBySection();
+    List<BedHarvestChartViewModel> GetHarvestByYearByBed();
 }

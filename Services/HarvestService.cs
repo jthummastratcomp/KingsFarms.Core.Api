@@ -7,19 +7,17 @@ using KingsFarms.Core.Api.Services.Interfaces;
 using KingsFarms.Core.Api.ViewModels;
 using LazyCache;
 using OfficeOpenXml;
-using static System.Collections.Specialized.BitVector32;
 using ILogger = Serilog.ILogger;
 
 namespace KingsFarms.Core.Api.Services;
 
 public class HarvestService : IHarvestService
 {
+    private readonly IAppCache _appCache;
     private readonly string _azStoreConnStr;
     private readonly string _azStoreContName;
     private readonly string _harvestFile;
     private readonly ILogger _logger;
-
-    private readonly IAppCache _appCache;
 
     public HarvestService(ILogger logger, IAppCache appCache, string azStoreConnStr, string azStoreContName,
         string harvestFile)
@@ -91,13 +89,12 @@ public class HarvestService : IHarvestService
         if (!Utils.HasRows(list)) return new List<SectionHarvestViewModel>();
 
 
-
         var sectionHarvests = new List<SectionHarvestViewModel>();
 
         var harvestYears = list.Select(y => y.HarvestDate.Year).Distinct();
         foreach (var harvestYear in harvestYears)
         {
-            var sectionHarvestForYear = new SectionHarvestViewModel() { HarvestYear = harvestYear };
+            var sectionHarvestForYear = new SectionHarvestViewModel { HarvestYear = harvestYear };
 
             var harvestsForTheYear = list.Where(x => x.HarvestDate.Year == harvestYear).ToList();
 
@@ -118,8 +115,45 @@ public class HarvestService : IHarvestService
 
             sectionHarvests.Add(sectionHarvestForYear);
         }
-        
+
         return sectionHarvests;
+    }
+
+    public List<BedHarvestChartViewModel> GetHarvestByYearByBed()
+    {
+        var list = GetAllHarvestData().ToList();
+        if (!Utils.HasRows(list)) return new List<BedHarvestChartViewModel>();
+
+        var bedHarvests = new List<BedHarvestChartViewModel>();
+
+        var beds = list.Select(y => y.BedNumber).Distinct();
+
+        foreach (var bed in beds)
+        {
+            var bedHarvest = new BedHarvestChartViewModel { BedNumber = bed };
+
+            var harvestsForTheBed = list.Where(x => x.BedNumber == bed).ToList();
+
+            var groupByYearForBed = harvestsForTheBed.GroupBy(x => x.HarvestDate.Year);
+
+            foreach (var groupBy in groupByYearForBed)
+            {
+                var year = groupBy.Key;
+                var yearHarvestForBed = groupBy.Sum(x => x.HarvestQty);
+
+                if (year == 2019) bedHarvest.Year2019 = yearHarvestForBed;
+                if (year == 2020) bedHarvest.Year2020 = yearHarvestForBed;
+                if (year == 2021) bedHarvest.Year2021 = yearHarvestForBed;
+                if (year == 2022) bedHarvest.Year2022 = yearHarvestForBed;
+                if (year == 2023) bedHarvest.Year2023 = yearHarvestForBed;
+                if (year == 2024) bedHarvest.Year2024 = yearHarvestForBed;
+            }
+
+            bedHarvests.Add(bedHarvest);
+        }
+
+
+        return bedHarvests;
     }
 
     private IEnumerable<HarvestViewModel> GetAllHarvestData()
@@ -186,6 +220,7 @@ public class HarvestService : IHarvestService
 
         return list;
     }
+
     private static List<HarvestViewModel> GetHarvestsForWeek(DataRow row, int season, DateTime harvestDate)
     {
         var list = new List<HarvestViewModel>();
@@ -229,6 +264,4 @@ public class HarvestService : IHarvestService
 
     //    return list;
     //}
-
-
 }

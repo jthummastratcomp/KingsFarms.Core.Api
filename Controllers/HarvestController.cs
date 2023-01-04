@@ -85,4 +85,10 @@ public class HarvestController : ControllerBase
     {
         return _harvestService.GetHarvestByYearBySection();
     }
+
+    [HttpGet(CoreApiRoutes.HarvestByYearByBed)]
+    public List<BedHarvestChartViewModel> GetHarvestByYearByBed()
+    {
+        return _harvestService.GetHarvestByYearByBed();
+    }
 }
