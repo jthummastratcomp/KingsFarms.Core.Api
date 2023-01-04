@@ -2,6 +2,8 @@ using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using KingsFarms.Core.Api;
 using KingsFarms.Core.Api.Bootstrap;
+using KingsFarms.Core.Api.Data.Db;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,7 +15,7 @@ builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
 builder.Host.ConfigureContainer<ContainerBuilder>(b => b.RegisterModule(new WebBootstrap(apiSettings)));
 
 // Add services to the container.
-
+builder.Services.AddDbContext<KingsFarmsDbContext>(opt=>opt.UseSqlServer(builder.Configuration.GetConnectionString("KingsFarmsDb")));
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -24,6 +26,19 @@ builder.Services.AddCors(x => x.AddDefaultPolicy(policyBuilder => policyBuilder.
 builder.Services.AddLazyCache();
 
 var app = builder.Build();
+
+//don't do thi sis production
+//await EnsureDatabaseIsMigrated(app.Services);
+
+//async Task EnsureDatabaseIsMigrated(IServiceProvider appServices)
+//{
+//    using var scope = appServices.CreateScope();
+//    await using var ctx = scope.ServiceProvider.GetService<KingsFarmsDbContext>();
+//    if (ctx is not null)
+//    {
+//        await ctx.Database.MigrateAsync();
+//    }
+//}
 
 // Configure the HTTP request pipeline.
 //if (app.Environment.IsDevelopment())
