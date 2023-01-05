@@ -5,6 +5,7 @@ using KingsFarms.Core.Api.Data.Providers;
 using KingsFarms.Core.Api.Data.Repositories;
 using KingsFarms.Core.Api.Services;
 using KingsFarms.Core.Api.Services.Interfaces;
+using KingsFarms.Core.Api.ViewModels;
 using Serilog;
 using ILogger = Serilog.ILogger;
 
@@ -83,6 +84,12 @@ public class WebBootstrap : Module
         builder.RegisterType<CustomerDataProvider>().As<ICustomerDataProvider>();
 
         builder.RegisterType<Repository<Customer>>().As<IRepository<Customer>>();
+        builder.RegisterType<Repository<Invoice>>().As<IRepository<Invoice>>();
+        builder.RegisterType<Repository<Bed>>().As<IRepository<Bed>>();
+        builder.RegisterType<Repository<Harvest>>().As<IRepository<Harvest>>();
+        builder.RegisterType<Repository<HorseFarm>>().As<IRepository<HorseFarm>>();
+        builder.RegisterType<Repository<HorseFarmLoad>>().As<IRepository<HorseFarmLoad>>();
+        
 
         builder.RegisterType<UnitOfWork>().As<IUnitOfWork>();
 

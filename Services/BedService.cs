@@ -32,7 +32,9 @@ public class BedService : IBedService
     //[CacheTimeout]
     public List<BedHarvestFieldOpsViewModel> GetBedsInfo()
     {
-        var l = _customerDataProvider.GetCustomers();
+        var customers = _customerDataProvider.GetAll();
+        customers.First().Address = "modified";
+        _customerDataProvider.Save(customers.First());
 
        var x = _customerDataProvider.Save(new Customer() {Id =2, Key = "ghd", Address = "yes", City = "cin", Name = "ot", Zip = 1234, StoreName = "euyt"});
 

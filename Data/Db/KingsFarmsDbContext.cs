@@ -6,14 +6,14 @@ using System.Configuration;
 
 namespace KingsFarms.Core.Api.Data.Db;
 
-public class KingsFarmsDbContext : DbContext, IDbContext
+public sealed class KingsFarmsDbContext : DbContext, IDbContext
 {
     public KingsFarmsDbContext(DbContextOptions<KingsFarmsDbContext> options) : base(options)
     {
         //Database.SetInitializer<MavenContext>(null);
         //Configuration.ProxyCreationEnabled = false;
         ChangeTracker.LazyLoadingEnabled = false;
-        ChangeTracker.AutoDetectChangesEnabled = false;
+        ChangeTracker.AutoDetectChangesEnabled = true;
     }
 
 

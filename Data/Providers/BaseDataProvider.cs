@@ -27,6 +27,11 @@ public abstract class BaseDataProvider<T> where T : DomainObject
         return _repository.GetById(id);
     }
 
+    public List<T> GetAll()
+    {
+        return _repository.GetAll().ToList();
+    }
+
     public int Save(T? modifiedDomainObject)
     {
         if (modifiedDomainObject == null) return 0;
