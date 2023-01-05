@@ -1,6 +1,8 @@
 ﻿using System.Data;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Specialized;
+using KingsFarms.Core.Api.Data.Domain;
+using KingsFarms.Core.Api.Data.Providers;
 using KingsFarms.Core.Api.Enums;
 using KingsFarms.Core.Api.Helpers;
 using KingsFarms.Core.Api.Services.Interfaces;
@@ -15,19 +17,25 @@ public class BedService : IBedService
     private readonly string _azStoreConnStr;
     private readonly string _azStoreContName;
     private readonly string _harvestFile;
+    private readonly ICustomerDataProvider _customerDataProvider;
     private readonly ILogger _logger;
 
-    public BedService(ILogger logger, string azStoreConnStr, string azStoreContName, string harvestFile)
+    public BedService(ILogger logger, string azStoreConnStr, string azStoreContName, string harvestFile, ICustomerDataProvider customerDataProvider)
     {
         _logger = logger;
         _azStoreConnStr = azStoreConnStr;
         _azStoreContName = azStoreContName;
         _harvestFile = harvestFile;
+        _customerDataProvider = customerDataProvider;
     }
 
     //[CacheTimeout]
     public List<BedHarvestFieldOpsViewModel> GetBedsInfo()
     {
+        var l = _customerDataProvider.GetCustomers();
+
+       var x = _customerDataProvider.Save(new Customer() {Id =2, Key = "ghd", Address = "yes", City = "cin", Name = "ot", Zip = 1234, StoreName = "euyt"});
+
         var list = new List<BedHarvestFieldOpsViewModel>();
 
         var client = new BlobServiceClient(_azStoreConnStr);

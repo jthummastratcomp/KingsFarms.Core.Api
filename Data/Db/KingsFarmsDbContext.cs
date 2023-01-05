@@ -1,13 +1,22 @@
 ﻿using KingsFarms.Core.Api.Data.Domain;
+using KingsFarms.Core.Api.Data.Providers;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
+using System.Configuration;
 
 namespace KingsFarms.Core.Api.Data.Db;
 
-public class KingsFarmsDbContext : DbContext
+public class KingsFarmsDbContext : DbContext, IDbContext
 {
     public KingsFarmsDbContext(DbContextOptions<KingsFarmsDbContext> options) : base(options)
     {
+        //Database.SetInitializer<MavenContext>(null);
+        //Configuration.ProxyCreationEnabled = false;
+        ChangeTracker.LazyLoadingEnabled = false;
+        ChangeTracker.AutoDetectChangesEnabled = false;
     }
+
+
 
     public DbSet<Customer> Customers => Set<Customer>();
     public DbSet<Invoice> Invoices => Set<Invoice>();
@@ -35,4 +44,14 @@ public class KingsFarmsDbContext : DbContext
     //        new Harvest {Id=3, HarvestDate = DateTime.Today, Quantity = 24 }
     //    );
     //}
+    public DbSet<T> GetSet<T>() where T : class
+    {
+        return Set<T>();
+    }
+
+    public EntityEntry<T> GetEntry<T>(T entity) where T : class
+    {
+        return Entry(entity);
+    }
+    
 }

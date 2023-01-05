@@ -1,4 +1,8 @@
 ﻿using Autofac;
+using KingsFarms.Core.Api.Data.Db;
+using KingsFarms.Core.Api.Data.Domain;
+using KingsFarms.Core.Api.Data.Providers;
+using KingsFarms.Core.Api.Data.Repositories;
 using KingsFarms.Core.Api.Services;
 using KingsFarms.Core.Api.Services.Interfaces;
 using Serilog;
@@ -75,5 +79,13 @@ public class WebBootstrap : Module
         //builder.RegisterType<UsdaNewMemoService>().As<IUsdaMemoService>();
         builder.RegisterType<ApplyInvoiceInfoService>().As<IApplyInvoiceInfoService>();
         builder.RegisterType<InvoiceInfoService>().As<IInvoiceInfoService>();
+
+        builder.RegisterType<CustomerDataProvider>().As<ICustomerDataProvider>();
+
+        builder.RegisterType<Repository<Customer>>().As<IRepository<Customer>>();
+
+        builder.RegisterType<UnitOfWork>().As<IUnitOfWork>();
+
+        builder.RegisterType<KingsFarmsDbContext>().As<IDbContext>();
     }
 }
