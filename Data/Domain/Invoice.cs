@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace KingsFarms.Core.Api.Data.Domain;
 
-[Index(nameof(InvoiceNumber), IsUnique = true)]
+//[Index(nameof(InvoiceNumber), IsUnique = true)]
 public class Invoice: DomainObject
 {
     
@@ -18,7 +18,7 @@ public class Invoice: DomainObject
 
     [Required] [Precision(14, 2)] public decimal? Rate { get; set; }
 
-    [Required] [Precision(14, 2)] public decimal? Amount { get; set; }
+    [Required] [Precision(14, 2)] public double Amount { get; set; }
 
     [Precision(14, 2)] public decimal? ShippingCharge { get; set; }
 
@@ -28,9 +28,4 @@ public class Invoice: DomainObject
     public string? Memo { get; set; }
 
     [Required] public Customer? Customer { get; set; }
-}
-
-public class DomainObject
-{
-    public int Id { get; set; }
 }

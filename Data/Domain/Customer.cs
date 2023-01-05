@@ -3,10 +3,13 @@ using System.ComponentModel.DataAnnotations;
 
 namespace KingsFarms.Core.Api.Data.Domain
 {
-    [Index(nameof(Key), IsUnique = true)]
+    //[Index(nameof(Key), IsUnique = true)]
     public class Customer : DomainObject
     {
-        
+        public Customer()
+        {
+            Invoices = new List<Invoice>();
+        }
         [Required][StringLength(20)] public string? Key { get; set; }
 
         [StringLength(50)] public string? Name { get; set; }
@@ -25,6 +28,8 @@ namespace KingsFarms.Core.Api.Data.Domain
         [StringLength(100)] public string? ContactName { get; set; }
 
         public string? ContactPhone { get; set; }
+
+        public List<Invoice> Invoices { get; }
 
     }
 }

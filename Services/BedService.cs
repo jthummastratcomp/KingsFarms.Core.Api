@@ -1,12 +1,14 @@
 ﻿using System.Data;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Specialized;
+using KingsFarms.Core.Api.Data.Db;
 using KingsFarms.Core.Api.Data.Domain;
 using KingsFarms.Core.Api.Data.Providers;
 using KingsFarms.Core.Api.Enums;
 using KingsFarms.Core.Api.Helpers;
 using KingsFarms.Core.Api.Services.Interfaces;
 using KingsFarms.Core.Api.ViewModels;
+using Microsoft.EntityFrameworkCore;
 using OfficeOpenXml;
 using ILogger = Serilog.ILogger;
 
@@ -16,8 +18,8 @@ public class BedService : IBedService
 {
     private readonly string _azStoreConnStr;
     private readonly string _azStoreContName;
-    private readonly string _harvestFile;
     private readonly ICustomerDataProvider _customerDataProvider;
+    private readonly string _harvestFile;
     private readonly ILogger _logger;
 
     public BedService(ILogger logger, string azStoreConnStr, string azStoreContName, string harvestFile, ICustomerDataProvider customerDataProvider)
@@ -32,11 +34,42 @@ public class BedService : IBedService
     //[CacheTimeout]
     public List<BedHarvestFieldOpsViewModel> GetBedsInfo()
     {
-        var customers = _customerDataProvider.GetAll();
-        customers.First().Address = "modified";
-        _customerDataProvider.Save(customers.First());
+       
+        using (var context = new KingsFarmsDbContext())
+        {
+            
+            //context.RemoveRange(context.Customers.ToList());
 
-       var x = _customerDataProvider.Save(new Customer() {Id =2, Key = "ghd", Address = "yes", City = "cin", Name = "ot", Zip = 1234, StoreName = "euyt"});
+            //var customer = new Customer { Key = "IND-IRV", Address = "yes", City = "cin", Name = "ot", Zip = 1234, StoreName = "euyt" };
+            //var inv = new Invoice { DueDate = DateTime.Today, InvoiceDate = DateTime.Today, Amount = 23.23, InvoiceNumber = "IND-MIN-101/22", Quantity = 20, Rate = 12 };
+            //customer.Invoices.Add(inv);
+
+            //context.Customers.Add(customer);
+            //context.SaveChanges();
+
+            //var cust2 = context.Customers.FirstOrDefault(x => x.Key == "IND-IRV");
+            //if (cust2 != null)
+            //{
+            //    cust2.Name = "101 First Street";
+            //    cust2.City = "Irving";
+            //    cust2.Name = "India bazaar";
+
+            //    using var ctx2 = new KingsFarmsDbContext();
+            //    ctx2.Customers.Update(cust2);
+            //    ctx2.Customers.Remove(cust2);
+            //    ctx2.SaveChanges();
+            //}
+
+            context.SaveChanges();
+        }
+
+        //var invoicesLike = context.Invoices.AsNoTracking().Where(x => x.InvoiceNumber != null && x.InvoiceNumber.Contains("IND-MIN")).ToList();
+
+        // var customers = _customerDataProvider.GetAll();
+        // customers.First().Address = "modified";
+        // _customerDataProvider.Save(customers.First());
+
+        //var x = _customerDataProvider.Save(new Customer() {Id =2, Key = "ghd", Address = "yes", City = "cin", Name = "ot", Zip = 1234, StoreName = "euyt"});
 
         var list = new List<BedHarvestFieldOpsViewModel>();
 
