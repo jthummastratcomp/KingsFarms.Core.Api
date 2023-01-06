@@ -1,4 +1,5 @@
-﻿using KingsFarms.Core.Api.Data.Db;
+﻿using System.Linq.Expressions;
+using KingsFarms.Core.Api.Data.Db;
 using KingsFarms.Core.Api.Data.Domain;
 using KingsFarms.Core.Api.Data.Providers;
 using Microsoft.EntityFrameworkCore;
@@ -7,35 +8,105 @@ namespace KingsFarms.Core.Api.Data.Repositories;
 
 public class Repository<T> : IRepository<T> where T : DomainObject
 {
-    private readonly IUnitOfWork _unitOfWork;
+    protected readonly KingsFarmsDbContext _context;
+    //private readonly IUnitOfWork _unitOfWork;
 
-    public Repository(IUnitOfWork unitOfWork)
+    //public Repository(IUnitOfWork unitOfWork)
+    //{
+    //    _unitOfWork = unitOfWork;
+    //}
+
+    protected Repository(KingsFarmsDbContext context)
     {
-        _unitOfWork = unitOfWork;
+        _context = context;
     }
 
-    public T? GetById(int id)
+
+    //public T? GetById(int id)
+    //{
+    //    //return _unitOfWork.Context.GetSet<T>().FirstOrDefault(x => x.Id == id);
+    //    return _context.GetSet<T>().FirstOrDefault(x => x.Id == id);
+    //}
+
+    //public IQueryable<T> GetAll()
+    //{
+    //    return _unitOfWork.Context.GetSet<T>();
+    //}
+
+    //public void InsertOrUpdate(T? entity)
+    //{
+    //    if (entity != null) _unitOfWork.Context.GetEntry(entity).State = entity.Id == 0 ? EntityState.Added : EntityState.Modified;
+    //}
+
+    //public void Delete(T? entity)
+    //{
+    //    if (entity != null) _unitOfWork.Context.GetSet<T>().Remove(entity);
+    //}
+
+    //public void UpdateValues(T originalEntity, T modifiedEntity)
+    //{
+    //    _unitOfWork.Context.GetEntry(originalEntity).CurrentValues.SetValues(modifiedEntity);
+    //}
+    public virtual T Add(T entity)
     {
-        return _unitOfWork.Context.GetSet<T>().FirstOrDefault(x => x.Id == id);
+        return _context.Add(entity).Entity;
     }
 
-    public IQueryable<T> GetAll()
+    public virtual T Update(T entity)
     {
-        return _unitOfWork.Context.GetSet<T>();
+        return _context.Update(entity).Entity;
     }
 
-    public void InsertOrUpdate(T? entity)
+    public virtual T? Get(int id)
     {
-        if (entity != null) _unitOfWork.Context.GetEntry(entity).State = entity.Id == 0 ? EntityState.Added : EntityState.Modified;
+        return _context.Find<T>(id);
     }
 
-    public void Delete(T? entity)
+    public virtual IEnumerable<T> All()
     {
-        if (entity != null) _unitOfWork.Context.GetSet<T>().Remove(entity);
+        return _context.Set<T>().ToList();
     }
 
-    public void UpdateValues(T originalEntity, T modifiedEntity)
+    public virtual IEnumerable<T> Find(Expression<Func<T, bool>> predicate)
     {
-        _unitOfWork.Context.GetEntry(originalEntity).CurrentValues.SetValues(modifiedEntity);
+        return _context.Set<T>().AsQueryable().Where(predicate).ToList();
     }
+
+    public virtual void Remove(T entity)
+    {
+        _context.Remove(entity);
+    }
+
+    //public virtual void SaveChanges()
+    //{
+    //    _context.SaveChanges();
+    //}
+}
+
+public class CustomerRepository : Repository<Customer>
+{
+    public CustomerRepository(KingsFarmsDbContext context) : base(context)
+    {
+    }
+
+    public override Customer Update(Customer entity)
+    {
+        var customer = Get(entity.Id);
+        if (customer == null) return entity;
+
+        customer.City = entity.City;
+
+        return base.Update(customer);
+
+    }
+}
+
+
+public class InvoiceRepository : Repository<Invoice>
+{
+    public InvoiceRepository(KingsFarmsDbContext context) : base(context)
+    {
+    }
+
+    
 }

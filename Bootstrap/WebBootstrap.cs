@@ -81,18 +81,21 @@ public class WebBootstrap : Module
         builder.RegisterType<ApplyInvoiceInfoService>().As<IApplyInvoiceInfoService>();
         builder.RegisterType<InvoiceInfoService>().As<IInvoiceInfoService>();
 
-        builder.RegisterType<CustomerDataProvider>().As<ICustomerDataProvider>();
+        //builder.RegisterType<CustomerDataProvider>().As<ICustomerDataProvider>();
 
-        builder.RegisterType<Repository<Customer>>().As<IRepository<Customer>>();
-        builder.RegisterType<Repository<Invoice>>().As<IRepository<Invoice>>();
-        builder.RegisterType<Repository<Bed>>().As<IRepository<Bed>>();
-        builder.RegisterType<Repository<Harvest>>().As<IRepository<Harvest>>();
-        builder.RegisterType<Repository<HorseFarm>>().As<IRepository<HorseFarm>>();
-        builder.RegisterType<Repository<HorseFarmLoad>>().As<IRepository<HorseFarmLoad>>();
-        
+        //builder.RegisterType<Repository<Customer>>().As<IRepository<Customer>>();
+        //builder.RegisterType<Repository<Invoice>>().As<IRepository<Invoice>>();
+        //builder.RegisterType<Repository<Bed>>().As<IRepository<Bed>>();
+        //builder.RegisterType<Repository<Harvest>>().As<IRepository<Harvest>>();
+        //builder.RegisterType<Repository<HorseFarm>>().As<IRepository<HorseFarm>>();
+        //builder.RegisterType<Repository<HorseFarmLoad>>().As<IRepository<HorseFarmLoad>>();
+
 
         builder.RegisterType<UnitOfWork>().As<IUnitOfWork>();
 
-        builder.RegisterType<KingsFarmsDbContext>().As<IDbContext>();
+        //builder.RegisterType<KingsFarmsDbContext>().As<IDbContext>();
+
+        builder.RegisterType<CustomerRepository>().As<IRepository<Customer>>();
+        builder.RegisterType<InvoiceRepository>().As<IRepository<Invoice>>();
     }
 }

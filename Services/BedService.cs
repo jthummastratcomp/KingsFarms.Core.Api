@@ -4,6 +4,7 @@ using Azure.Storage.Blobs.Specialized;
 using KingsFarms.Core.Api.Data.Db;
 using KingsFarms.Core.Api.Data.Domain;
 using KingsFarms.Core.Api.Data.Providers;
+using KingsFarms.Core.Api.Data.Repositories;
 using KingsFarms.Core.Api.Enums;
 using KingsFarms.Core.Api.Helpers;
 using KingsFarms.Core.Api.Services.Interfaces;
@@ -18,50 +19,58 @@ public class BedService : IBedService
 {
     private readonly string _azStoreConnStr;
     private readonly string _azStoreContName;
-    private readonly ICustomerDataProvider _customerDataProvider;
+    //private readonly ICustomerDataProvider _customerDataProvider;
     private readonly string _harvestFile;
+    private readonly IUnitOfWork _unitOfWork;
+    //private readonly IRepository<Customer> _customerRepository;
     private readonly ILogger _logger;
 
-    public BedService(ILogger logger, string azStoreConnStr, string azStoreContName, string harvestFile, ICustomerDataProvider customerDataProvider)
+    public BedService(ILogger logger, string azStoreConnStr, string azStoreContName, string harvestFile
+        //, ICustomerDataProvider customerDataProvider
+        //, IRepository<Customer> customerRepository
+        , IUnitOfWork unitOfWork
+        )
     {
         _logger = logger;
         _azStoreConnStr = azStoreConnStr;
         _azStoreContName = azStoreContName;
         _harvestFile = harvestFile;
-        _customerDataProvider = customerDataProvider;
+        _unitOfWork = unitOfWork;
+        //_customerRepository = customerRepository;
+        //_customerDataProvider = customerDataProvider;
     }
 
     //[CacheTimeout]
     public List<BedHarvestFieldOpsViewModel> GetBedsInfo()
     {
-       
-        using (var context = new KingsFarmsDbContext())
-        {
-            
-            //context.RemoveRange(context.Customers.ToList());
 
-            //var customer = new Customer { Key = "IND-IRV", Address = "yes", City = "cin", Name = "ot", Zip = 1234, StoreName = "euyt" };
-            //var inv = new Invoice { DueDate = DateTime.Today, InvoiceDate = DateTime.Today, Amount = 23.23, InvoiceNumber = "IND-MIN-101/22", Quantity = 20, Rate = 12 };
-            //customer.Invoices.Add(inv);
+        //using (var context = new KingsFarmsDbContext())
+        //{
 
-            //context.Customers.Add(customer);
-            //context.SaveChanges();
+        //context.RemoveRange(context.Customers.ToList());
 
-            //var cust2 = context.Customers.FirstOrDefault(x => x.Key == "IND-IRV");
-            //if (cust2 != null)
-            //{
-            //    cust2.Name = "101 First Street";
-            //    cust2.City = "Irving";
-            //    cust2.Name = "India bazaar";
+        //var customer = new Customer { Key = "IND-IRV", Address = "yes", City = "cin", Name = "ot", Zip = 1234, StoreName = "euyt" };
+        //var inv = new Invoice { DueDate = DateTime.Today, InvoiceDate = DateTime.Today, Amount = 23.23, InvoiceNumber = "IND-MIN-101/22", Quantity = 20, Rate = 12 };
+        //customer.Invoices.Add(inv);
 
-            //    using var ctx2 = new KingsFarmsDbContext();
-            //    ctx2.Customers.Update(cust2);
-            //    ctx2.Customers.Remove(cust2);
-            //    ctx2.SaveChanges();
-            //}
+        //context.Customers.Add(customer);
+        //context.SaveChanges();
 
-            context.SaveChanges();
-        }
+        //var cust2 = context.Customers.FirstOrDefault(x => x.Key == "IND-IRV");
+        //if (cust2 != null)
+        //{
+        //    cust2.Name = "101 First Street";
+        //    cust2.City = "Irving";
+        //    cust2.Name = "India bazaar";
+
+        //    using var ctx2 = new KingsFarmsDbContext();
+        //    ctx2.Customers.Update(cust2);
+        //    ctx2.Customers.Remove(cust2);
+        //    ctx2.SaveChanges();
+        //}
+
+        //    context.SaveChanges();
+        //}
 
         //var invoicesLike = context.Invoices.AsNoTracking().Where(x => x.InvoiceNumber != null && x.InvoiceNumber.Contains("IND-MIN")).ToList();
 
@@ -70,6 +79,46 @@ public class BedService : IBedService
         // _customerDataProvider.Save(customers.First());
 
         //var x = _customerDataProvider.Save(new Customer() {Id =2, Key = "ghd", Address = "yes", City = "cin", Name = "ot", Zip = 1234, StoreName = "euyt"});
+
+
+//        var inv = new Invoice() { InvoiceNumber = "IND-MIN-101/22", Rate = 20, Amount = 20, DueDate = DateTime.Today, InvoiceDate = DateTime.Today, Quantity = 20};
+//        _unitOfWork.CustomerRepository.Add(new Customer() { Key = "IND-PLA", Name = "India Baz", City = "Cin", Invoices = { inv }});
+//        //_unitOfWork.InvoiceRepository.Add(inv);
+//_unitOfWork.SaveChanges();
+
+//        var cust = _unitOfWork.CustomerRepository.Find(x => x.Key == "IND").FirstOrDefault();
+//        if (cust != null)
+//        {
+//            cust.City = "Minneapolis";
+//            cust.Key = "IND-MIN";
+//            cust.Invoices.Add(new Invoice() { InvoiceNumber = "IND-MIN-102/22", Rate = 20, Amount = 20, DueDate = DateTime.Today, InvoiceDate = DateTime.Today, Quantity = 29});
+//            _unitOfWork.CustomerRepository.Update(cust);
+//        }
+//        _unitOfWork.CustomerRepository.Add(new Customer() { Key = "IND-IRV", Name = "India Baz", City = "Cin" });
+
+        //var l = _customerRepository.All();
+        //foreach (var customer in l)
+        //{
+        //    _customerRepository.Remove(customer);
+        //}
+        //_customerRepository.SaveChanges();
+
+
+        _unitOfWork.SaveChanges();
+
+
+
+        //var cust = _customerRepository.Find(x => x.Key.Contains("IND") ).ToList();
+        //if (cust != null)
+        //{
+        //    foreach (var customer in cust)
+        //    {
+        //        _customerRepository.Remove(customer);
+        //    }
+        //    _customerRepository.SaveChanges();
+        //}
+
+        
 
         var list = new List<BedHarvestFieldOpsViewModel>();
 

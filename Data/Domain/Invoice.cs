@@ -28,4 +28,5 @@ public class Invoice: DomainObject
     public string? Memo { get; set; }
 
     [Required] public Customer? Customer { get; set; }
+    [Required] public int? CustomerId { get; set; }
 }

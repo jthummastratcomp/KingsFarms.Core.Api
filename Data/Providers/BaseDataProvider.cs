@@ -10,60 +10,60 @@ public abstract class BaseDataProvider<T> where T : DomainObject
     private readonly IUnitOfWork _unitOfWork;
 
 
-    protected BaseDataProvider(IRepository<T> repository, IUnitOfWork unitOfWork)
-    {
-        _repository = repository;
-        _unitOfWork = unitOfWork;
-    }
+    //protected BaseDataProvider(IRepository<T> repository, IUnitOfWork unitOfWork)
+    //{
+    //    _repository = repository;
+    //    _unitOfWork = unitOfWork;
+    //}
 
-    public void Remove(T? currentDomainObject)
-    {
-        _repository.Delete(currentDomainObject);
-        _unitOfWork.Save();
-    }
+    //public void Remove(T? currentDomainObject)
+    //{
+    //    _repository.Delete(currentDomainObject);
+    //    _unitOfWork.Save();
+    //}
 
-    public virtual T? GetById(int id)
-    {
-        return _repository.GetById(id);
-    }
+    //public virtual T? GetById(int id)
+    //{
+    //    return _repository.GetById(id);
+    //}
 
-    public List<T> GetAll()
-    {
-        return _repository.GetAll().ToList();
-    }
+    //public List<T> GetAll()
+    //{
+    //    return _repository.GetAll().ToList();
+    //}
 
-    public int Save(T? modifiedDomainObject)
-    {
-        if (modifiedDomainObject == null) return 0;
+    //public int Save(T? modifiedDomainObject)
+    //{
+    //    if (modifiedDomainObject == null) return 0;
 
-        var domainObject = GetByIdPreSave(modifiedDomainObject);
+    //    var domainObject = GetByIdPreSave(modifiedDomainObject);
 
-        if (domainObject == null)
-            _repository.InsertOrUpdate(modifiedDomainObject);
-        else
-            _repository.UpdateValues(domainObject, modifiedDomainObject);
+    //    if (domainObject == null)
+    //        _repository.InsertOrUpdate(modifiedDomainObject);
+    //    else
+    //        _repository.UpdateValues(domainObject, modifiedDomainObject);
 
 
-        return Save();
-    }
+    //    return Save();
+    //}
 
-    protected virtual T? GetByIdPreSave(T? modifiedDomainObject)
-    {
-        return _repository.GetById(modifiedDomainObject.Id);
-    }
+    //protected virtual T? GetByIdPreSave(T? modifiedDomainObject)
+    //{
+    //    return _repository.GetById(modifiedDomainObject.Id);
+    //}
 
-    private int Save()
-    {
-        int id;
-        try
-        {
-            id = _unitOfWork.Save();
-        }
-        catch (ValidationException ex)
-        {
-            throw ex;
-        }
+    //private int Save()
+    //{
+    //    int id;
+    //    try
+    //    {
+    //        id = _unitOfWork.Save();
+    //    }
+    //    catch (ValidationException ex)
+    //    {
+    //        throw ex;
+    //    }
 
-        return id;
-    }
+    //    return id;
+    //}
 }
