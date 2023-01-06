@@ -54,21 +54,38 @@ public class SyncService : ISyncService
 
         foreach (var vm in list)
         {
-            var bed = _unitOfWork.BedsRepo.Get(vm.BedNumber);
-            if (bed != null)
+            var bed = _unitOfWork.BedsRepo.Get(vm.BedNumber); // ?? _unitOfWork.BedsRepo.Add(new Bed { Number = vm.BedNumber});
+            if (bed == null) continue;
+
+            var harvestForBedDate = _unitOfWork.HarvestRepo.Find(x => x.BedId == bed.Id && x.HarvestDate == vm.HarvestDate).FirstOrDefault();
+            if (harvestForBedDate == null)
             {
-                var harvest = new Harvest()
+                var harvest = new Harvest
                 {
-                    HarvestDate = vm.HarvestDate, Quantity = vm.HarvestQty
+                    HarvestDate = vm.HarvestDate,
+                    Quantity = vm.HarvestQty,
+                    BedId = bed.Id
                 };
-                harvest.BedId = bed.Id;
                 _unitOfWork.HarvestRepo.Add(harvest);
             }
-
-
+            else
+            {
+                harvestForBedDate.Quantity = vm.HarvestQty;
+                _unitOfWork.HarvestRepo.Update(harvestForBedDate);
+            }
         }
 
         _unitOfWork.SaveChanges();
         return "Synchronized Harvests";
+    }
+
+    public string SyncCustomers(List<CustomerHeaderViewModel> list)
+    {
+        foreach (var vm in list)
+        {
+            _unitOfWork.CustomerRepo.Add(new Customer() { Key = vm.CustomerKey, City = vm.Address.City });
+        }
+        _unitOfWork.SaveChanges();
+        return "Synchronized Customers";
     }
 }

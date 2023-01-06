@@ -3,6 +3,7 @@ using Autofac.Extensions.DependencyInjection;
 using KingsFarms.Core.Api;
 using KingsFarms.Core.Api.Bootstrap;
 using KingsFarms.Core.Api.Data.Db;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -25,6 +26,12 @@ builder.Services.AddCors(x => x.AddDefaultPolicy(policyBuilder => policyBuilder.
 
 builder.Services.AddLazyCache();
 
+
+builder.Services.AddMediatR(typeof(Program));
+builder.Services.AddDbContext<ContactsContext>(options => options.UseInMemoryDatabase(databaseName: "Contacts"));
+
+
+
 var app = builder.Build();
 
 //don't do thi sis production
@@ -39,6 +46,11 @@ var app = builder.Build();
 //        await ctx.Database.MigrateAsync();
 //    }
 //}
+
+using var scope = app.Services.CreateScope();
+using var ctx = scope.ServiceProvider.GetService<ContactsContext>();
+    ctx?.Database.EnsureCreated();
+
 
 // Configure the HTTP request pipeline.
 //if (app.Environment.IsDevelopment())

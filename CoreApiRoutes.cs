@@ -5,6 +5,7 @@ public static class CoreApiRoutes
     //CUSTOMER 
     public const string GetCustomersFromOrdersFile = "api/customers/file";
     public const string GetCustomersFromDb = "api/customers";
+    public const string SendCustomersToDb = "api/customers/sendToDb";
 
     //INVOICES
     public const string LoadInvoicesForWeek = "api/orders/{week}/{company}/load";

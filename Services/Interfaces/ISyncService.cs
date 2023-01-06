@@ -6,4 +6,5 @@ public interface ISyncService
 {
     string SyncBedsInfo();
     string SyncHarvestInfo();
+    string SyncCustomers(List<CustomerHeaderViewModel> list);
 }
