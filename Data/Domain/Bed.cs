@@ -9,7 +9,7 @@ public class Bed :DomainObject
 {
 
     [Required] public int Number { get; set; }
-    [Required] public string? Section { get; set; }
+    public string? Section { get; set; }
     public int PlantsCount { get; set; }
     public DateTime PlantedDate { get; set; }
     public List<Harvest> Harvests { get; }

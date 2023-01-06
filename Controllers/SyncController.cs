@@ -31,4 +31,13 @@ public class SyncController : ControllerBase
 
         return new QueryResult<string> { Data = list, Status = new SuccessResult() };
     }
+
+
+    [HttpPost(CoreApiRoutes.SendCustomersToDb)]
+    public IQueryResult SyncCustomers(List<CustomerHeaderViewModel> list)
+    {
+        var response = _syncService.SyncCustomers(list);
+
+        return new QueryResult<string> { Data = response, Status = new SuccessResult() };
+    }
 }
