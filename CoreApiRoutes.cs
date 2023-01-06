@@ -18,7 +18,7 @@ public static class CoreApiRoutes
     public const string HarvestStatusTotal = "api/harvest/{status}/statusTotal";
     public const string HarvestDataCalendarAll = "api/harvest/calendarall";
     public const string HarvestDataSeasonAll = "api/harvest/seasonall";
-
+    public const string HarvestDataAll = "api/harvest/data/all";
     public const string HarvestByYear = "api/harvest/byYear";
     public const string HarvestByYearByBed = "api/harvest/byYearByBed";
     public const string HarvestByYearBySection = "api/harvest/byYearBySection";
@@ -47,4 +47,8 @@ public static class CoreApiRoutes
     //WEEKS
     public const string FirstMondayOfYear = "api/orders/{year}/monday";
     public const string FirstSaturdayOfYear = "api/orders/{year}/saturday";
+
+    //SYNC
+    public const string SyncBedsInfo = "api/sync/bedsInfo";
+    public const string SyncHarvestsInfo = "api/sync/harvestsInfo";
 }

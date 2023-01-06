@@ -104,7 +104,7 @@ public class BedService : IBedService
         //_customerRepository.SaveChanges();
 
 
-        _unitOfWork.SaveChanges();
+        //_unitOfWork.SaveChanges();
 
 
 

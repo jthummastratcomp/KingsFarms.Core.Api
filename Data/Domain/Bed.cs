@@ -4,12 +4,13 @@ using System.ComponentModel.DataAnnotations;
 
 namespace KingsFarms.Core.Api.Data.Domain;
 
-[Index(nameof(Name), IsUnique = true)]
+[Index(nameof(Number), IsUnique = true)]
 public class Bed :DomainObject
 {
 
-    [Required] [StringLength(50)] public string? Name { get; set; }
-    [Required] public SectionEnum? Section { get; set; }
+    [Required] public int Number { get; set; }
+    [Required] public string? Section { get; set; }
     public int PlantsCount { get; set; }
     public DateTime PlantedDate { get; set; }
+    public List<Harvest> Harvests { get; }
 }

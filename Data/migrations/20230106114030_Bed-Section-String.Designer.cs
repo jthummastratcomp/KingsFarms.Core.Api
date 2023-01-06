@@ -4,16 +4,19 @@ using KingsFarms.Core.Api.Data.Db;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace KingsFarms.Core.Api.Data.Migrations
+namespace KingsFarms.Core.Api.data.migrations
 {
     [DbContext(typeof(KingsFarmsDbContext))]
-    partial class KingsFarmsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230106114030_Bed-Section-String")]
+    partial class BedSectionString
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -93,8 +96,10 @@ namespace KingsFarms.Core.Api.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("Number")
-                        .HasColumnType("int");
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<DateTime>("PlantedDate")
                         .HasColumnType("datetime2");
@@ -108,7 +113,7 @@ namespace KingsFarms.Core.Api.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Number")
+                    b.HasIndex("Name")
                         .IsUnique();
 
                     b.ToTable("Beds");
@@ -299,11 +304,13 @@ namespace KingsFarms.Core.Api.Data.Migrations
 
             modelBuilder.Entity("KingsFarms.Core.Api.Data.Domain.Harvest", b =>
                 {
-                    b.HasOne("KingsFarms.Core.Api.Data.Domain.Bed", null)
-                        .WithMany("Harvests")
+                    b.HasOne("KingsFarms.Core.Api.Data.Domain.Bed", "Bed")
+                        .WithMany()
                         .HasForeignKey("BedId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Bed");
                 });
 
             modelBuilder.Entity("KingsFarms.Core.Api.Data.Domain.Invoice", b =>
@@ -324,11 +331,6 @@ namespace KingsFarms.Core.Api.Data.Migrations
                         .HasForeignKey("CustomerId");
 
                     b.Navigation("Customer");
-                });
-
-            modelBuilder.Entity("KingsFarms.Core.Api.Data.Domain.Bed", b =>
-                {
-                    b.Navigation("Harvests");
                 });
 
             modelBuilder.Entity("KingsFarms.Core.Api.Data.Domain.Customer", b =>

@@ -11,7 +11,9 @@ namespace KingsFarms.Core.Api.Data.Providers;
 
 public interface IUnitOfWork
 {
-    IRepository<Customer> CustomerRepository { get; }
-    IRepository<Invoice> InvoiceRepository { get; }
+    IRepository<Customer> CustomerRepo { get; }
+    IRepository<Invoice> InvoiceRepo { get; }
+    IRepository<Bed> BedsRepo { get; }
+    IRepository<Harvest> HarvestRepo { get; }
     void SaveChanges();
 }

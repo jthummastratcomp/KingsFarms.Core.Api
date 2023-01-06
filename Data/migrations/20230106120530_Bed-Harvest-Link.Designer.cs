@@ -4,16 +4,19 @@ using KingsFarms.Core.Api.Data.Db;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace KingsFarms.Core.Api.Data.Migrations
+namespace KingsFarms.Core.Api.data.migrations
 {
     [DbContext(typeof(KingsFarmsDbContext))]
-    partial class KingsFarmsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230106120530_Bed-Harvest-Link")]
+    partial class BedHarvestLink
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -299,11 +302,13 @@ namespace KingsFarms.Core.Api.Data.Migrations
 
             modelBuilder.Entity("KingsFarms.Core.Api.Data.Domain.Harvest", b =>
                 {
-                    b.HasOne("KingsFarms.Core.Api.Data.Domain.Bed", null)
+                    b.HasOne("KingsFarms.Core.Api.Data.Domain.Bed", "Bed")
                         .WithMany("Harvests")
                         .HasForeignKey("BedId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Bed");
                 });
 
             modelBuilder.Entity("KingsFarms.Core.Api.Data.Domain.Invoice", b =>

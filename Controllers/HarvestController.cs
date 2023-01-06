@@ -21,6 +21,14 @@ public class HarvestController : ControllerBase
         _logger = logger;
     }
 
+    [HttpGet(CoreApiRoutes.HarvestDataAll)]
+    public IQueryResult GetAllHarvestData()
+    {
+        var list = _harvestService.GetAllHarvestData().ToList();
+
+        return new QueryResult<List<HarvestViewModel>> { Data = list, Status = new SuccessResult() };
+    }
+
     [HttpGet(CoreApiRoutes.HarvestDataBySeason)]
     public IQueryResult GetHarvestInfo(int season)
     {

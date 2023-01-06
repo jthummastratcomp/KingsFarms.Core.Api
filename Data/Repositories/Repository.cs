@@ -110,3 +110,21 @@ public class InvoiceRepository : Repository<Invoice>
 
     
 }
+
+public class BedRepository : Repository<Bed>
+{
+    public BedRepository(KingsFarmsDbContext context) : base(context)
+    {
+    }
+
+
+}
+
+public class HarvestRepository : Repository<Harvest>
+{
+    public HarvestRepository(KingsFarmsDbContext context) : base(context)
+    {
+    }
+
+
+}

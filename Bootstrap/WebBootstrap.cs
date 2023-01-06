@@ -81,6 +81,8 @@ public class WebBootstrap : Module
         builder.RegisterType<ApplyInvoiceInfoService>().As<IApplyInvoiceInfoService>();
         builder.RegisterType<InvoiceInfoService>().As<IInvoiceInfoService>();
 
+        builder.RegisterType<SyncService>().As<ISyncService>();
+
         //builder.RegisterType<CustomerDataProvider>().As<ICustomerDataProvider>();
 
         //builder.RegisterType<Repository<Customer>>().As<IRepository<Customer>>();
@@ -97,5 +99,7 @@ public class WebBootstrap : Module
 
         builder.RegisterType<CustomerRepository>().As<IRepository<Customer>>();
         builder.RegisterType<InvoiceRepository>().As<IRepository<Invoice>>();
+        builder.RegisterType<BedRepository>().As<IRepository<Bed>>();
+        builder.RegisterType<HarvestRepository>().As<IRepository<Harvest>>();
     }
 }

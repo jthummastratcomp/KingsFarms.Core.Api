@@ -156,7 +156,7 @@ public class HarvestService : IHarvestService
         return bedHarvests;
     }
 
-    private IEnumerable<HarvestViewModel> GetAllHarvestData()
+    public IEnumerable<HarvestViewModel> GetAllHarvestData()
     {
         return _appCache.GetOrAdd("GetAllHarvestData", () =>
         {
