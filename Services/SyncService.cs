@@ -88,4 +88,14 @@ public class SyncService : ISyncService
         _unitOfWork.SaveChanges();
         return "Synchronized Customers";
     }
+
+    public string SaveHarvestData(HarvestViewModel viewModel)
+    {
+        _unitOfWork.HarvestRepo.Add(new Harvest()
+        {
+            BedId = viewModel.BedNumber, HarvestDate = viewModel.HarvestDate, Quantity = viewModel.HarvestQty
+        });
+        _unitOfWork.SaveChanges();
+        return "Saved Harvest Data";
+    }
 }

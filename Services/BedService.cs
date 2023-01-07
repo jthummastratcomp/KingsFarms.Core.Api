@@ -1,15 +1,11 @@
 ﻿using System.Data;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Specialized;
-using KingsFarms.Core.Api.Data.Db;
-using KingsFarms.Core.Api.Data.Domain;
 using KingsFarms.Core.Api.Data.Providers;
-using KingsFarms.Core.Api.Data.Repositories;
 using KingsFarms.Core.Api.Enums;
 using KingsFarms.Core.Api.Helpers;
 using KingsFarms.Core.Api.Services.Interfaces;
 using KingsFarms.Core.Api.ViewModels;
-using Microsoft.EntityFrameworkCore;
 using OfficeOpenXml;
 using ILogger = Serilog.ILogger;
 
@@ -18,18 +14,21 @@ namespace KingsFarms.Core.Api.Services;
 public class BedService : IBedService
 {
     private readonly string _azStoreConnStr;
+
     private readonly string _azStoreContName;
+
     //private readonly ICustomerDataProvider _customerDataProvider;
     private readonly string _harvestFile;
-    private readonly IUnitOfWork _unitOfWork;
+
     //private readonly IRepository<Customer> _customerRepository;
     private readonly ILogger _logger;
+    private readonly IUnitOfWork _unitOfWork;
 
     public BedService(ILogger logger, string azStoreConnStr, string azStoreContName, string harvestFile
         //, ICustomerDataProvider customerDataProvider
         //, IRepository<Customer> customerRepository
         , IUnitOfWork unitOfWork
-        )
+    )
     {
         _logger = logger;
         _azStoreConnStr = azStoreConnStr;
@@ -43,7 +42,6 @@ public class BedService : IBedService
     //[CacheTimeout]
     public List<BedHarvestFieldOpsViewModel> GetBedsInfo()
     {
-
         //using (var context = new KingsFarmsDbContext())
         //{
 
@@ -107,7 +105,6 @@ public class BedService : IBedService
         //_unitOfWork.SaveChanges();
 
 
-
         //var cust = _customerRepository.Find(x => x.Key.Contains("IND") ).ToList();
         //if (cust != null)
         //{
@@ -118,7 +115,6 @@ public class BedService : IBedService
         //    _customerRepository.SaveChanges();
         //}
 
-        
 
         var list = new List<BedHarvestFieldOpsViewModel>();
 
@@ -199,6 +195,16 @@ public class BedService : IBedService
 
         _logger.Information("GetBedInfoGrouped returning {@Count}", list.Count);
         return list.OrderBy(x => x.Section).ToList();
+    }
+
+    public List<BedViewModel> GetBedsList()
+    {
+        var list = GetBedsInfo();
+
+        return (from vm in list
+            let bedNumber = Utils.ParseToInteger(vm.BedNumber.ToLower().Replace("bed", string.Empty).Trim())
+            where bedNumber > 0
+            select new BedViewModel { BedNumber = bedNumber, PlantsCount = vm.PlantsCount, PlantedDate = vm.PlantedDate }).ToList();
     }
 
     private static IEnumerable<IGrouping<SectionEnum, BedHarvestFieldOpsViewModel>> GetBedsGroupedBySection(IEnumerable<BedHarvestFieldOpsViewModel> list)

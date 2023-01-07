@@ -23,9 +23,11 @@ public static class CoreApiRoutes
     public const string HarvestByYear = "api/harvest/byYear";
     public const string HarvestByYearByBed = "api/harvest/byYearByBed";
     public const string HarvestByYearBySection = "api/harvest/byYearBySection";
-    
+
+    public const string SaveHarvestData = "api/harvest/save";
 
     //BEDS
+    public const string BedList = "api/beds/list";
     public const string BedInfo = "api/beds/info";
     public const string BedInfoGrouped = "api/beds/info/grouped";
 

@@ -40,4 +40,12 @@ public class SyncController : ControllerBase
 
         return new QueryResult<string> { Data = response, Status = new SuccessResult() };
     }
+
+    [HttpPost(CoreApiRoutes.SaveHarvestData)]
+    public IQueryResult SaveHarvestData(HarvestViewModel viewModel)
+    {
+        var response = _syncService.SaveHarvestData(viewModel);
+
+        return new QueryResult<string> { Data = response, Status = new SuccessResult() };
+    }
 }

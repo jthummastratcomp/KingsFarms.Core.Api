@@ -21,6 +21,13 @@ public class BedController : ControllerBase
         _logger = logger;
     }
 
+    [HttpGet(CoreApiRoutes.BedList)]
+    public List<BedViewModel> GetBedsList()
+    {
+        var list = _bedService.GetBedsList();
+        return list;
+        //return new QueryResult<List<BedViewModel>> { Data = list, Status = new SuccessResult() };
+    }
 
     [HttpGet(CoreApiRoutes.BedInfo, Name = "GetBedsInfo")]
     public IQueryResult GetBedsInfo()
