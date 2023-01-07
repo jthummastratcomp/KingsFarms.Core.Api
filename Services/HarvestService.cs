@@ -1,6 +1,7 @@
 ﻿using System.Data;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Specialized;
+using KingsFarms.Core.Api.Data.Providers;
 using KingsFarms.Core.Api.Enums;
 using KingsFarms.Core.Api.Helpers;
 using KingsFarms.Core.Api.Services.Interfaces;
@@ -18,14 +19,16 @@ public class HarvestService : IHarvestService
     private readonly string _azStoreContName;
     private readonly string _harvestFile;
     private readonly ILogger _logger;
+    private readonly IUnitOfWork _unitOfWork;
 
     public HarvestService(ILogger logger, IAppCache appCache, string azStoreConnStr, string azStoreContName,
-        string harvestFile)
+        string harvestFile, IUnitOfWork unitOfWork)
     {
         _logger = logger;
         _azStoreConnStr = azStoreConnStr;
         _azStoreContName = azStoreContName;
         _harvestFile = harvestFile;
+        _unitOfWork = unitOfWork;
         _appCache = appCache;
     }
 
@@ -158,12 +161,19 @@ public class HarvestService : IHarvestService
 
     public IEnumerable<HarvestViewModel> GetAllHarvestData()
     {
-        return _appCache.GetOrAdd("GetAllHarvestData", () =>
-        {
-            var list = new List<HarvestViewModel>();
-            for (var year = 2020; year <= DateTime.Today.Year; year++) list.AddRange(GetHarvestDataForYearBySeason(year));
-            return list;
-        }, DateTime.Now.AddHours(2));
+        //return _appCache.GetOrAdd("GetAllHarvestData", () =>
+        //{
+            //var list = new List<HarvestViewModel>();
+            //for (var year = 2020; year <= DateTime.Today.Year; year++) list.AddRange(GetHarvestDataForYearBySeason(year));
+            //return list.OrderByDescending(x=>x.HarvestDate).ThenBy(x=>x.BedNumber).ToList();
+
+            var list = _unitOfWork.HarvestRepo.All();
+
+            return list.Select(x => new HarvestViewModel
+            {
+                BedNumber = x.BedId, HarvestDate = x.HarvestDate.GetValueOrDefault(), HarvestQty = x.Quantity.GetValueOrDefault()
+            }).ToList().OrderByDescending(x=>x.HarvestDate).ThenBy(x=>x.BedNumber);
+        //}, DateTime.Now.AddHours(2));
     }
 
 

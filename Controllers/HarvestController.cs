@@ -22,11 +22,10 @@ public class HarvestController : ControllerBase
     }
 
     [HttpGet(CoreApiRoutes.HarvestDataAll)]
-    public IQueryResult GetAllHarvestData()
+    public List<HarvestViewModel> GetAllHarvestData()
     {
-        var list = _harvestService.GetAllHarvestData().ToList();
-
-        return new QueryResult<List<HarvestViewModel>> { Data = list, Status = new SuccessResult() };
+        return _harvestService.GetAllHarvestData().ToList();
+        
     }
 
     [HttpGet(CoreApiRoutes.HarvestDataBySeason)]
