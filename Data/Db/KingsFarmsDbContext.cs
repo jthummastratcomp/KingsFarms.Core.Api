@@ -2,7 +2,6 @@
 using KingsFarms.Core.Api.Data.Providers;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
-using System.Configuration;
 
 namespace KingsFarms.Core.Api.Data.Db;
 
@@ -10,21 +9,14 @@ public sealed class KingsFarmsDbContext : DbContext, IDbContext
 {
     public KingsFarmsDbContext()
     {
-        
     }
+
     public KingsFarmsDbContext(DbContextOptions<KingsFarmsDbContext> options) : base(options)
     {
         //Database.SetInitializer<MavenContext>(null);
         //Configuration.ProxyCreationEnabled = false;
         ChangeTracker.LazyLoadingEnabled = false;
         ChangeTracker.AutoDetectChangesEnabled = true;
-    }
-
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-        optionsBuilder
-            .UseSqlServer("Server=tcp:kingsfarms.database.windows.net,1433;Initial Catalog=kingsfarmsDEV;Persist Security Info=False;User ID=jthumma-admin;Password=j+humm@-@dm1n;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=600;")
-            .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
     }
 
     public DbSet<Customer> Customers => Set<Customer>();
@@ -62,5 +54,12 @@ public sealed class KingsFarmsDbContext : DbContext, IDbContext
     {
         return Entry(entity);
     }
-    
+
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        optionsBuilder
+            .UseSqlServer(
+                "Server=tcp:kingsfarms.database.windows.net,1433;Initial Catalog=kingsfarmsDEV;Persist Security Info=False;User ID=jthumma-admin;Password=j+humm@-@dm1n;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=600;")
+            .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
+    }
 }

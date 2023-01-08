@@ -1,13 +1,4 @@
-﻿using System.Data;
-using Azure.Storage.Blobs;
-using Azure.Storage.Blobs.Specialized;
-using KingsFarms.Core.Api.Helpers;
-using KingsFarms.Core.Api.Services.Interfaces;
-using KingsFarms.Core.Api.ViewModels;
-using OfficeOpenXml;
-using ILogger = Serilog.ILogger;
-
-namespace KingsFarms.Core.Api.Services;
+﻿namespace KingsFarms.Core.Api.Services;
 
 //public class FieldOperationService : IFieldOperationService
 //{
@@ -59,7 +50,6 @@ namespace KingsFarms.Core.Api.Services;
 //        };
 //    }
 
-
 //    //private static List<HarvestViewModel> GetHarvestViewModels(DataTable table, int year)
 //    //{
 //    //    var list = new List<HarvestViewModel>();
@@ -76,7 +66,6 @@ namespace KingsFarms.Core.Api.Services;
 
 //    //    return list;
 //    //}
-
 
 //    //private static List<HarvestBedViewModel> GetHarvestsForWeek(DataRow row, int year)
 //    //{

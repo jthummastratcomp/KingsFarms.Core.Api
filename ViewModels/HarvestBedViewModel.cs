@@ -1,6 +1,4 @@
-﻿using KingsFarms.Core.Api.Enums;
-
-namespace KingsFarms.Core.Api.ViewModels;
+﻿namespace KingsFarms.Core.Api.ViewModels;
 
 //public class HarvestBedViewModel
 //{

@@ -81,17 +81,14 @@ public class SyncService : ISyncService
 
     public string SyncCustomers(List<CustomerHeaderViewModel> list)
     {
-        foreach (var vm in list)
-        {
-            _unitOfWork.CustomerRepo.Add(new Customer() { Key = vm.CustomerKey, City = vm.Address.City });
-        }
+        foreach (var vm in list) _unitOfWork.CustomerRepo.Add(new Customer { Key = vm.CustomerKey, City = vm.Address.City });
         _unitOfWork.SaveChanges();
         return "Synchronized Customers";
     }
 
     public string SaveHarvestData(HarvestViewModel viewModel)
     {
-        _unitOfWork.HarvestRepo.Add(new Harvest()
+        _unitOfWork.HarvestRepo.Add(new Harvest
         {
             BedId = viewModel.BedNumber, HarvestDate = viewModel.HarvestDate, Quantity = viewModel.HarvestQty
         });

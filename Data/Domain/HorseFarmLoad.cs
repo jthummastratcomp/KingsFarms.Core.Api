@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using KingsFarms.Core.Api.Data.Domain;
 using Microsoft.EntityFrameworkCore;
+
+namespace KingsFarms.Core.Api.Data.Domain;
 
 [Index(nameof(LoadDate))]
 public class HorseFarmLoad : DomainObject

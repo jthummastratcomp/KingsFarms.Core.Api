@@ -15,7 +15,9 @@ public interface IRepository<T> where T : DomainObject
     T Update(T entity);
     T? Get(int id);
     IEnumerable<T> All();
+
     IEnumerable<T> Find(Expression<Func<T, bool>> predicate);
+
     //void SaveChanges();
     void Remove(T entity);
 }

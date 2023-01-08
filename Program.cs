@@ -3,6 +3,7 @@ using Autofac.Extensions.DependencyInjection;
 using KingsFarms.Core.Api;
 using KingsFarms.Core.Api.Bootstrap;
 using KingsFarms.Core.Api.Data.Db;
+using KingsFarms.Core.Api.Data.memory;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -16,7 +17,7 @@ builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
 builder.Host.ConfigureContainer<ContainerBuilder>(b => b.RegisterModule(new WebBootstrap(apiSettings)));
 
 // Add services to the container.
-builder.Services.AddDbContext<KingsFarmsDbContext>(opt=>opt.UseSqlServer(builder.Configuration.GetConnectionString("KingsFarmsDb")));
+builder.Services.AddDbContext<KingsFarmsDbContext>(opt => opt.UseSqlServer(builder.Configuration.GetConnectionString("KingsFarmsDb")));
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -28,8 +29,7 @@ builder.Services.AddLazyCache();
 
 
 builder.Services.AddMediatR(typeof(Program));
-builder.Services.AddDbContext<ContactsContext>(options => options.UseInMemoryDatabase(databaseName: "Contacts"));
-
+builder.Services.AddDbContext<ContactsContext>(options => options.UseInMemoryDatabase("Contacts"));
 
 
 var app = builder.Build();
@@ -49,7 +49,7 @@ var app = builder.Build();
 
 using var scope = app.Services.CreateScope();
 using var ctx = scope.ServiceProvider.GetService<ContactsContext>();
-    ctx?.Database.EnsureCreated();
+ctx?.Database.EnsureCreated();
 
 
 // Configure the HTTP request pipeline.

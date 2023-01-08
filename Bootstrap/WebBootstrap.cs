@@ -1,11 +1,9 @@
 ﻿using Autofac;
-using KingsFarms.Core.Api.Data.Db;
 using KingsFarms.Core.Api.Data.Domain;
 using KingsFarms.Core.Api.Data.Providers;
 using KingsFarms.Core.Api.Data.Repositories;
 using KingsFarms.Core.Api.Services;
 using KingsFarms.Core.Api.Services.Interfaces;
-using KingsFarms.Core.Api.ViewModels;
 using Serilog;
 using ILogger = Serilog.ILogger;
 
@@ -62,7 +60,7 @@ public class WebBootstrap : Module
             .WithParameter("azStoreConnStr", azStoreConnStr)
             .WithParameter("azStoreContName", azStoreContName)
             .WithParameter("harvestFile", harvestFile);
-        
+
         builder.RegisterType<FedexTokenService>().As<IFedexTokenService>()
             .WithParameter("url", fedexUrl)
             .WithParameter("clientId", fedexClientId)
@@ -76,7 +74,7 @@ public class WebBootstrap : Module
 
         builder.RegisterType<PrepareUsdaInvoiceService>().As<IPrepareUsdaInvoiceService>();
         builder.RegisterType<InvoiceNumberGeneratorService>().As<IInvoiceNumberGeneratorService>();
-        
+
         //builder.RegisterType<UsdaNewMemoService>().As<IUsdaMemoService>();
         builder.RegisterType<ApplyInvoiceInfoService>().As<IApplyInvoiceInfoService>();
         builder.RegisterType<InvoiceInfoService>().As<IInvoiceInfoService>();

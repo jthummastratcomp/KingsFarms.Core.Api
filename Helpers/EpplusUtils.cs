@@ -78,7 +78,6 @@ public static class EpplusUtils
 
             //loop all cells in the row
             foreach (var cell in row)
-            {
                 try
                 {
                     newRow[cell.Start.Column - 1] = cell.Text;
@@ -87,7 +86,6 @@ public static class EpplusUtils
                 {
                     // ignored
                 }
-            }
 
             dt.Rows.Add(newRow);
         }

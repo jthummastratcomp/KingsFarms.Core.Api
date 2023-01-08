@@ -1,4 +1,6 @@
-﻿public enum ShipmentTypeEnum
+﻿namespace KingsFarms.Core.Api.Data.Domain;
+
+public enum ShipmentTypeEnum
 {
     None,
     FedExGround,

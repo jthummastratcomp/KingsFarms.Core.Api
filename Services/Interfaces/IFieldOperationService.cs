@@ -1,6 +1,4 @@
-﻿using KingsFarms.Core.Api.ViewModels;
-
-namespace KingsFarms.Core.Api.Services.Interfaces;
+﻿namespace KingsFarms.Core.Api.Services.Interfaces;
 
 //public interface IFieldOperationService
 //{

@@ -211,10 +211,10 @@ public static class Utils
 
         //return dt.AddDays(1);
 
-        int day = 0;
-        while ((new DateTime(year, 1, ++day).DayOfWeek != DayOfWeek.Saturday)) ;
-        
-        return  new DateTime(year, 1, day);
+        var day = 0;
+        while (new DateTime(year, 1, ++day).DayOfWeek != DayOfWeek.Saturday) ;
+
+        return new DateTime(year, 1, day);
     }
 
     public static int GetWeekOfYear(DateTime invoiceDate)

@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 
+namespace KingsFarms.Core.Api.Data.memory;
+
 public class ContactsContext : DbContext
 {
     public ContactsContext(DbContextOptions<ContactsContext> options) : base(options)

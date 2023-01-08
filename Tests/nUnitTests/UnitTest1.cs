@@ -1,16 +1,15 @@
-namespace KingsFarms.Core.Api.nUnitTests
-{
-    public class Tests
-    {
-        [SetUp]
-        public void Setup()
-        {
-        }
+namespace KingsFarms.Core.Api.nUnitTests;
 
-        [Test]
-        public void Test1()
-        {
-            Assert.Pass();
-        }
+public class Tests
+{
+    [SetUp]
+    public void Setup()
+    {
+    }
+
+    [Test]
+    public void Test1()
+    {
+        Assert.Pass();
     }
 }

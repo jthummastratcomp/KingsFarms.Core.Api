@@ -163,16 +163,16 @@ public class HarvestService : IHarvestService
     {
         //return _appCache.GetOrAdd("GetAllHarvestData", () =>
         //{
-            //var list = new List<HarvestViewModel>();
-            //for (var year = 2020; year <= DateTime.Today.Year; year++) list.AddRange(GetHarvestDataForYearBySeason(year));
-            //return list.OrderByDescending(x=>x.HarvestDate).ThenBy(x=>x.BedNumber).ToList();
+        //var list = new List<HarvestViewModel>();
+        //for (var year = 2020; year <= DateTime.Today.Year; year++) list.AddRange(GetHarvestDataForYearBySeason(year));
+        //return list.OrderByDescending(x=>x.HarvestDate).ThenBy(x=>x.BedNumber).ToList();
 
-            var list = _unitOfWork.HarvestRepo.All();
+        var list = _unitOfWork.HarvestRepo.All();
 
-            return list.Select(x => new HarvestViewModel
-            {
-                BedNumber = x.BedId, HarvestDate = x.HarvestDate.GetValueOrDefault(), HarvestQty = x.Quantity.GetValueOrDefault()
-            }).ToList().OrderByDescending(x=>x.HarvestDate).ThenBy(x=>x.BedNumber);
+        return list.Select(x => new HarvestViewModel
+        {
+            BedNumber = x.BedId, HarvestDate = x.HarvestDate.GetValueOrDefault(), HarvestQty = x.Quantity.GetValueOrDefault()
+        }).ToList().OrderByDescending(x => x.HarvestDate).ThenBy(x => x.BedNumber);
         //}, DateTime.Now.AddHours(2));
     }
 

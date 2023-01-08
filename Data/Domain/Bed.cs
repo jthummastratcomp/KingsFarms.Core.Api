@@ -1,13 +1,11 @@
-﻿using KingsFarms.Core.Api.Enums;
+﻿using System.ComponentModel.DataAnnotations;
 using Microsoft.EntityFrameworkCore;
-using System.ComponentModel.DataAnnotations;
 
 namespace KingsFarms.Core.Api.Data.Domain;
 
 [Index(nameof(Number), IsUnique = true)]
-public class Bed :DomainObject
+public class Bed : DomainObject
 {
-
     [Required] public int Number { get; set; }
     public string? Section { get; set; }
     public int PlantsCount { get; set; }

@@ -2,7 +2,6 @@ using KingsFarms.Core.Api.Results;
 using KingsFarms.Core.Api.Services.Interfaces;
 using KingsFarms.Core.Api.ViewModels;
 using Microsoft.AspNetCore.Mvc;
-using ILogger = Serilog.ILogger;
 
 namespace KingsFarms.Core.Api.Controllers;
 
@@ -24,6 +23,7 @@ public class SyncController : ControllerBase
 
         return new QueryResult<string> { Data = list, Status = new SuccessResult() };
     }
+
     [HttpGet(CoreApiRoutes.SyncHarvestsInfo)]
     public IQueryResult SyncHarvestsInfo()
     {

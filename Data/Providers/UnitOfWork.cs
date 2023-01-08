@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using KingsFarms.Core.Api.Data.Db;
+﻿using KingsFarms.Core.Api.Data.Db;
 using KingsFarms.Core.Api.Data.Domain;
 using KingsFarms.Core.Api.Data.Repositories;
 
@@ -8,7 +7,7 @@ namespace KingsFarms.Core.Api.Data.Providers;
 public class UnitOfWork : IUnitOfWork
 {
     private readonly KingsFarmsDbContext _context;
-    
+
 
     public UnitOfWork(KingsFarmsDbContext context)
     {
@@ -30,7 +29,6 @@ public class UnitOfWork : IUnitOfWork
         _context.SaveChanges();
     }
 }
-
 
 //public sealed class UnitOfWork : IUnitOfWork
 //{
@@ -62,7 +60,7 @@ public class UnitOfWork : IUnitOfWork
 //                HResult = 0,
 //                Source = null
 //            };
-                
+
 //        }
 //    }
 //}

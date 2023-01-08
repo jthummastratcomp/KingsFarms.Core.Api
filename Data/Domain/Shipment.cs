@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using KingsFarms.Core.Api.Data.Domain;
 using Microsoft.EntityFrameworkCore;
+
+namespace KingsFarms.Core.Api.Data.Domain;
 
 [Index(nameof(ShipmentDate))]
 public class Shipment : DomainObject
@@ -10,5 +11,4 @@ public class Shipment : DomainObject
     [Required] public int? Boxes { get; set; }
     public ShipmentTypeEnum? ShipmentType { get; set; }
     public Customer? Customer { get; set; }
-
 }

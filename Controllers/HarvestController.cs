@@ -25,7 +25,6 @@ public class HarvestController : ControllerBase
     public List<HarvestViewModel> GetAllHarvestData()
     {
         return _harvestService.GetAllHarvestData().ToList();
-        
     }
 
     [HttpGet(CoreApiRoutes.HarvestDataBySeason)]

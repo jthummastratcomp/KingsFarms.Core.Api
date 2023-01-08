@@ -1,16 +1,15 @@
 ﻿using KingsFarms.Core.Api.Data.Domain;
-using System.Net;
 
 namespace KingsFarms.Core.Api.Data.Providers;
 
-public interface ICustomerDataProvider :IBaseDataProvider<Customer>
+public interface ICustomerDataProvider : IBaseDataProvider<Customer>
 {
     //Customer? GetCustomer(int id);
     //List<Customer> GetCustomers();
     //int Save(Customer modifiedCustomer);
 }
 
-public interface IBaseDataProvider <T> where T : DomainObject
+public interface IBaseDataProvider<T> where T : DomainObject
 {
     T? GetById(int id);
     List<T> GetAll();

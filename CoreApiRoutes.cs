@@ -40,7 +40,7 @@ public static class CoreApiRoutes
 
     //DASHBOARD
     public const string Dashboard = "api/dashboard";
-    
+
     //FEDEX
     public const string FedExLocationInfo = "api/fedex/location/info";
     public const string ValidatedAddress = "api/fedex/validate/address";

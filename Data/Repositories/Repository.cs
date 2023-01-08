@@ -1,8 +1,6 @@
 ﻿using System.Linq.Expressions;
 using KingsFarms.Core.Api.Data.Db;
 using KingsFarms.Core.Api.Data.Domain;
-using KingsFarms.Core.Api.Data.Providers;
-using Microsoft.EntityFrameworkCore;
 
 namespace KingsFarms.Core.Api.Data.Repositories;
 
@@ -97,18 +95,14 @@ public class CustomerRepository : Repository<Customer>
         customer.City = entity.City;
 
         return base.Update(customer);
-
     }
 }
-
 
 public class InvoiceRepository : Repository<Invoice>
 {
     public InvoiceRepository(KingsFarmsDbContext context) : base(context)
     {
     }
-
-    
 }
 
 public class BedRepository : Repository<Bed>
@@ -116,8 +110,6 @@ public class BedRepository : Repository<Bed>
     public BedRepository(KingsFarmsDbContext context) : base(context)
     {
     }
-
-
 }
 
 public class HarvestRepository : Repository<Harvest>
@@ -125,6 +117,4 @@ public class HarvestRepository : Repository<Harvest>
     public HarvestRepository(KingsFarmsDbContext context) : base(context)
     {
     }
-
-
 }

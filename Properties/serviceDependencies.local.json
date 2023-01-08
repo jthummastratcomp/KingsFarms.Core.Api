@@ -5,7 +5,8 @@
     },
     "mssql1": {
       "secretStore": "LocalSecretsFile",
-      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.Sql/servers/kingsfarms/databases/kingsfarmsDEV",
+      "resourceId":
+        "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.Sql/servers/kingsfarms/databases/kingsfarmsDEV",
       "type": "mssql.azure",
       "connectionId": "ConnectionStrings:KingsFarmsDb",
       "dynamicId": null
