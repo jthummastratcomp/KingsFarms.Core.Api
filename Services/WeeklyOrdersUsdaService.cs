@@ -137,9 +137,8 @@ public class WeeklyOrdersUsdaService : IWeeklyOrdersUsdaService
         if (dtSource == null) return 0;
 
         //var weekOfYear = DateTime.Parse($"1/1/{DateTime.Today.Year}");
-
-        var weekOfYear = DateTime.Parse($"1/1/{weekDate.Year}");
-
+        //var weekOfYear = DateTime.Parse($"1/1/{weekDate.Year}");
+        var weekOfYear = DateTime.Parse($"1/7/{weekDate.Year}");
         var columnInDt = PickColumn(weekDate, weekOfYear);
 
         return columnInDt;
