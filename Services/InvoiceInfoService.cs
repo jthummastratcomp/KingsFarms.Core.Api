@@ -44,6 +44,10 @@ public class InvoiceInfoService : IInvoiceInfoService
                 model.Bill.ChargesDiscounts = -30m;
                 model.Bill.Billed -= 30m;
                 break;
+            case "TRI-ELL":
+                model.Bill.ChargesDiscounts = -30m;
+                model.Bill.Billed -= 30m;
+                break;
         }
 
         return model;
