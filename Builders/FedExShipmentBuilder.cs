@@ -35,7 +35,7 @@ public static class FedExShipmentBuilder
             .WithBlockInsightVisibility(false)
             .WithShippingPayment(BuildShipmentPayment())
             .WithLabelSpecification(BuildShipmentLabelSpecification())
-            .WithPackageCount(1)
+            .WithPackageCount(4)
             .WithPackageItem(BuildShipmentPackageItem())
             .Build();
     }
@@ -43,7 +43,9 @@ public static class FedExShipmentBuilder
     private static FedExAccountNumber? BuildShipmentAccountNumber()
     {
         return new FedExAccountNumberBuilder()
-            .WithNumber("740561073")
+            .WithNumber("740561073") //developer
+                                     //519249120 //prod jay
+                                     //673904076 //prod grthummakings
             .Build();
     }
 
@@ -51,7 +53,7 @@ public static class FedExShipmentBuilder
     {
         return new FedExPackageItemBuilder()
             .WithWeight(new FedExWeightBuilder()
-                .WithValue(10)
+                .WithValue(12)
                 .WithUnits("LB")
                 .Build())
             //.WithDimension(new FedExDimensionBuilder()

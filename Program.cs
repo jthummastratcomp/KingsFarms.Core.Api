@@ -6,6 +6,7 @@ using KingsFarms.Core.Api.Data.Db;
 using KingsFarms.Core.Api.Data.memory;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,7 +29,8 @@ builder.Services.AddCors(x => x.AddDefaultPolicy(policyBuilder => policyBuilder.
 builder.Services.AddLazyCache();
 
 
-builder.Services.AddMediatR(typeof(Program));
+//builder.Services.AddMediatR(typeof(Program));
+builder.Services.AddMediatR(cfg => { cfg.RegisterServicesFromAssemblies(Assembly.GetAssembly(typeof(Program))!); });
 builder.Services.AddDbContext<ContactsContext>(options => options.UseInMemoryDatabase("Contacts"));
 
 
