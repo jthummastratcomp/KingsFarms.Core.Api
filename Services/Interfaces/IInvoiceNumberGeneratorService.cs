@@ -1,5 +1,6 @@
 ﻿using System.Data;
 using KingsFarms.Core.Api.ViewModels;
+using KingsFarms.Core.Api.ViewModels.Invoice;
 
 namespace KingsFarms.Core.Api.Services.Interfaces;
 

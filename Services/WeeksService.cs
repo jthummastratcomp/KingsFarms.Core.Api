@@ -34,7 +34,3 @@ public class WeeksService : IWeeksService
         return weekOfYear;
     }
 }
-
-public interface IWeeksService
-{
-}

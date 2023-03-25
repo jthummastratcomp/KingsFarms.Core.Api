@@ -5,7 +5,7 @@ using KingsFarms.Core.Api.Data.Providers;
 using KingsFarms.Core.Api.Enums;
 using KingsFarms.Core.Api.Helpers;
 using KingsFarms.Core.Api.Services.Interfaces;
-using KingsFarms.Core.Api.ViewModels;
+using KingsFarms.Core.Api.ViewModels.Harvest;
 using LazyCache;
 using OfficeOpenXml;
 using ILogger = Serilog.ILogger;

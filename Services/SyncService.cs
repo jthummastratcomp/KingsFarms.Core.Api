@@ -2,7 +2,8 @@
 using KingsFarms.Core.Api.Data.Providers;
 using KingsFarms.Core.Api.Helpers;
 using KingsFarms.Core.Api.Services.Interfaces;
-using KingsFarms.Core.Api.ViewModels;
+using KingsFarms.Core.Api.ViewModels.Customer;
+using KingsFarms.Core.Api.ViewModels.Harvest;
 
 namespace KingsFarms.Core.Api.Services;
 

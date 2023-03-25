@@ -1,6 +1,6 @@
 using KingsFarms.Core.Api.Results;
 using KingsFarms.Core.Api.Services.Interfaces;
-using KingsFarms.Core.Api.ViewModels;
+using KingsFarms.Core.Api.ViewModels.Harvest;
 using Microsoft.AspNetCore.Mvc;
 using ILogger = Serilog.ILogger;
 

@@ -1,4 +1,4 @@
-﻿using KingsFarms.Core.Api.ViewModels;
+﻿using KingsFarms.Core.Api.ViewModels.Shipment;
 
 namespace KingsFarms.Core.Api.Services.Interfaces;
 

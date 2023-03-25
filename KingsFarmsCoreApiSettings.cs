@@ -12,7 +12,6 @@ public class KingsFarmsCoreApiSettings
     public string cosmosDbContainer_Beds { get; set; }
     public string cosmosDbDatabaseId { get; set; }
 
-
     public string azStoreConnStr { get; set; }
     public string azStoreContName { get; set; }
     public string weeklyOrdersFile { get; set; }
@@ -24,4 +23,10 @@ public class KingsFarmsCoreApiSettings
     public string fedexUrl { get; set; }
     public string fedexClientId { get; set; }
     public string fedexClientSecret { get; set; }
+
+    public string twilioAccountSid { get; set; }
+    public string twilioAuthToken { get; set; }
+    public string twilioSmsFrom { get; set; }
+    public string twilioSmsTo { get; set; }
+    public string twilioSmsToReal { get; set; }
 }

@@ -2,6 +2,7 @@ using KingsFarms.Core.Api.Enums;
 using KingsFarms.Core.Api.Helpers;
 using KingsFarms.Core.Api.Services.Interfaces;
 using KingsFarms.Core.Api.ViewModels;
+using KingsFarms.Core.Api.ViewModels.Invoice;
 using Microsoft.AspNetCore.Mvc;
 using ILogger = Serilog.ILogger;
 

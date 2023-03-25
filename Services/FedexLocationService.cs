@@ -2,7 +2,7 @@
 using KingsFarms.Core.Api.Services.Endpoints;
 using KingsFarms.Core.Api.Services.Extensions;
 using KingsFarms.Core.Api.Services.Interfaces;
-using KingsFarms.Core.Api.ViewModels;
+using KingsFarms.Core.Api.ViewModels.Shipment;
 using Newtonsoft.Json;
 using RestSharp;
 using ILogger = Serilog.ILogger;

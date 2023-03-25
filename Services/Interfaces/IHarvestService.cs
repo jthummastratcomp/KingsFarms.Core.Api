@@ -1,5 +1,5 @@
 ﻿using KingsFarms.Core.Api.Enums;
-using KingsFarms.Core.Api.ViewModels;
+using KingsFarms.Core.Api.ViewModels.Harvest;
 
 namespace KingsFarms.Core.Api.Services.Interfaces;
 

@@ -30,9 +30,6 @@ public class WebBootstrap : Module
         var horseManureFile = _hotTowelCoreApiSettings.horseManureFile;
         var fieldOperationsFile = _hotTowelCoreApiSettings.fieldOperationsFile;
 
-        var fedexUrl = _hotTowelCoreApiSettings.fedexUrl;
-        var fedexClientId = _hotTowelCoreApiSettings.fedexClientId;
-        var fedexClientSecret = _hotTowelCoreApiSettings.fedexClientSecret;
 
         builder.Register<ILogger>((c, p) => new LoggerConfiguration().Enrich.WithProperty("App", "HotTowellette").WriteTo.Seq(seqLogUrl).CreateLogger());
 
@@ -62,15 +59,15 @@ public class WebBootstrap : Module
             .WithParameter("harvestFile", harvestFile);
 
         builder.RegisterType<FedexTokenService>().As<IFedexTokenService>()
-            .WithParameter("url", fedexUrl)
-            .WithParameter("clientId", fedexClientId)
-            .WithParameter("clientSecret", fedexClientSecret);
+            .WithParameter("url", _hotTowelCoreApiSettings.fedexUrl)
+            .WithParameter("clientId", _hotTowelCoreApiSettings.fedexClientId)
+            .WithParameter("clientSecret", _hotTowelCoreApiSettings.fedexClientSecret);
 
         builder.RegisterType<FedexLocationService>().As<IFedexLocationService>()
-            .WithParameter("url", fedexUrl);
+            .WithParameter("url", _hotTowelCoreApiSettings.fedexUrl);
 
         builder.RegisterType<FedexShipmentService>().As<IFedexShipmentService>()
-            .WithParameter("url", fedexUrl);
+            .WithParameter("url", _hotTowelCoreApiSettings.fedexUrl);
 
         builder.RegisterType<PrepareUsdaInvoiceService>().As<IPrepareUsdaInvoiceService>();
         builder.RegisterType<InvoiceNumberGeneratorService>().As<IInvoiceNumberGeneratorService>();
@@ -80,6 +77,14 @@ public class WebBootstrap : Module
         builder.RegisterType<InvoiceInfoService>().As<IInvoiceInfoService>();
 
         builder.RegisterType<SyncService>().As<ISyncService>();
+
+        builder.RegisterType<MessagingService>().As<IMessagingService>()
+            .WithParameter("accountSid", _hotTowelCoreApiSettings.twilioAccountSid)
+            .WithParameter("authToken", _hotTowelCoreApiSettings.twilioAuthToken)
+            .WithParameter("fromSmsPhone", _hotTowelCoreApiSettings.twilioSmsFrom)
+            .WithParameter("useRealToPhone", _hotTowelCoreApiSettings.twilioSmsToReal)
+            .WithParameter("toSmsPhone", _hotTowelCoreApiSettings.twilioSmsTo);
+
 
         //builder.RegisterType<CustomerDataProvider>().As<ICustomerDataProvider>();
 

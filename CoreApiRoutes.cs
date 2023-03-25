@@ -54,4 +54,8 @@ public static class CoreApiRoutes
     //SYNC
     public const string SyncBedsInfo = "api/sync/bedsInfo";
     public const string SyncHarvestsInfo = "api/sync/harvestsInfo";
+
+    //MESSAGING
+    public const string SendCustomerInvoiceSms = "api/messaging/sendsms";
+    public const string SendCustomerInvoiceBulkYearSms = "api/messaging/sendsmsyear";
 }

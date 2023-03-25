@@ -1,12 +1,11 @@
+using System.Reflection;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using KingsFarms.Core.Api;
 using KingsFarms.Core.Api.Bootstrap;
 using KingsFarms.Core.Api.Data.Db;
 using KingsFarms.Core.Api.Data.memory;
-using MediatR;
 using Microsoft.EntityFrameworkCore;
-using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 

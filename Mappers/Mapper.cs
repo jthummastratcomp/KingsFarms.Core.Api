@@ -1,7 +1,9 @@
 using System.Data;
 using KingsFarms.Core.Api.Enums;
 using KingsFarms.Core.Api.Helpers;
-using KingsFarms.Core.Api.ViewModels;
+using KingsFarms.Core.Api.ViewModels.Customer;
+using KingsFarms.Core.Api.ViewModels.Harvest;
+using KingsFarms.Core.Api.ViewModels.Invoice;
 
 namespace KingsFarms.Core.Api.Mappers;
 

@@ -1,7 +1,7 @@
 using KingsFarms.Core.Api.Data.Db;
 using KingsFarms.Core.Api.Data.Domain;
 using KingsFarms.Core.Api.Services.Interfaces;
-using KingsFarms.Core.Api.ViewModels;
+using KingsFarms.Core.Api.ViewModels.Customer;
 using Microsoft.AspNetCore.Mvc;
 
 namespace KingsFarms.Core.Api.Controllers;
