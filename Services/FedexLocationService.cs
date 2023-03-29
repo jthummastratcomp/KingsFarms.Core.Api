@@ -45,19 +45,21 @@ public class FedexLocationService : IFedexLocationService
 
     public List<FedexLocationViewModel> ValidateAddress()
     {
+        var json = JsonConvert.SerializeObject(new FedExAddressesToValidateBuilder()
+            .WithLocation(new FedExAddressBuilder()
+                .WithCountryCode("US")
+                .WithPostalCode("45040")
+                .WithCity("Mason")
+                .WithStreetLine1("4029 Melampy Creek Ln")
+                .Build())
+            .Build(), Formatting.Indented);
+
         var client = new RestClient(new RestClientOptions(_url));
         var request = new RestRequest(FedExEndpoints.FedExValidateAddressEndPoint)
             .AddHeaderAuthorization(_tokenService.GetAccessToken())
             .AddHeaderLocale()
             .AddHeaderContentTypeJson()
-            .AddBody(JsonConvert.SerializeObject(new FedExAddressesToValidateBuilder()
-                .WithLocation(new FedExAddressBuilder()
-                    .WithCountryCode("US")
-                    .WithPostalCode("45040")
-                    .WithCity("Cincinnati")
-                    .WithStreetLine1("4029 Melampy Creek Ln")
-                    .Build())
-                .Build()));
+            .AddBody(json);
 
         var resp = client.Post(request);
 

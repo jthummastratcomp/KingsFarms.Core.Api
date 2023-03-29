@@ -5,14 +5,7 @@ namespace KingsFarms.Core.Api.Builders;
 
 public static class FedExShipmentBuilder
 {
-    //public static FedExCreateShipment? BuildShipment()
-    //{
-    //    return new FedExCreateShipmentBuilder()
-    //        .WithLabelOptions(FedExLabelOptions.URL_ONLY)
-    //        .WithRequestedShipment(BuildRequestedShipment())
-    //        .WithAccountNumber(BuildShipmentAccountNumber())
-    //        .Build();
-    //}
+  
 
     public static FedExCreateShipment? BuildShipment(CreateShipmentRequest? request)
     {
@@ -28,14 +21,14 @@ public static class FedExShipmentBuilder
         return new FedExRequestedShipmentBuilder()
             .WithShipper(BuildShipmentShipper())
             .WithRecipient(BuildShipmentRecipient(request?.To))
-            //.WithShipDate(DateTime.Today.ToString("d"))
+            .WithShipDate(request?.ShipDate)
             .WithServiceType(FedExServiceType.GROUND)
             .WithPackagingType(FedExPackagingType.YOUR_PACKAGING)
             .WithPickupType(FedExPickupType.PICKUP)
             .WithBlockInsightVisibility(false)
             .WithShippingPayment(BuildShipmentPayment())
             .WithLabelSpecification(BuildShipmentLabelSpecification())
-            .WithPackageCount(4)
+            .WithPackageCount(request?.BoxCount)
             .WithPackageItem(BuildShipmentPackageItem())
             .Build();
     }
@@ -56,12 +49,12 @@ public static class FedExShipmentBuilder
                 .WithValue(12)
                 .WithUnits("LB")
                 .Build())
-            //.WithDimension(new FedExDimensionBuilder()
-            //    .WithLength(24)
-            //    .WithWidth(12)
-            //    .WithHeight(14)
-            //    .WithUnit("IN")
-            //    .Build())
+            .WithDimension(new FedExDimensionBuilder()
+                .WithLength(24)
+                .WithWidth(12)
+                .WithHeight(14)
+                .WithUnit("IN")
+                .Build())
             .Build();
     }
 

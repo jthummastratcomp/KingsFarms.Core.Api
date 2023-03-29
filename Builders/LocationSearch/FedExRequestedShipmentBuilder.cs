@@ -11,8 +11,7 @@ public class FedExRequestedShipmentBuilder
     private FedExShippingPayment? _payment;
     private string? _pickupType;
     private string? _serviceType;
-
-    private string _shipDate;
+    private DateTime? _shipDate;
     private FedExShipperRecipient? _shipper;
 
     public FedExRequestedShipmentBuilder()
@@ -21,7 +20,7 @@ public class FedExRequestedShipmentBuilder
         _recipients = new List<FedExShipperRecipient>();
     }
 
-    public FedExRequestedShipmentBuilder WithShipDate(string value)
+    public FedExRequestedShipmentBuilder WithShipDate(DateTime? value)
     {
         _shipDate = value;
         return this;
@@ -75,15 +74,18 @@ public class FedExRequestedShipmentBuilder
         return this;
     }
 
-    public FedExRequestedShipmentBuilder WithPackageCount(int value)
+    public FedExRequestedShipmentBuilder WithPackageCount(int? value)
     {
-        _packageCount = value;
+        _packageCount = value ?? 3;
         return this;
     }
 
     public FedExRequestedShipmentBuilder WithPackageItem(FedExPackageItem item)
     {
-        _packageItems.Add(item);
+        for (int i = 0; i < _packageCount; i++)
+        {
+            _packageItems.Add(item);
+        }
         return this;
     }
 
@@ -94,8 +96,7 @@ public class FedExRequestedShipmentBuilder
             Shipper = _shipper,
             Recipients = _recipients,
             PackageItems = _packageItems,
-            //ShipDate = "2022-07-30",
-            //ShipDate = _shipDate,
+            //ShipDate = _shipDate.HasValue? _shipDate.Value.ToString("d") : DateTime.Today.ToString("d"),
             ServiceType = _serviceType,
             PackagingType = _packagingType,
             PickupType = _pickupType,

@@ -7,4 +7,5 @@ public class CreateShipmentRequest
     public ShipmentContactRequest? To { get; init; }
     public int? BoxCount { get; init; }
     public int? Weight { get; init; }
+    public DateTime ShipDate { get; set; } = DateTime.Today;
 }

@@ -9,6 +9,6 @@ public class SearchDto
 
     public string? Data { get; set; }
 
-    //public string SortOrderIndex { get; set; }
-    public string DataType { get; set; }
+    public List<string> Messages { get; set; }
+    public string? DataType { get; set; }
 }
