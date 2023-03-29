@@ -16,7 +16,7 @@ public class Invoice : DomainObject
 
     [Required] [Precision(14, 2)] public decimal? Rate { get; set; }
 
-    [Required] [Precision(14, 2)] public double Amount { get; set; }
+    [Required] [Precision(14, 2)] public decimal? Amount { get; set; }
 
     [Precision(14, 2)] public decimal? ShippingCharge { get; set; }
 

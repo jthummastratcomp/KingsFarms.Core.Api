@@ -77,6 +77,7 @@ public class WebBootstrap : Module
         builder.RegisterType<InvoiceInfoService>().As<IInvoiceInfoService>();
 
         builder.RegisterType<SyncService>().As<ISyncService>();
+        builder.RegisterType<SqlService>().As<ISqlService>();
 
         builder.RegisterType<MessagingService>().As<IMessagingService>()
             .WithParameter("accountSid", _hotTowelCoreApiSettings.twilioAccountSid)

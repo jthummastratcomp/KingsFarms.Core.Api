@@ -7,12 +7,12 @@ using Microsoft.AspNetCore.Mvc;
 namespace KingsFarms.Core.Api.Controllers;
 
 [ApiController]
-public class CustomerController : ControllerBase
+public class FileController : ControllerBase
 {
     private readonly KingsFarmsDbContext _context;
     private readonly IWeeklyOrdersUsdaService _ordersService;
 
-    public CustomerController(ILogger<CustomerController> logger, IWeeklyOrdersUsdaService ordersService, KingsFarmsDbContext context)
+    public FileController(ILogger<FileController> logger, IWeeklyOrdersUsdaService ordersService, KingsFarmsDbContext context)
     {
         _ordersService = ordersService;
         _context = context;

@@ -40,6 +40,14 @@ public class SyncController : ControllerBase
 
         return new QueryResult<string> { Data = list, Status = new SuccessResult() };
     }
+    
+    [HttpGet(CoreApiRoutes.SyncInvoices)]
+    public IQueryResult SyncInvoices()
+    {
+        var list = _syncService.SyncInvoices();
+
+        return new QueryResult<string> { Data = list, Status = new SuccessResult() };
+    }
 
     [HttpPost(CoreApiRoutes.SendCustomersToDb)]
     public IQueryResult SyncCustomers(List<CustomerHeaderViewModel> list)

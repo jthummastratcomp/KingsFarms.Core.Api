@@ -1,5 +1,6 @@
 ﻿using KingsFarms.Core.Api.Data.Domain;
 using KingsFarms.Core.Api.Data.Providers;
+using KingsFarms.Core.Api.Enums;
 using KingsFarms.Core.Api.Helpers;
 using KingsFarms.Core.Api.Services.Interfaces;
 using KingsFarms.Core.Api.ViewModels.Customer;
@@ -116,6 +117,54 @@ public class SyncService : ISyncService
 
         _unitOfWork.SaveChanges();
         return "Synchronized Customers";
+    }
+
+
+    public string SyncInvoices()
+    {
+        var weeks = _weeklyOrdersUsdaService.GetInvoiceWeeksListForYear(2023);
+        foreach (var week in weeks)
+        {
+            if (week.Data == "2022-12-31") continue;
+
+            var list = _weeklyOrdersUsdaService.LoadInvoicesForWeek(week.Data, CompanyEnum.Kings);
+
+            foreach (var vm in list)
+            {
+                var customer = _unitOfWork.CustomerRepo.Find(x => x.Key == vm.CustomerHeader.CustomerKey).FirstOrDefault();
+                if (customer != null)
+                {
+                    var invoice = _unitOfWork.InvoiceRepo.Find(x => x.InvoiceNumber == vm.InvoiceNumber).FirstOrDefault();
+                    if (invoice == null)
+                    {
+                        _unitOfWork.InvoiceRepo.Add(new Invoice
+                        {
+                            InvoiceNumber = vm.InvoiceNumber,
+                            InvoiceDate = vm.InvoiceDate,
+                            DueDate = vm.DueDate,
+                            Quantity = vm.Cost.Quantity,
+                            Rate = vm.Price.Rate,
+                            Amount = vm.Bill.Billed,
+                            Memo = vm.Memo,
+                            CustomerId = customer.Id
+                        });
+                    }
+                    else
+                    {
+                        invoice.InvoiceDate = vm.InvoiceDate;
+                        invoice.DueDate = vm.DueDate;
+                        invoice.Quantity = vm.Cost.Quantity;
+                        invoice.Rate = vm.Price.Rate;
+                        invoice.Amount = vm.Bill.Billed;
+                        invoice.Memo = vm.Memo;
+                    }
+                }
+            }
+        }
+
+        _unitOfWork.SaveChanges();
+        return "Synchronized Invoices";
+        ;
     }
 
     public string SyncCustomers(List<CustomerHeaderViewModel> list)

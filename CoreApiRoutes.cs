@@ -2,10 +2,17 @@ namespace KingsFarms.Core.Api;
 
 public static class CoreApiRoutes
 {
-    //CUSTOMER 
+    //FILE
     public const string GetCustomersFromOrdersFile = "api/customers/file";
     public const string GetCustomersFromDb = "api/customers";
     public const string SendCustomersToDb = "api/customers/sendToDb";
+
+    //DATABASE SQL
+    public const string GetCustomersFromSql = "api/sql/customers";
+    public const string GetBedsFromSql = "api/sql/beds";
+    public const string GetHarvestsFromSql = "api/sql/harvests";
+    public const string GetManureFromSql = "api/sql/manure";
+    public const string GetInvoicesFromSql = "api/sql/invoices";
 
     //INVOICES
     public const string LoadInvoicesForWeek = "api/orders/{week}/{company}/load";
