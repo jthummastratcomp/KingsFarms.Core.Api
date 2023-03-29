@@ -24,9 +24,9 @@ public class CustomerController : ControllerBase
         return _ordersService.GetCustomersFromOrdersFile();
     }
 
-    [HttpGet(CoreApiRoutes.GetCustomersFromDb)]
-    public List<Bed> GetCustomers()
-    {
-        return _context.Beds.ToList();
-    }
+    //[HttpGet(CoreApiRoutes.GetCustomersFromDb)]
+    //public List<Bed> GetCustomers()
+    //{
+    //    return _context.Beds.ToList();
+    //}
 }

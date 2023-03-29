@@ -12,15 +12,17 @@ public class SyncService : ISyncService
     private readonly IBedService _bedService;
     private readonly IHarvestService _harvestService;
     private readonly IUnitOfWork _unitOfWork;
+    private readonly IWeeklyOrdersUsdaService _weeklyOrdersUsdaService;
 
-    public SyncService(IBedService bedService, IHarvestService harvestService, IUnitOfWork unitOfWork)
+    public SyncService(IBedService bedService, IHarvestService harvestService, IWeeklyOrdersUsdaService weeklyOrdersUsdaService, IUnitOfWork unitOfWork)
     {
         _bedService = bedService;
         _harvestService = harvestService;
+        _weeklyOrdersUsdaService = weeklyOrdersUsdaService;
         _unitOfWork = unitOfWork;
     }
 
-    public string SyncBedsInfo()
+    public string SyncBeds()
     {
         var list = _bedService.GetBedsInfo();
 
@@ -32,7 +34,7 @@ public class SyncService : ISyncService
             var bed = _unitOfWork.BedsRepo.Find(x => x.Number == bedNumber).FirstOrDefault();
             if (bed == null)
             {
-                _unitOfWork.BedsRepo.Add(new Bed { Number = bedNumber, Section = vm.SectionDisplay, PlantedDate = vm.PlantedDate, PlantsCount = vm.PlantsCount });
+                _unitOfWork.BedsRepo.Add(new Bed {Number = bedNumber, Section = vm.SectionDisplay, PlantedDate = vm.PlantedDate, PlantsCount = vm.PlantsCount});
             }
             else
             {
@@ -48,14 +50,14 @@ public class SyncService : ISyncService
         return "Synchronized Beds";
     }
 
-    public string SyncHarvestInfo()
+    public string SyncHarvests()
     {
         var list = _harvestService.GetAllHarvestData();
 
 
         foreach (var vm in list)
         {
-            var bed = _unitOfWork.BedsRepo.Get(vm.BedNumber); // ?? _unitOfWork.BedsRepo.Add(new Bed { Number = vm.BedNumber});
+            var bed = _unitOfWork.BedsRepo.Get(vm.BedNumber);
             if (bed == null) continue;
 
             var harvestForBedDate = _unitOfWork.HarvestRepo.Find(x => x.BedId == bed.Id && x.HarvestDate == vm.HarvestDate).FirstOrDefault();
@@ -80,9 +82,45 @@ public class SyncService : ISyncService
         return "Synchronized Harvests";
     }
 
+    public string SyncCustomers()
+    {
+        var list = _weeklyOrdersUsdaService.GetCustomersFromOrdersFile();
+
+        foreach (var vm in list)
+        {
+            var customer = _unitOfWork.CustomerRepo.Find(x => x.Key == vm.CustomerHeader.CustomerKey).FirstOrDefault();
+            if (customer == null)
+            {
+                _unitOfWork.CustomerRepo.Add(new Customer
+                {
+                    Key = vm.CustomerHeader.CustomerKey,
+                    Name = vm.CustomerHeader.StoreName,
+                    Address = vm.CustomerHeader.Address.FirstLineDisplay,
+                    City = vm.CustomerHeader.Address.City,
+                    StoreName = vm.CustomerHeader.StoreName,
+                    Zip = vm.CustomerHeader.Address.Zip,
+                    ContactName = vm.CustomerHeader.Contact.Name
+                });
+            }
+            else
+            {
+                customer.Name = vm.CustomerHeader.StoreName;
+                customer.Address = vm.CustomerHeader.Address.FirstLineDisplay;
+                customer.City = vm.CustomerHeader.Address.City;
+                customer.StoreName = vm.CustomerHeader.StoreName;
+                customer.Zip = vm.CustomerHeader.Address.Zip;
+                customer.ContactName = vm.CustomerHeader.Contact.Name;
+                _unitOfWork.CustomerRepo.Update(customer);
+            }
+        }
+
+        _unitOfWork.SaveChanges();
+        return "Synchronized Customers";
+    }
+
     public string SyncCustomers(List<CustomerHeaderViewModel> list)
     {
-        foreach (var vm in list) _unitOfWork.CustomerRepo.Add(new Customer { Key = vm.CustomerKey, City = vm.Address.City });
+        foreach (var vm in list) _unitOfWork.CustomerRepo.Add(new Customer {Key = vm.CustomerKey, City = vm.Address.City});
         _unitOfWork.SaveChanges();
         return "Synchronized Customers";
     }

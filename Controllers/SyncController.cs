@@ -17,22 +17,29 @@ public class SyncController : ControllerBase
     }
 
 
-    [HttpGet(CoreApiRoutes.SyncBedsInfo)]
+    [HttpGet(CoreApiRoutes.SyncBeds)]
     public IQueryResult SyncBedsInfo()
     {
-        var list = _syncService.SyncBedsInfo();
+        var list = _syncService.SyncBeds();
 
         return new QueryResult<string> { Data = list, Status = new SuccessResult() };
     }
 
-    [HttpGet(CoreApiRoutes.SyncHarvestsInfo)]
+    [HttpGet(CoreApiRoutes.SyncHarvests)]
     public IQueryResult SyncHarvestsInfo()
     {
-        var list = _syncService.SyncHarvestInfo();
+        var list = _syncService.SyncHarvests();
 
         return new QueryResult<string> { Data = list, Status = new SuccessResult() };
     }
 
+    [HttpGet(CoreApiRoutes.SyncCustomers)]
+    public IQueryResult SyncCustomers()
+    {
+        var list = _syncService.SyncCustomers();
+
+        return new QueryResult<string> { Data = list, Status = new SuccessResult() };
+    }
 
     [HttpPost(CoreApiRoutes.SendCustomersToDb)]
     public IQueryResult SyncCustomers(List<CustomerHeaderViewModel> list)

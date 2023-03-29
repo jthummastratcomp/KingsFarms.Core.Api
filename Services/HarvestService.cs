@@ -161,19 +161,10 @@ public class HarvestService : IHarvestService
 
     public IEnumerable<HarvestViewModel> GetAllHarvestData()
     {
-        //return _appCache.GetOrAdd("GetAllHarvestData", () =>
-        //{
+
         var list = new List<HarvestViewModel>();
         for (var year = 2020; year <= DateTime.Today.Year; year++) list.AddRange(GetHarvestDataForYearBySeason(year));
         return list.OrderByDescending(x => x.HarvestDate).ThenBy(x => x.BedNumber).ToList();
-
-        //var list = _unitOfWork.HarvestRepo.All();
-
-        //return list.Select(x => new HarvestViewModel
-        //{
-        //    BedNumber = x.BedId, HarvestDate = x.HarvestDate.GetValueOrDefault(), HarvestQty = x.Quantity.GetValueOrDefault()
-        //}).ToList().OrderByDescending(x => x.HarvestDate).ThenBy(x => x.BedNumber);
-        //}, DateTime.Now.AddHours(2));
     }
 
 
@@ -222,8 +213,7 @@ public class HarvestService : IHarvestService
             var harvestDate = Utils.ParseToDateTime(dataRow[1].ToString());
             if (!harvestDate.HasValue) continue;
 
-            //list.Add(new HarvestViewModel(harvestDate.GetValueOrDefault())
-            //    { BedHarvests = GetHarvestsForWeek(dataRow, season) });
+            
 
             list.AddRange(GetHarvestsForWeek(dataRow, season, harvestDate.GetValueOrDefault()));
         }
@@ -252,26 +242,5 @@ public class HarvestService : IHarvestService
 
         return list;
     }
-
-    //private static List<HarvestBedViewModel> GetHarvestsForWeek(DataRow row, int season)
-    //{
-    //    var list = new List<HarvestBedViewModel>();
-
-    //    var colMax = season == 2020 ? 33 : 56;
-    //    for (var col = 5; col < colMax; col++)
-    //    {
-    //        var qty = Utils.ParseToInteger(row[col].ToString());
-    //        if (qty <= 0) continue;
-    //        var model = new HarvestBedViewModel
-    //        {
-    //            BedNumber = $"Bed {col - 4}",
-    //            HarvestQty = qty,
-
-    //        };
-
-    //        list.Add(model);
-    //    }
-
-    //    return list;
-    //}
+    
 }

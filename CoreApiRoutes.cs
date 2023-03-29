@@ -52,8 +52,11 @@ public static class CoreApiRoutes
     public const string FirstSaturdayOfYear = "api/orders/{year}/saturday";
 
     //SYNC
-    public const string SyncBedsInfo = "api/sync/bedsInfo";
-    public const string SyncHarvestsInfo = "api/sync/harvestsInfo";
+    public const string SyncBeds = "api/sync/beds";
+    public const string SyncHarvests = "api/sync/harvests";
+    public const string SyncCustomers = "api/sync/customers";
+    public const string SyncManure = "api/sync/manure";
+    public const string SyncInvoices = "api/sync/invoices";
 
     //MESSAGING
     public const string SendCustomerInvoiceSms = "api/messaging/sendsms";

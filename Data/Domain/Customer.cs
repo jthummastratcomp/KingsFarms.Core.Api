@@ -18,7 +18,8 @@ public class Customer : DomainObject
 
     [StringLength(100)] public string? City { get; set; }
 
-    public int Zip { get; set; }
+    [StringLength(50)]
+    public string? Zip { get; set; }
 
     [StringLength(250)] public string? StoreName { get; set; }
 

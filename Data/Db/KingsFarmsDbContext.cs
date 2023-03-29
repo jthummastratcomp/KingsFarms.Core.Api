@@ -13,8 +13,6 @@ public sealed class KingsFarmsDbContext : DbContext, IDbContext
 
     public KingsFarmsDbContext(DbContextOptions<KingsFarmsDbContext> options) : base(options)
     {
-        //Database.SetInitializer<MavenContext>(null);
-        //Configuration.ProxyCreationEnabled = false;
         ChangeTracker.LazyLoadingEnabled = false;
         ChangeTracker.AutoDetectChangesEnabled = true;
     }
@@ -29,22 +27,6 @@ public sealed class KingsFarmsDbContext : DbContext, IDbContext
     public DbSet<HorseFarmLoad> HorseFarmLoads => Set<HorseFarmLoad>();
 
 
-    //protected override void OnModelCreating(ModelBuilder modelBuilder)
-    //{
-    //    base.OnModelCreating(modelBuilder);
-
-    //    modelBuilder.Entity<Bed>().HasData(
-    //        new Bed { Id=1, Name = "1", Section = "MidWest" },
-    //        new Bed { Id=2, Name = "2", Section = "MidWest" },
-    //        new Bed { Id=3, Name = "3", Section = "MidWest" }
-    //    );
-
-    //    modelBuilder.Entity<Harvest>().HasData(
-    //        new Harvest {Id=1, HarvestDate = DateTime.Today.AddDays(-10), Quantity = 230 },
-    //        new Harvest {Id=2, HarvestDate = DateTime.Today.AddDays(-5), Quantity = 120 },
-    //        new Harvest {Id=3, HarvestDate = DateTime.Today, Quantity = 24 }
-    //    );
-    //}
     public DbSet<T> GetSet<T>() where T : class
     {
         return Set<T>();
@@ -58,8 +40,9 @@ public sealed class KingsFarmsDbContext : DbContext, IDbContext
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         optionsBuilder
+            //.UseSqlServer("Server=tcp:kingsfarms.database.windows.net,1433;Initial Catalog=kingsfarmsDEV;Persist Security Info=False;User ID=jthumma-admin;Password=j+humm@-@dm1n;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=600;")
             .UseSqlServer(
-                "Server=tcp:kingsfarms.database.windows.net,1433;Initial Catalog=kingsfarmsDEV;Persist Security Info=False;User ID=jthumma-admin;Password=j+humm@-@dm1n;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=600;")
+                "Server=tcp:kingsfarmssqlserver.database.windows.net,1433;Initial Catalog=kingsfarmsdb;Persist Security Info=False;User ID=jthumma;Password=Jthumm@123;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;")
             .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
     }
 }
