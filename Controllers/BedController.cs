@@ -26,7 +26,6 @@ public class BedController : ControllerBase
     {
         var list = _bedService.GetBedsList();
         return list;
-        //return new QueryResult<List<BedViewModel>> { Data = list, Status = new SuccessResult() };
     }
 
     [HttpGet(CoreApiRoutes.BedInfo, Name = "GetBedsInfo")]
@@ -35,7 +34,7 @@ public class BedController : ControllerBase
         _logger.Information("GetBedInfo");
         var list = _bedService.GetBedsInfo();
 
-        return new QueryResult<List<BedHarvestFieldOpsViewModel>> { Data = list, Status = new SuccessResult() };
+        return new QueryResult<List<BedHarvestFieldOpsViewModel>> {Data = list, Status = new SuccessResult()};
     }
 
     [HttpGet(CoreApiRoutes.BedInfoGrouped, Name = "GetBedsInfoGrouped")]
@@ -44,6 +43,6 @@ public class BedController : ControllerBase
         _logger.Information("BedInfoGrouped");
         var list = _bedService.GetBedsInfoGrouped();
 
-        return new QueryResult<List<BedHarvestFieldOpsViewModel>> { Data = list, Status = new SuccessResult() };
+        return new QueryResult<List<BedHarvestFieldOpsViewModel>> {Data = list, Status = new SuccessResult()};
     }
 }

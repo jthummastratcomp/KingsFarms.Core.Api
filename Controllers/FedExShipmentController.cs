@@ -24,7 +24,7 @@ public class FedExShipmentController : ControllerBase
     {
         var data = _shipmentService.CreateShipment(null);
 
-        return new QueryResult<CreateShipmentResponse?> { Data = data, Status = new SuccessResult() };
+        return new QueryResult<CreateShipmentResponse?> {Data = data, Status = new SuccessResult()};
     }
 
     [HttpPost(CoreApiRoutes.CreateShipmentRequest)]
@@ -45,42 +45,34 @@ public class FedExShipmentController : ControllerBase
             if (shipment?.PieceResponses == null) continue;
 
             foreach (var pieceResponse in shipment?.PieceResponses!)
-            {
                 //var trackingNumber = $"{pieceResponse?.TrackingNumberMaster}";
+            foreach (var packageDocument in pieceResponse.packageDocuments)
+            {
+                var labelUrl = packageDocument.url;
 
-                foreach (var packageDocument in pieceResponse.packageDocuments)
+                list.Add(new SearchDto
                 {
-                    var labelUrl = packageDocument.url;
-
-                    list.Add(new SearchDto()
-                    {
-                        //Id = trackingNumber,
-                        Data = labelUrl,
-                        //DataType = masterTrackingNumber,
-                        //Messages = messages
-                    });
-                }
-
-                
-
-                //var messages = new List<string>();
-
-                //foreach (var customerReference in pieceResponse?.customerReferences!)
-                //{
-                //    messages.Add($"{customerReference.customerReferenceType} - {customerReference.value}");
-                //}
-
-                //list.Add(new SearchDto()
-                //{
-                //    Id = trackingNumber,
-                //    //Data = labelUrl,
-                //    DataType = masterTrackingNumber,
-                //    //Messages = messages
-                //});
+                    //Id = trackingNumber,
+                    Data = labelUrl
+                    //DataType = masterTrackingNumber,
+                    //Messages = messages
+                });
             }
 
+            //var messages = new List<string>();
+            //foreach (var customerReference in pieceResponse?.customerReferences!)
+            //{
+            //    messages.Add($"{customerReference.customerReferenceType} - {customerReference.value}");
+            //}
+            //list.Add(new SearchDto()
+            //{
+            //    Id = trackingNumber,
+            //    //Data = labelUrl,
+            //    DataType = masterTrackingNumber,
+            //    //Messages = messages
+            //});
             if (shipment.CompletedShipmentDetail?.completedPackageDetails == null) continue;
-            for (int i = 0; i < shipment?.CompletedShipmentDetail?.completedPackageDetails.Count; i++)
+            for (var i = 0; i < shipment?.CompletedShipmentDetail?.completedPackageDetails.Count; i++)
             {
                 var trackingIds = shipment?.CompletedShipmentDetail?.completedPackageDetails[i].trackingIds;
                 if (trackingIds != null && Utils.HasRows(trackingIds))
@@ -89,8 +81,6 @@ public class FedExShipmentController : ControllerBase
                     list[i].Id = trackingId?.trackingNumber;
                 }
             }
-
-            
         }
 
         //var trackingNumber = data?.Output?.Shipments?[0]?.TrackingNumberMaster;

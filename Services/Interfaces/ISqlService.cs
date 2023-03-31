@@ -1,6 +1,4 @@
 ﻿using KingsFarms.Core.Api.Data.Domain;
-using KingsFarms.Core.Api.ViewModels.Customer;
-using KingsFarms.Core.Api.ViewModels.Harvest;
 
 namespace KingsFarms.Core.Api.Services.Interfaces;
 

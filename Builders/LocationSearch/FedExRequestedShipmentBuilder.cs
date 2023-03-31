@@ -82,10 +82,7 @@ public class FedExRequestedShipmentBuilder
 
     public FedExRequestedShipmentBuilder WithPackageItem(FedExPackageItem item)
     {
-        for (int i = 0; i < _packageCount; i++)
-        {
-            _packageItems.Add(item);
-        }
+        for (var i = 0; i < _packageCount; i++) _packageItems.Add(item);
         return this;
     }
 

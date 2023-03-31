@@ -36,7 +36,7 @@ public class MessagingService : IMessagingService
         TwilioClient.Init(_accountSid, _authToken);
 
         MessageResource.Create(
-            body: $"{message}. Msg from Kings Sunshine Farms, FL" ,
+            body: $"{message}. Msg from Kings Sunshine Farms, FL",
             from: new PhoneNumber(_fromSmsPhone),
             to: new PhoneNumber(toSmsPhone)
         );

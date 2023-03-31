@@ -65,6 +65,8 @@ public static class CoreApiRoutes
     public const string SyncManure = "api/sync/manure";
     public const string SyncInvoices = "api/sync/invoices";
 
+    public const string AddCustomer = "api/sync/customer/add";
+
     //MESSAGING
     public const string SendCustomerInvoiceSms = "api/messaging/sendsms";
     public const string SendCustomerInvoiceBulkYearSms = "api/messaging/sendsmsyear";

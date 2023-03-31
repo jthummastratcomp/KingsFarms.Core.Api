@@ -33,7 +33,7 @@ public class HarvestController : ControllerBase
         _logger.Information("GetHarvestDataBySeason");
         var list = _harvestService.GetHarvestDataBySeason(season);
 
-        return new QueryResult<List<HarvestViewModel>> { Data = list, Status = new SuccessResult() };
+        return new QueryResult<List<HarvestViewModel>> {Data = list, Status = new SuccessResult()};
     }
 
     [HttpGet(CoreApiRoutes.HarvestDataByCalendar)]
@@ -42,7 +42,7 @@ public class HarvestController : ControllerBase
         _logger.Information("HarvestDataByCalendar");
         var list = _harvestService.GetHarvestDataByCalendar(calendar);
 
-        return new QueryResult<List<HarvestViewModel>> { Data = list, Status = new SuccessResult() };
+        return new QueryResult<List<HarvestViewModel>> {Data = list, Status = new SuccessResult()};
     }
 
     [HttpGet(CoreApiRoutes.HarvestYearTotalBySeason)]

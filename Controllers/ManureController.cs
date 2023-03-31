@@ -28,7 +28,7 @@ public class ManureController : ControllerBase
     {
         _logger.Information("GetManureForMonth");
 
-        return new QueryResult<List<ManureLoadViewModel>> { Data = _manureService.GetManureLoadForMonth(month), Status = new SuccessResult() };
+        return new QueryResult<List<ManureLoadViewModel>> {Data = _manureService.GetManureLoadForMonth(month), Status = new SuccessResult()};
     }
 
     [HttpGet(CoreApiRoutes.ManureAllMonths, Name = "ManureAllMonths")]
@@ -38,7 +38,7 @@ public class ManureController : ControllerBase
 
         var list = _manureService.GetManureLoads();
 
-        return new QueryResult<List<ManureLoadViewModel>> { Data = list, Status = new SuccessResult() };
+        return new QueryResult<List<ManureLoadViewModel>> {Data = list, Status = new SuccessResult()};
     }
 
     [HttpGet(CoreApiRoutes.ManureForFarm, Name = "ManureForFarm")]
@@ -50,13 +50,13 @@ public class ManureController : ControllerBase
 
         list = list.Where(x => x.Loads.ContainsKey(farm)).ToList();
 
-        return new QueryResult<List<ManureLoadViewModel>> { Data = list, Status = new SuccessResult() };
+        return new QueryResult<List<ManureLoadViewModel>> {Data = list, Status = new SuccessResult()};
     }
 
     [HttpGet(CoreApiRoutes.ManureFarms, Name = "ManureFarms")]
     public IQueryResult GetManureFarms()
     {
-        return new QueryResult<List<string>> { Data = GetFarmsList(), Status = new SuccessResult() };
+        return new QueryResult<List<string>> {Data = GetFarmsList(), Status = new SuccessResult()};
     }
 
     private List<string> GetFarmsList()
@@ -80,6 +80,6 @@ public class ManureController : ControllerBase
             if (farmLoads.ContainsKey(farm)) farmLoads[farm] += value;
             else farmLoads.Add(farm, value);
 
-        return new QueryResult<Dictionary<string, int>> { Data = farmLoads, Status = new SuccessResult() };
+        return new QueryResult<Dictionary<string, int>> {Data = farmLoads, Status = new SuccessResult()};
     }
 }

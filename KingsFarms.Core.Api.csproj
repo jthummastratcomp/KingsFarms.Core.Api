@@ -1,97 +1,99 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
-  <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
-    <Nullable>enable</Nullable>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <UserSecretsId>6136cac0-ce4d-43f6-a57a-9b5e4632a9ef</UserSecretsId>
-  </PropertyGroup>
+    <PropertyGroup>
+        <TargetFramework>net7.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <UserSecretsId>6136cac0-ce4d-43f6-a57a-9b5e4632a9ef</UserSecretsId>
+    </PropertyGroup>
 
-  <ItemGroup>
-    <Compile Remove="Cache\**" />
-    <Compile Remove="Services\Helpers\**" />
-    <Compile Remove="Services\Strategy\**" />
-    <Compile Remove="Tests\**" />
-    <Content Remove="Cache\**" />
-    <Content Remove="Services\Helpers\**" />
-    <Content Remove="Services\Strategy\**" />
-    <Content Remove="Tests\**" />
-    <EmbeddedResource Remove="Cache\**" />
-    <EmbeddedResource Remove="Services\Helpers\**" />
-    <EmbeddedResource Remove="Services\Strategy\**" />
-    <EmbeddedResource Remove="Tests\**" />
-    <None Remove="Cache\**" />
-    <None Remove="Services\Helpers\**" />
-    <None Remove="Services\Strategy\**" />
-    <None Remove="Tests\**" />
-  </ItemGroup>
+    <ItemGroup>
+        <Compile Remove="Cache\**" />
+        <Compile Remove="Data\memory\**" />
+        <Compile Remove="Services\Helpers\**" />
+        <Compile Remove="Services\Strategy\**" />
+        <Compile Remove="Tests\**" />
+        <Content Remove="Cache\**" />
+        <Content Remove="Data\memory\**" />
+        <Content Remove="Services\Helpers\**" />
+        <Content Remove="Services\Strategy\**" />
+        <Content Remove="Tests\**" />
+        <EmbeddedResource Remove="Cache\**" />
+        <EmbeddedResource Remove="Data\memory\**" />
+        <EmbeddedResource Remove="Services\Helpers\**" />
+        <EmbeddedResource Remove="Services\Strategy\**" />
+        <EmbeddedResource Remove="Tests\**" />
+        <None Remove="Cache\**" />
+        <None Remove="Data\memory\**" />
+        <None Remove="Services\Helpers\**" />
+        <None Remove="Services\Strategy\**" />
+        <None Remove="Tests\**" />
+    </ItemGroup>
 
-  <ItemGroup>
-    <Compile Remove="Controllers\FieldOpsController.cs" />
-    <Compile Remove="Controllers\UsdaController.cs" />
-    <Compile Remove="Services\AdminService.cs" />
-    <Compile Remove="Services\BedHarvestFieldOpsService.cs" />
-    <Compile Remove="Services\CosmosDbService.cs" />
-    <Compile Remove="Services\CustomerLoadService.cs" />
-    <Compile Remove="Services\CustomerService.cs" />
-    <Compile Remove="Services\FieldOperationsService.cs" />
-    <Compile Remove="Services\GenerateWeeklyOrdersService.cs" />
-    <Compile Remove="Services\Interfaces\IAdminService.cs" />
-    <Compile Remove="Services\Interfaces\IBedHarvestFieldOpsService.cs" />
-    <Compile Remove="Services\Interfaces\ICosmosDbService.cs" />
-    <Compile Remove="Services\Interfaces\ICustomerLoadService.cs" />
-    <Compile Remove="Services\Interfaces\ICustomerService.cs" />
-    <Compile Remove="Services\Interfaces\IFieldOperationsService.cs" />
-    <Compile Remove="Services\Interfaces\IGenerateWeeklyOrdersService.cs" />
-    <Compile Remove="Services\Interfaces\IIntuitDataService.cs" />
-    <Compile Remove="Services\Interfaces\IInvoiceLoadLoopService.cs" />
-    <Compile Remove="Services\Interfaces\IInvoiceLoadService.cs" />
-    <Compile Remove="Services\Interfaces\IInvoiceService.cs" />
-    <Compile Remove="Services\Interfaces\IPrepareInvoiceService.cs" />
-    <Compile Remove="Services\Interfaces\IPrepareUsdaLotsInvoiceService.cs" />
-    <Compile Remove="Services\Interfaces\IUsdaMemoService.cs" />
-    <Compile Remove="Services\Interfaces\IUsdaQueueService.cs" />
-    <Compile Remove="Services\Interfaces\IUsdaService.cs" />
-    <Compile Remove="Services\Interfaces\IWeeklyOrdersService.cs" />
-    <Compile Remove="Services\Interfaces\IWeeklyOrdersUsdaLotsService.cs" />
-    <Compile Remove="Services\IntuitDataService.cs" />
-    <Compile Remove="Services\InvoiceLoadLoopService.cs" />
-    <Compile Remove="Services\InvoiceLoadService.cs" />
-    <Compile Remove="Services\InvoiceService.cs" />
-    <Compile Remove="Services\PrepareInvoiceService.cs" />
-    <Compile Remove="Services\PrepareUsdaLotsInvoiceService.cs" />
-    <Compile Remove="Services\UsdaMemoService.cs" />
-    <Compile Remove="Services\UsdaNewMemoService.cs" />
-    <Compile Remove="Services\UsdaQueueService.cs" />
-    <Compile Remove="Services\UsdaService.cs" />
-    <Compile Remove="Services\WeeklyOrdersService.cs" />
-    <Compile Remove="Services\WeeklyOrdersUsdaLotsService.cs" />
-  </ItemGroup>
+    <ItemGroup>
+        <Compile Remove="Controllers\ContactsController.cs" />
+        <Compile Remove="Controllers\FieldOpsController.cs" />
+        <Compile Remove="Controllers\UsdaController.cs" />
+        <Compile Remove="Services\AdminService.cs" />
+        <Compile Remove="Services\BedHarvestFieldOpsService.cs" />
+        <Compile Remove="Services\CosmosDbService.cs" />
+        <Compile Remove="Services\CustomerLoadService.cs" />
+        <Compile Remove="Services\CustomerService.cs" />
+        <Compile Remove="Services\FieldOperationsService.cs" />
+        <Compile Remove="Services\GenerateWeeklyOrdersService.cs" />
+        <Compile Remove="Services\Interfaces\IAdminService.cs" />
+        <Compile Remove="Services\Interfaces\IBedHarvestFieldOpsService.cs" />
+        <Compile Remove="Services\Interfaces\ICosmosDbService.cs" />
+        <Compile Remove="Services\Interfaces\ICustomerLoadService.cs" />
+        <Compile Remove="Services\Interfaces\ICustomerService.cs" />
+        <Compile Remove="Services\Interfaces\IFieldOperationsService.cs" />
+        <Compile Remove="Services\Interfaces\IGenerateWeeklyOrdersService.cs" />
+        <Compile Remove="Services\Interfaces\IIntuitDataService.cs" />
+        <Compile Remove="Services\Interfaces\IInvoiceLoadLoopService.cs" />
+        <Compile Remove="Services\Interfaces\IInvoiceLoadService.cs" />
+        <Compile Remove="Services\Interfaces\IInvoiceService.cs" />
+        <Compile Remove="Services\Interfaces\IPrepareInvoiceService.cs" />
+        <Compile Remove="Services\Interfaces\IPrepareUsdaLotsInvoiceService.cs" />
+        <Compile Remove="Services\Interfaces\IUsdaMemoService.cs" />
+        <Compile Remove="Services\Interfaces\IUsdaQueueService.cs" />
+        <Compile Remove="Services\Interfaces\IUsdaService.cs" />
+        <Compile Remove="Services\Interfaces\IWeeklyOrdersService.cs" />
+        <Compile Remove="Services\Interfaces\IWeeklyOrdersUsdaLotsService.cs" />
+        <Compile Remove="Services\IntuitDataService.cs" />
+        <Compile Remove="Services\InvoiceLoadLoopService.cs" />
+        <Compile Remove="Services\InvoiceLoadService.cs" />
+        <Compile Remove="Services\InvoiceService.cs" />
+        <Compile Remove="Services\PrepareInvoiceService.cs" />
+        <Compile Remove="Services\PrepareUsdaLotsInvoiceService.cs" />
+        <Compile Remove="Services\UsdaMemoService.cs" />
+        <Compile Remove="Services\UsdaNewMemoService.cs" />
+        <Compile Remove="Services\UsdaQueueService.cs" />
+        <Compile Remove="Services\UsdaService.cs" />
+        <Compile Remove="Services\WeeklyOrdersService.cs" />
+        <Compile Remove="Services\WeeklyOrdersUsdaLotsService.cs" />
+    </ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="8.0.0" />
-    <PackageReference Include="Azure.Storage.Blobs" Version="12.15.0" />
-    <PackageReference Include="EPPlus" Version="6.2.0" />
-    <PackageReference Include="LazyCache" Version="2.4.0" />
-    <PackageReference Include="LazyCache.AspNetCore" Version="2.4.0" />
-    <PackageReference Include="MediatR" Version="12.0.1" />
-    <PackageReference Include="Microsoft.Azure.Cosmos" Version="3.32.2" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="7.0.4" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.4" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.4">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-    <PackageReference Include="RestSharp" Version="109.0.1" />
-    <PackageReference Include="Serilog.Sinks.Seq" Version="5.2.2" />
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
-    <PackageReference Include="Twilio" Version="6.3.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Data\memory\" />
-  </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="8.0.0" />
+        <PackageReference Include="AutoMapper" Version="12.0.1" />
+        <PackageReference Include="Azure.Storage.Blobs" Version="12.15.1" />
+        <PackageReference Include="EPPlus" Version="6.2.0" />
+        <PackageReference Include="LazyCache" Version="2.4.0" />
+        <PackageReference Include="LazyCache.AspNetCore" Version="2.4.0" />
+        <PackageReference Include="MediatR" Version="12.0.1" />
+        <PackageReference Include="Microsoft.Azure.Cosmos" Version="3.32.2" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="7.0.4" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.4" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.4">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
+        <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+        <PackageReference Include="RestSharp" Version="109.0.1" />
+        <PackageReference Include="Serilog.Sinks.Seq" Version="5.2.2" />
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+        <PackageReference Include="Twilio" Version="6.3.0" />
+    </ItemGroup>
 
 </Project>

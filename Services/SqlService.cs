@@ -6,9 +6,8 @@ namespace KingsFarms.Core.Api.Services;
 
 public class SqlService : ISqlService
 {
-    
     private readonly IUnitOfWork _unitOfWork;
-    
+
 
     public SqlService(IUnitOfWork unitOfWork)
     {
@@ -34,5 +33,4 @@ public class SqlService : ISqlService
     {
         return _unitOfWork.InvoiceRepo.All().ToList();
     }
-    
 }

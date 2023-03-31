@@ -104,7 +104,7 @@ public static class Utils
 
         number = number.Trim().ToLower();
 
-        number = number.Replace(" ", string.Empty);
+        number = number.Replace("Â ", string.Empty);
 
         number = number.Replace(@"\t", string.Empty);
 
@@ -118,7 +118,7 @@ public static class Utils
 
         number = number.Replace("extension", "x").Replace("ext", "x").Replace("xt", "x").Replace("ex", "x");
 
-        var invalidwords = new[] { "direct", "phone", "cell", "fax", "phn", "cel", "ce", "fx", "ph", "c", "f", "m", "\r", "\n", "\t" };
+        var invalidwords = new[] {"direct", "phone", "cell", "fax", "phn", "cel", "ce", "fx", "ph", "c", "f", "m", "\r", "\n", "\t"};
 
         number = invalidwords.Aggregate(number, (current, word) => current.Contains(word) ? current.Replace(word, string.Empty) : current);
 
@@ -164,7 +164,7 @@ public static class Utils
 
         if (!retainCase) input = input.Trim().ToLower();
 
-        input = input.Replace(" ", string.Empty);
+        input = input.Replace("Â ", string.Empty);
 
         input = input.Replace("\"", string.Empty);
 
@@ -196,7 +196,7 @@ public static class Utils
     public static DateTime GetFirstMondayOfYear(int year)
     {
         var dateTime = new DateTime(year - 1, 12, 30);
-        return dateTime.AddDays(8 - (int)dateTime.DayOfWeek);
+        return dateTime.AddDays(8 - (int) dateTime.DayOfWeek);
     }
 
     public static DateTime GetFirstSaturdayOfYear(int year)
@@ -249,7 +249,7 @@ public static class Utils
     {
         var date = ParseToDateTimeYearMonthDay(monday);
 
-        weeksList.Add(new SearchDto { Id = $"Week {weekNumber}", Data = date });
+        weeksList.Add(new SearchDto {Id = $"Week {weekNumber}", Data = date});
         return monday.AddDays(7);
     }
 }

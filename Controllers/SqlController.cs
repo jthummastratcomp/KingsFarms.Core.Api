@@ -9,7 +9,7 @@ namespace KingsFarms.Core.Api.Controllers;
 public class SqlController : ControllerBase
 {
     private readonly ISqlService _sqlService;
-    
+
     public SqlController(ISqlService sqlService)
     {
         _sqlService = sqlService;

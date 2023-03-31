@@ -40,7 +40,7 @@ public class FedexLocationService : IFedexLocationService
 
         var resp = client.Post(request);
 
-        return new List<FedexLocationViewModel> { new() { BedNumber = resp.Content } };
+        return new List<FedexLocationViewModel> {new() {BedNumber = resp.Content}};
     }
 
     public List<FedexLocationViewModel> ValidateAddress()
@@ -63,7 +63,7 @@ public class FedexLocationService : IFedexLocationService
 
         var resp = client.Post(request);
 
-        return new List<FedexLocationViewModel> { new() { BedNumber = resp.Content } };
+        return new List<FedexLocationViewModel> {new() {BedNumber = resp.Content}};
     }
 
     //public CreateShipmentResponse? CreateShipment(CreateShipmentRequest? shipmentRequest)

@@ -11,4 +11,6 @@ public interface ISyncService
     string SyncCustomers(List<CustomerHeaderViewModel> list);
     string SaveHarvestData(HarvestViewModel viewModel);
     string SyncInvoices();
+
+    string AddCustomer(CustomerDashboardViewModel vm);
 }

@@ -22,7 +22,7 @@ public class SyncController : ControllerBase
     {
         var list = _syncService.SyncBeds();
 
-        return new QueryResult<string> { Data = list, Status = new SuccessResult() };
+        return new QueryResult<string> {Data = list, Status = new SuccessResult()};
     }
 
     [HttpGet(CoreApiRoutes.SyncHarvests)]
@@ -30,7 +30,7 @@ public class SyncController : ControllerBase
     {
         var list = _syncService.SyncHarvests();
 
-        return new QueryResult<string> { Data = list, Status = new SuccessResult() };
+        return new QueryResult<string> {Data = list, Status = new SuccessResult()};
     }
 
     [HttpGet(CoreApiRoutes.SyncCustomers)]
@@ -38,15 +38,23 @@ public class SyncController : ControllerBase
     {
         var list = _syncService.SyncCustomers();
 
-        return new QueryResult<string> { Data = list, Status = new SuccessResult() };
+        return new QueryResult<string> {Data = list, Status = new SuccessResult()};
     }
-    
+
     [HttpGet(CoreApiRoutes.SyncInvoices)]
     public IQueryResult SyncInvoices()
     {
         var list = _syncService.SyncInvoices();
 
-        return new QueryResult<string> { Data = list, Status = new SuccessResult() };
+        return new QueryResult<string> {Data = list, Status = new SuccessResult()};
+    }
+
+    [HttpPost(CoreApiRoutes.AddCustomer)]
+    public IQueryResult AddCustomer(CustomerDashboardViewModel vm)
+    {
+        var response = _syncService.AddCustomer(vm);
+
+        return new QueryResult<string> {Data = response, Status = new SuccessResult()};
     }
 
     [HttpPost(CoreApiRoutes.SendCustomersToDb)]
@@ -54,7 +62,7 @@ public class SyncController : ControllerBase
     {
         var response = _syncService.SyncCustomers(list);
 
-        return new QueryResult<string> { Data = response, Status = new SuccessResult() };
+        return new QueryResult<string> {Data = response, Status = new SuccessResult()};
     }
 
     [HttpPost(CoreApiRoutes.SaveHarvestData)]
@@ -62,6 +70,6 @@ public class SyncController : ControllerBase
     {
         var response = _syncService.SaveHarvestData(viewModel);
 
-        return new QueryResult<string> { Data = response, Status = new SuccessResult() };
+        return new QueryResult<string> {Data = response, Status = new SuccessResult()};
     }
 }

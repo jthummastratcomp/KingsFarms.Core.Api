@@ -11,9 +11,9 @@ namespace KingsFarms.Core.Api.Bootstrap;
 
 public class WebBootstrap : Module
 {
-    private readonly KingsFarmsCoreApiSettings _hotTowelCoreApiSettings;
+    private readonly KingsFarmsCoreApiSettings? _hotTowelCoreApiSettings;
 
-    public WebBootstrap(KingsFarmsCoreApiSettings hotTowelCoreApiSettings)
+    public WebBootstrap(KingsFarmsCoreApiSettings? hotTowelCoreApiSettings)
     {
         _hotTowelCoreApiSettings = hotTowelCoreApiSettings;
     }

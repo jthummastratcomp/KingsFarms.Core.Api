@@ -97,7 +97,7 @@ public class HarvestService : IHarvestService
         var harvestYears = list.Select(y => y.HarvestDate.Year).Distinct();
         foreach (var harvestYear in harvestYears)
         {
-            var sectionHarvestForYear = new SectionHarvestViewModel { HarvestYear = harvestYear };
+            var sectionHarvestForYear = new SectionHarvestViewModel {HarvestYear = harvestYear};
 
             var harvestsForTheYear = list.Where(x => x.HarvestDate.Year == harvestYear).ToList();
 
@@ -133,7 +133,7 @@ public class HarvestService : IHarvestService
 
         foreach (var bed in beds)
         {
-            var bedHarvest = new BedHarvestChartViewModel { BedNumber = bed };
+            var bedHarvest = new BedHarvestChartViewModel {BedNumber = bed};
 
             var harvestsForTheBed = list.Where(x => x.BedNumber == bed).ToList();
 
@@ -161,7 +161,6 @@ public class HarvestService : IHarvestService
 
     public IEnumerable<HarvestViewModel> GetAllHarvestData()
     {
-
         var list = new List<HarvestViewModel>();
         for (var year = 2020; year <= DateTime.Today.Year; year++) list.AddRange(GetHarvestDataForYearBySeason(year));
         return list.OrderByDescending(x => x.HarvestDate).ThenBy(x => x.BedNumber).ToList();
@@ -213,7 +212,6 @@ public class HarvestService : IHarvestService
             var harvestDate = Utils.ParseToDateTime(dataRow[1].ToString());
             if (!harvestDate.HasValue) continue;
 
-            
 
             list.AddRange(GetHarvestsForWeek(dataRow, season, harvestDate.GetValueOrDefault()));
         }
@@ -242,5 +240,4 @@ public class HarvestService : IHarvestService
 
         return list;
     }
-    
 }

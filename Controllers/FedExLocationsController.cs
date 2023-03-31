@@ -20,7 +20,7 @@ public class FedExLocationsController : ControllerBase
     {
         var data = _locationService.GetLocations();
 
-        return new QueryResult<List<FedexLocationViewModel>> { Data = data, Status = new SuccessResult() };
+        return new QueryResult<List<FedexLocationViewModel>> {Data = data, Status = new SuccessResult()};
     }
 
     [HttpGet(CoreApiRoutes.ValidatedAddress, Name = "ValidatedAddress")]
@@ -28,6 +28,6 @@ public class FedExLocationsController : ControllerBase
     {
         var data = _locationService.ValidateAddress();
 
-        return new QueryResult<List<FedexLocationViewModel>> { Data = data, Status = new SuccessResult() };
+        return new QueryResult<List<FedexLocationViewModel>> {Data = data, Status = new SuccessResult()};
     }
 }

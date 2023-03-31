@@ -12,6 +12,6 @@ public class FedExShippingPaymentBuilder
 
     public FedExShippingPayment Build()
     {
-        return new FedExShippingPayment { PaymentType = _paymentType };
+        return new FedExShippingPayment {PaymentType = _paymentType};
     }
 }

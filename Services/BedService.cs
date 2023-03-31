@@ -25,7 +25,6 @@ public class BedService : IBedService
     private readonly IUnitOfWork _unitOfWork;
 
     public BedService(ILogger logger, string azStoreConnStr, string azStoreContName, string harvestFile
-
         , IUnitOfWork unitOfWork
     )
     {
@@ -36,10 +35,9 @@ public class BedService : IBedService
         _unitOfWork = unitOfWork;
     }
 
-    
+
     public List<BedHarvestFieldOpsViewModel> GetBedsInfo()
     {
-        
         var list = new List<BedHarvestFieldOpsViewModel>();
 
         var client = new BlobServiceClient(_azStoreConnStr);
@@ -98,7 +96,6 @@ public class BedService : IBedService
     }
 
 
-    
     public List<BedHarvestFieldOpsViewModel> GetBedsInfoGrouped()
     {
         var groupedList = GetBedsGroupedBySection(GetBedsInfo());
@@ -128,7 +125,7 @@ public class BedService : IBedService
         return (from vm in list
             let bedNumber = Utils.ParseToInteger(vm.BedNumber.ToLower().Replace("bed", string.Empty).Trim())
             where bedNumber > 0
-            select new BedViewModel { BedNumber = bedNumber, PlantsCount = vm.PlantsCount, PlantedDate = vm.PlantedDate }).ToList();
+            select new BedViewModel {BedNumber = bedNumber, PlantsCount = vm.PlantsCount, PlantedDate = vm.PlantedDate}).ToList();
     }
 
     private static IEnumerable<IGrouping<SectionEnum, BedHarvestFieldOpsViewModel>> GetBedsGroupedBySection(IEnumerable<BedHarvestFieldOpsViewModel> list)

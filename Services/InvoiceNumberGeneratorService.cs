@@ -15,7 +15,7 @@ public class InvoiceNumberGeneratorService : IInvoiceNumberGeneratorService
         foreach (var viewModel in prepList)
         {
             var invoiceNumber = GetNewInvoiceNumber(viewModel.CustomerKey, currentColumnInDt, weekDate, dtKings, dtMansi);
-            list.Add(new SearchDto { Id = viewModel.CustomerKey, Data = invoiceNumber });
+            list.Add(new SearchDto {Id = viewModel.CustomerKey, Data = invoiceNumber});
         }
 
         return list;

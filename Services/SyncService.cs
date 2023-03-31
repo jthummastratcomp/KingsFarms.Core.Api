@@ -91,28 +91,9 @@ public class SyncService : ISyncService
         {
             var customer = _unitOfWork.CustomerRepo.Find(x => x.Key == vm.CustomerHeader.CustomerKey).FirstOrDefault();
             if (customer == null)
-            {
-                _unitOfWork.CustomerRepo.Add(new Customer
-                {
-                    Key = vm.CustomerHeader.CustomerKey,
-                    Name = vm.CustomerHeader.StoreName,
-                    Address = vm.CustomerHeader.Address.FirstLineDisplay,
-                    City = vm.CustomerHeader.Address.City,
-                    StoreName = vm.CustomerHeader.StoreName,
-                    Zip = vm.CustomerHeader.Address.Zip,
-                    ContactName = vm.CustomerHeader.Contact.Name
-                });
-            }
+                AddCustomerToRepo(vm);
             else
-            {
-                customer.Name = vm.CustomerHeader.StoreName;
-                customer.Address = vm.CustomerHeader.Address.FirstLineDisplay;
-                customer.City = vm.CustomerHeader.Address.City;
-                customer.StoreName = vm.CustomerHeader.StoreName;
-                customer.Zip = vm.CustomerHeader.Address.Zip;
-                customer.ContactName = vm.CustomerHeader.Contact.Name;
-                _unitOfWork.CustomerRepo.Update(customer);
-            }
+                UpdateCustomerOnRepo(customer, vm);
         }
 
         _unitOfWork.SaveChanges();
@@ -167,6 +148,13 @@ public class SyncService : ISyncService
         ;
     }
 
+    public string AddCustomer(CustomerDashboardViewModel vm)
+    {
+        AddCustomerToRepo(vm);
+        _unitOfWork.SaveChanges();
+        return "Customer Added";
+    }
+
     public string SyncCustomers(List<CustomerHeaderViewModel> list)
     {
         foreach (var vm in list) _unitOfWork.CustomerRepo.Add(new Customer {Key = vm.CustomerKey, City = vm.Address.City});
@@ -182,5 +170,30 @@ public class SyncService : ISyncService
         });
         _unitOfWork.SaveChanges();
         return "Saved Harvest Data";
+    }
+
+    private void UpdateCustomerOnRepo(Customer customer, CustomerDashboardViewModel vm)
+    {
+        customer.Name = vm.CustomerHeader.StoreName;
+        customer.Address = vm.CustomerHeader.Address.FirstLineDisplay;
+        customer.City = vm.CustomerHeader.Address.City;
+        customer.StoreName = vm.CustomerHeader.StoreName;
+        customer.Zip = vm.CustomerHeader.Address.Zip;
+        customer.ContactName = vm.CustomerHeader.Contact.Name;
+        _unitOfWork.CustomerRepo.Update(customer);
+    }
+
+    private void AddCustomerToRepo(CustomerDashboardViewModel vm)
+    {
+        _unitOfWork.CustomerRepo.Add(new Customer
+        {
+            Key = vm.CustomerHeader.CustomerKey,
+            Name = vm.CustomerHeader.StoreName,
+            Address = vm.CustomerHeader.Address.FirstLineDisplay,
+            City = vm.CustomerHeader.Address.City,
+            StoreName = vm.CustomerHeader.StoreName,
+            Zip = vm.CustomerHeader.Address.Zip,
+            ContactName = vm.CustomerHeader.Contact.Name
+        });
     }
 }

@@ -7,12 +7,12 @@ public class FedExAddressesToValidateBuilder
 
     public FedExAddressesToValidateBuilder WithLocation(FedExAddress fedExAddress)
     {
-        _fedExLocations.Add(new FedExLocation { Address = fedExAddress });
+        _fedExLocations.Add(new FedExLocation {Address = fedExAddress});
         return this;
     }
 
     public FedExValidateAddress Build()
     {
-        return new FedExValidateAddress { Addresses = _fedExLocations };
+        return new FedExValidateAddress {Addresses = _fedExLocations};
     }
 }

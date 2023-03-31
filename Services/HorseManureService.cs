@@ -118,7 +118,7 @@ public class HorseManureService : IHorseManureService
             var manureLoadDate = Utils.ParseToDateTime(dataRow[0].ToString());
             if (!manureLoadDate.HasValue) continue;
 
-            var manureLoad = new ManureLoadViewModel { ManureLoadDate = manureLoadDate.GetValueOrDefault() };
+            var manureLoad = new ManureLoadViewModel {ManureLoadDate = manureLoadDate.GetValueOrDefault()};
 
             for (var index = 0; index < farms.Count; index++)
             {

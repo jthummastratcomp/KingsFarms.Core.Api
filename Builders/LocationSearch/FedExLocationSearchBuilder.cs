@@ -6,18 +6,18 @@ public class FedExLocationSearchBuilder
 
     public FedExLocationSearchBuilder WithLocation()
     {
-        _fedExLocation = new FedExLocation { Address = new FedExAddress() };
+        _fedExLocation = new FedExLocation {Address = new FedExAddress()};
         return this;
     }
 
     public FedExLocationSearchBuilder WithLocation(FedExAddress fedExAddress)
     {
-        _fedExLocation = new FedExLocation { Address = fedExAddress };
+        _fedExLocation = new FedExLocation {Address = fedExAddress};
         return this;
     }
 
     public FedExLocationSearch Build()
     {
-        return new FedExLocationSearch { Location = _fedExLocation };
+        return new FedExLocationSearch {Location = _fedExLocation};
     }
 }

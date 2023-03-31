@@ -20,5 +20,4 @@ public interface IRepository<T> where T : DomainObject
 
     //void SaveChanges();
     void Remove(T entity);
-    
 }

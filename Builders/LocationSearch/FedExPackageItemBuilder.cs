@@ -19,6 +19,6 @@ public class FedExPackageItemBuilder
 
     public FedExPackageItem Build()
     {
-        return new FedExPackageItem { Weight = _weight };
+        return new FedExPackageItem {Weight = _weight};
     }
 }

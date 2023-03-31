@@ -5,8 +5,6 @@ namespace KingsFarms.Core.Api.Builders;
 
 public static class FedExShipmentBuilder
 {
-  
-
     public static FedExCreateShipment? BuildShipment(CreateShipmentRequest? request)
     {
         return new FedExCreateShipmentBuilder()

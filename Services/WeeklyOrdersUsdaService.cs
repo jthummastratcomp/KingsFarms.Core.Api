@@ -115,7 +115,7 @@ public class WeeklyOrdersUsdaService : IWeeklyOrdersUsdaService
             let lot = row[currentColumnInDt - 1].ToString()
             where inspectDate.HasValue && bed != 0 && !string.IsNullOrEmpty(lot)
             let key = @$"Lot# 2022-065-{inspectDate.Value.ToString("MMddyy")}-{GetBlock(bed)}-{bed.ToString("00")}-{lot}-FL Compliance# CP2223FTP045"
-            select new SearchDto { Id = customerKey, Data = key });
+            select new SearchDto {Id = customerKey, Data = key});
 
 
         return lots;

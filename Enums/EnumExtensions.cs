@@ -6,7 +6,7 @@ public static class EnumExtensions
 {
     public static string GetDescription(this Enum value)
     {
-        var desc = (DescriptionAttribute[])value.GetType().GetField(value.ToString()).GetCustomAttributes(typeof(DescriptionAttribute), false);
+        var desc = (DescriptionAttribute[]) value.GetType().GetField(value.ToString()).GetCustomAttributes(typeof(DescriptionAttribute), false);
         return desc.Length > 0 ? desc[0].Description : value.ToString();
     }
 
@@ -34,11 +34,11 @@ public static class EnumExtensions
             var attribute = Attribute.GetCustomAttribute(field, typeof(DescriptionAttribute)) as DescriptionAttribute;
             if (attribute != null)
             {
-                if (attribute.Description.ToLower().Trim() == description.ToLower().Trim()) return (T)field.GetValue(null);
+                if (attribute.Description.ToLower().Trim() == description.ToLower().Trim()) return (T) field.GetValue(null);
             }
             else
             {
-                if (field.Name.ToLower().Trim() == description.ToLower().Trim()) return (T)field.GetValue(null);
+                if (field.Name.ToLower().Trim() == description.ToLower().Trim()) return (T) field.GetValue(null);
             }
         }
 
@@ -53,7 +53,7 @@ public static class EnumExtensions
         {
             var attribute =
                 Attribute.GetCustomAttribute(field, typeof(DescriptionAttribute)) as DescriptionAttribute;
-            if (field.Name.ToLower().Trim() == value.ToLower().Trim()) return (T)field.GetValue(null);
+            if (field.Name.ToLower().Trim() == value.ToLower().Trim()) return (T) field.GetValue(null);
         }
 
         return default;

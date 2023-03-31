@@ -13,6 +13,6 @@ public class FedExAccountNumberBuilder
 
     public FedExAccountNumber? Build()
     {
-        return new FedExAccountNumber { Number = _number };
+        return new FedExAccountNumber {Number = _number};
     }
 }

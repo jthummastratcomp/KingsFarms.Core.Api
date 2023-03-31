@@ -4,21 +4,21 @@ using Autofac.Extensions.DependencyInjection;
 using KingsFarms.Core.Api;
 using KingsFarms.Core.Api.Bootstrap;
 using KingsFarms.Core.Api.Data.Db;
-using KingsFarms.Core.Api.Data.memory;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 
-var apiSettings = builder.Configuration.GetSection(typeof(KingsFarmsCoreApiSettings).Name).Get<KingsFarmsCoreApiSettings>();
+var apiSettings = builder.Configuration.GetSection(nameof(KingsFarmsCoreApiSettings)).Get<KingsFarmsCoreApiSettings>();
 
 builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
-//builder.Host.ConfigureContainer<ContainerBuilder>(b => b.RegisterModule<WebBootstrap>());
+
 builder.Host.ConfigureContainer<ContainerBuilder>(b => b.RegisterModule(new WebBootstrap(apiSettings)));
 
 // Add services to the container.
 builder.Services.AddDbContext<KingsFarmsDbContext>(opt => opt.UseSqlServer(builder.Configuration.GetConnectionString("KingsFarmsDb")));
 builder.Services.AddControllers();
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -30,7 +30,7 @@ builder.Services.AddLazyCache();
 
 //builder.Services.AddMediatR(typeof(Program));
 builder.Services.AddMediatR(cfg => { cfg.RegisterServicesFromAssemblies(Assembly.GetAssembly(typeof(Program))!); });
-builder.Services.AddDbContext<ContactsContext>(options => options.UseInMemoryDatabase("Contacts"));
+//builder.Services.AddDbContext<ContactsContext>(options => options.UseInMemoryDatabase("Contacts"));
 
 
 var app = builder.Build();
@@ -48,9 +48,9 @@ var app = builder.Build();
 //    }
 //}
 
-using var scope = app.Services.CreateScope();
-using var ctx = scope.ServiceProvider.GetService<ContactsContext>();
-ctx?.Database.EnsureCreated();
+//using var scope = app.Services.CreateScope();
+//using var ctx = scope.ServiceProvider.GetService<ContactsContext>();
+//ctx?.Database.EnsureCreated();
 
 
 // Configure the HTTP request pipeline.

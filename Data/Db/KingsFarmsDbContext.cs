@@ -36,13 +36,5 @@ public sealed class KingsFarmsDbContext : DbContext, IDbContext
     {
         return Entry(entity);
     }
-
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-        optionsBuilder
-            //.UseSqlServer("Server=tcp:kingsfarms.database.windows.net,1433;Initial Catalog=kingsfarmsDEV;Persist Security Info=False;User ID=jthumma-admin;Password=j+humm@-@dm1n;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=600;")
-            .UseSqlServer(
-                "Server=tcp:kingsfarmssqlserver.database.windows.net,1433;Initial Catalog=kingsfarmsdb;Persist Security Info=False;User ID=jthumma;Password=Jthumm@123;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;")
-            .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
-    }
+    
 }
