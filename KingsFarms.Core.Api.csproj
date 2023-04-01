@@ -34,6 +34,35 @@
         <Compile Remove="Controllers\ContactsController.cs" />
         <Compile Remove="Controllers\FieldOpsController.cs" />
         <Compile Remove="Controllers\UsdaController.cs" />
+        <Compile Remove="Data\configurations\BedConfiguration.cs" />
+        <Compile Remove="Data\configurations\CustomerPriceConfiguration.cs" />
+        <Compile Remove="Data\configurations\HarvestConfiguration.cs" />
+        <Compile Remove="Data\configurations\InvoiceConfiguration.cs" />
+        <Compile Remove="Data\Domain\Bed.cs" />
+        <Compile Remove="Data\Domain\CustomerPrice.cs" />
+        <Compile Remove="Data\Domain\Harvest.cs" />
+        <Compile Remove="Data\Domain\HorseFarm.cs" />
+        <Compile Remove="Data\Domain\HorseFarmLoad.cs" />
+        <Compile Remove="Data\Domain\Invoice.cs" />
+        <Compile Remove="Data\Domain\Shipment.cs" />
+        <Compile Remove="Data\Domain\ShipmentTypeEnum.cs" />
+        <Compile Remove="Data\migrations\20230105191941_Initial.cs" />
+        <Compile Remove="Data\migrations\20230105191941_Initial.Designer.cs" />
+        <Compile Remove="Data\migrations\20230106114030_Bed-Section-String.cs" />
+        <Compile Remove="Data\migrations\20230106114030_Bed-Section-String.Designer.cs" />
+        <Compile Remove="Data\migrations\20230106120107_Bed-Name-Number.cs" />
+        <Compile Remove="Data\migrations\20230106120107_Bed-Name-Number.Designer.cs" />
+        <Compile Remove="Data\migrations\20230106120530_Bed-Harvest-Link.cs" />
+        <Compile Remove="Data\migrations\20230106120530_Bed-Harvest-Link.Designer.cs" />
+        <Compile Remove="Data\migrations\20230106123643_Bed-Harvest-Link-1.cs" />
+        <Compile Remove="Data\migrations\20230106123643_Bed-Harvest-Link-1.Designer.cs" />
+        <Compile Remove="Data\migrations\20230106134021_Bed-Removed-Req-Section.cs" />
+        <Compile Remove="Data\migrations\20230106134021_Bed-Removed-Req-Section.Designer.cs" />
+        <Compile Remove="Data\migrations\20230329190745_CustomerZip.cs" />
+        <Compile Remove="Data\migrations\20230329190745_CustomerZip.Designer.cs" />
+        <Compile Remove="Data\migrations\20230329193336_AmountDecimal.cs" />
+        <Compile Remove="Data\migrations\20230329193336_AmountDecimal.Designer.cs" />
+        <Compile Remove="Data\migrations\KingsFarmsDbContextModelSnapshot.cs" />
         <Compile Remove="Services\AdminService.cs" />
         <Compile Remove="Services\BedHarvestFieldOpsService.cs" />
         <Compile Remove="Services\CosmosDbService.cs" />
@@ -94,6 +123,10 @@
         <PackageReference Include="Serilog.Sinks.Seq" Version="5.2.2" />
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
         <PackageReference Include="Twilio" Version="6.3.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Data\migrations\" />
     </ItemGroup>
 
 </Project>

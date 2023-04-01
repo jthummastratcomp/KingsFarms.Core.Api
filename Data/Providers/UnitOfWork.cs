@@ -13,15 +13,15 @@ public class UnitOfWork : IUnitOfWork
     {
         _context = context;
         CustomerRepo = new CustomerRepository(_context);
-        InvoiceRepo = new InvoiceRepository(_context);
-        BedsRepo = new BedRepository(_context);
-        HarvestRepo = new HarvestRepository(_context);
+        //InvoiceRepo = new InvoiceRepository(_context);
+        //BedsRepo = new BedRepository(_context);
+        //HarvestRepo = new HarvestRepository(_context);
     }
 
     public IRepository<Customer> CustomerRepo { get; }
-    public IRepository<Invoice> InvoiceRepo { get; }
-    public IRepository<Bed> BedsRepo { get; }
-    public IRepository<Harvest> HarvestRepo { get; }
+    //public IRepository<Invoice> InvoiceRepo { get; }
+    //public IRepository<Bed> BedsRepo { get; }
+    //public IRepository<Harvest> HarvestRepo { get; }
 
 
     public void SaveChanges()

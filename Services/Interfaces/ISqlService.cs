@@ -4,8 +4,8 @@ namespace KingsFarms.Core.Api.Services.Interfaces;
 
 public interface ISqlService
 {
-    public List<Bed> GetBeds();
-    public List<Harvest> GetHarvests();
+    //public List<Bed> GetBeds();
+    //public List<Harvest> GetHarvests();
     public List<Customer> GetCustomers();
-    public List<Invoice> GetInvoices();
+    //public List<Invoice> GetInvoices();
 }

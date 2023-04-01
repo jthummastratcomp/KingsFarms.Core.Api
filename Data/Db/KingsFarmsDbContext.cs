@@ -1,4 +1,5 @@
-﻿using KingsFarms.Core.Api.Data.Domain;
+﻿using KingsFarms.Core.Api.Data.configurations;
+using KingsFarms.Core.Api.Data.Domain;
 using KingsFarms.Core.Api.Data.Providers;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
@@ -18,13 +19,13 @@ public sealed class KingsFarmsDbContext : DbContext, IDbContext
     }
 
     public DbSet<Customer> Customers => Set<Customer>();
-    public DbSet<Invoice> Invoices => Set<Invoice>();
-    public DbSet<Bed> Beds => Set<Bed>();
-    public DbSet<Harvest> Harvests => Set<Harvest>();
+    //public DbSet<Invoice> Invoices => Set<Invoice>();
+    //public DbSet<Bed> Beds => Set<Bed>();
+    //public DbSet<Harvest> Harvests => Set<Harvest>();
 
-    public DbSet<Shipment> Shipments => Set<Shipment>();
-    public DbSet<HorseFarm> HorseFarms => Set<HorseFarm>();
-    public DbSet<HorseFarmLoad> HorseFarmLoads => Set<HorseFarmLoad>();
+    //public DbSet<Shipment> Shipments => Set<Shipment>();
+    //public DbSet<HorseFarm> HorseFarms => Set<HorseFarm>();
+    //public DbSet<HorseFarmLoad> HorseFarmLoads => Set<HorseFarmLoad>();
 
 
     public DbSet<T> GetSet<T>() where T : class
@@ -36,5 +37,9 @@ public sealed class KingsFarmsDbContext : DbContext, IDbContext
     {
         return Entry(entity);
     }
-    
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.ApplyConfigurationsFromAssembly(typeof(CustomerConfiguration).Assembly);
+    }
 }

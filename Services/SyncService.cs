@@ -23,65 +23,65 @@ public class SyncService : ISyncService
         _unitOfWork = unitOfWork;
     }
 
-    public string SyncBeds()
-    {
-        var list = _bedService.GetBedsInfo();
+    //public string SyncBeds()
+    //{
+    //    var list = _bedService.GetBedsInfo();
 
 
-        foreach (var vm in list)
-        {
-            var bedNumber = Utils.ParseToInteger(vm.BedNumber.ToLower().Replace("bed", "").Trim());
+    //    foreach (var vm in list)
+    //    {
+    //        var bedNumber = Utils.ParseToInteger(vm.BedNumber.ToLower().Replace("bed", "").Trim());
 
-            var bed = _unitOfWork.BedsRepo.Find(x => x.Number == bedNumber).FirstOrDefault();
-            if (bed == null)
-            {
-                _unitOfWork.BedsRepo.Add(new Bed {Number = bedNumber, Section = vm.SectionDisplay, PlantedDate = vm.PlantedDate, PlantsCount = vm.PlantsCount});
-            }
-            else
-            {
-                bed.Section = vm.SectionDisplay;
-                bed.PlantedDate = vm.PlantedDate;
-                bed.PlantsCount = vm.PlantsCount;
+    //        var bed = _unitOfWork.BedsRepo.Find(x => x.Number == bedNumber).FirstOrDefault();
+    //        if (bed == null)
+    //        {
+    //            _unitOfWork.BedsRepo.Add(new Bed {Number = bedNumber, Section = vm.SectionDisplay, PlantedDate = vm.PlantedDate, PlantsCount = vm.PlantsCount});
+    //        }
+    //        else
+    //        {
+    //            bed.Section = vm.SectionDisplay;
+    //            bed.PlantedDate = vm.PlantedDate;
+    //            bed.PlantsCount = vm.PlantsCount;
 
-                _unitOfWork.BedsRepo.Update(bed);
-            }
-        }
+    //            _unitOfWork.BedsRepo.Update(bed);
+    //        }
+    //    }
 
-        _unitOfWork.SaveChanges();
-        return "Synchronized Beds";
-    }
+    //    _unitOfWork.SaveChanges();
+    //    return "Synchronized Beds";
+    //}
 
-    public string SyncHarvests()
-    {
-        var list = _harvestService.GetAllHarvestData();
+    //public string SyncHarvests()
+    //{
+    //    var list = _harvestService.GetAllHarvestData();
 
 
-        foreach (var vm in list)
-        {
-            var bed = _unitOfWork.BedsRepo.Get(vm.BedNumber);
-            if (bed == null) continue;
+    //    foreach (var vm in list)
+    //    {
+    //        var bed = _unitOfWork.BedsRepo.Get(vm.BedNumber);
+    //        if (bed == null) continue;
 
-            var harvestForBedDate = _unitOfWork.HarvestRepo.Find(x => x.BedId == bed.Id && x.HarvestDate == vm.HarvestDate).FirstOrDefault();
-            if (harvestForBedDate == null)
-            {
-                var harvest = new Harvest
-                {
-                    HarvestDate = vm.HarvestDate,
-                    Quantity = vm.HarvestQty,
-                    BedId = bed.Id
-                };
-                _unitOfWork.HarvestRepo.Add(harvest);
-            }
-            else
-            {
-                harvestForBedDate.Quantity = vm.HarvestQty;
-                _unitOfWork.HarvestRepo.Update(harvestForBedDate);
-            }
-        }
+    //        var harvestForBedDate = _unitOfWork.HarvestRepo.Find(x => x.BedId == bed.Id && x.HarvestDate == vm.HarvestDate).FirstOrDefault();
+    //        if (harvestForBedDate == null)
+    //        {
+    //            var harvest = new Harvest
+    //            {
+    //                HarvestDate = vm.HarvestDate,
+    //                Quantity = vm.HarvestQty,
+    //                BedId = bed.Id
+    //            };
+    //            _unitOfWork.HarvestRepo.Add(harvest);
+    //        }
+    //        else
+    //        {
+    //            harvestForBedDate.Quantity = vm.HarvestQty;
+    //            _unitOfWork.HarvestRepo.Update(harvestForBedDate);
+    //        }
+    //    }
 
-        _unitOfWork.SaveChanges();
-        return "Synchronized Harvests";
-    }
+    //    _unitOfWork.SaveChanges();
+    //    return "Synchronized Harvests";
+    //}
 
     public string SyncCustomers()
     {
@@ -101,52 +101,52 @@ public class SyncService : ISyncService
     }
 
 
-    public string SyncInvoices()
-    {
-        var weeks = _weeklyOrdersUsdaService.GetInvoiceWeeksListForYear(2023);
-        foreach (var week in weeks)
-        {
-            if (week.Data == "2022-12-31") continue;
+    //public string SyncInvoices()
+    //{
+    //    var weeks = _weeklyOrdersUsdaService.GetInvoiceWeeksListForYear(2023);
+    //    foreach (var week in weeks)
+    //    {
+    //        if (week.Data == "2022-12-31") continue;
 
-            var list = _weeklyOrdersUsdaService.LoadInvoicesForWeek(week.Data, CompanyEnum.Kings);
+    //        var list = _weeklyOrdersUsdaService.LoadInvoicesForWeek(week.Data, CompanyEnum.Kings);
 
-            foreach (var vm in list)
-            {
-                var customer = _unitOfWork.CustomerRepo.Find(x => x.Key == vm.CustomerHeader.CustomerKey).FirstOrDefault();
-                if (customer != null)
-                {
-                    var invoice = _unitOfWork.InvoiceRepo.Find(x => x.InvoiceNumber == vm.InvoiceNumber).FirstOrDefault();
-                    if (invoice == null)
-                    {
-                        _unitOfWork.InvoiceRepo.Add(new Invoice
-                        {
-                            InvoiceNumber = vm.InvoiceNumber,
-                            InvoiceDate = vm.InvoiceDate,
-                            DueDate = vm.DueDate,
-                            Quantity = vm.Cost.Quantity,
-                            Rate = vm.Price.Rate,
-                            Amount = vm.Bill.Billed,
-                            Memo = vm.Memo,
-                            CustomerId = customer.Id
-                        });
-                    }
-                    else
-                    {
-                        invoice.InvoiceDate = vm.InvoiceDate;
-                        invoice.DueDate = vm.DueDate;
-                        invoice.Quantity = vm.Cost.Quantity;
-                        invoice.Rate = vm.Price.Rate;
-                        invoice.Amount = vm.Bill.Billed;
-                        invoice.Memo = vm.Memo;
-                    }
-                }
-            }
-        }
+    //        foreach (var vm in list)
+    //        {
+    //            var customer = _unitOfWork.CustomerRepo.Find(x => x.Key == vm.CustomerHeader.CustomerKey).FirstOrDefault();
+    //            if (customer != null)
+    //            {
+    //                var invoice = _unitOfWork.InvoiceRepo.Find(x => x.InvoiceNumber == vm.InvoiceNumber).FirstOrDefault();
+    //                if (invoice == null)
+    //                {
+    //                    _unitOfWork.InvoiceRepo.Add(new Invoice
+    //                    {
+    //                        InvoiceNumber = vm.InvoiceNumber,
+    //                        InvoiceDate = vm.InvoiceDate,
+    //                        DueDate = vm.DueDate,
+    //                        Quantity = vm.Cost.Quantity,
+    //                        Rate = vm.Price.Rate,
+    //                        Amount = vm.Bill.Billed,
+    //                        Memo = vm.Memo,
+    //                        CustomerId = customer.Id
+    //                    });
+    //                }
+    //                else
+    //                {
+    //                    invoice.InvoiceDate = vm.InvoiceDate;
+    //                    invoice.DueDate = vm.DueDate;
+    //                    invoice.Quantity = vm.Cost.Quantity;
+    //                    invoice.Rate = vm.Price.Rate;
+    //                    invoice.Amount = vm.Bill.Billed;
+    //                    invoice.Memo = vm.Memo;
+    //                }
+    //            }
+    //        }
+    //    }
 
-        _unitOfWork.SaveChanges();
-        return "Synchronized Invoices";
-        ;
-    }
+    //    _unitOfWork.SaveChanges();
+    //    return "Synchronized Invoices";
+    //    ;
+    //}
 
     public string AddCustomer(CustomerDashboardViewModel vm)
     {
@@ -162,15 +162,15 @@ public class SyncService : ISyncService
         return "Synchronized Customers";
     }
 
-    public string SaveHarvestData(HarvestViewModel viewModel)
-    {
-        _unitOfWork.HarvestRepo.Add(new Harvest
-        {
-            BedId = viewModel.BedNumber, HarvestDate = viewModel.HarvestDate, Quantity = viewModel.HarvestQty
-        });
-        _unitOfWork.SaveChanges();
-        return "Saved Harvest Data";
-    }
+    //public string SaveHarvestData(HarvestViewModel viewModel)
+    //{
+    //    _unitOfWork.HarvestRepo.Add(new Harvest
+    //    {
+    //        BedId = viewModel.BedNumber, HarvestDate = viewModel.HarvestDate, Quantity = viewModel.HarvestQty
+    //    });
+    //    _unitOfWork.SaveChanges();
+    //    return "Saved Harvest Data";
+    //}
 
     private void UpdateCustomerOnRepo(Customer customer, CustomerDashboardViewModel vm)
     {

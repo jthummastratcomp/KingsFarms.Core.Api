@@ -14,23 +14,23 @@ public class SqlService : ISqlService
         _unitOfWork = unitOfWork;
     }
 
-    public List<Bed> GetBeds()
-    {
-        return _unitOfWork.BedsRepo.All().ToList();
-    }
+    //public List<Bed> GetBeds()
+    //{
+    //    return _unitOfWork.BedsRepo.All().ToList();
+    //}
 
-    public List<Harvest> GetHarvests()
-    {
-        return _unitOfWork.HarvestRepo.All().ToList();
-    }
+    //public List<Harvest> GetHarvests()
+    //{
+    //    return _unitOfWork.HarvestRepo.All().ToList();
+    //}
 
     public List<Customer> GetCustomers()
     {
         return _unitOfWork.CustomerRepo.All().ToList();
     }
 
-    public List<Invoice> GetInvoices()
-    {
-        return _unitOfWork.InvoiceRepo.All().ToList();
-    }
+    //public List<Invoice> GetInvoices()
+    //{
+    //    return _unitOfWork.InvoiceRepo.All().ToList();
+    //}
 }

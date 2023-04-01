@@ -6,14 +6,14 @@ namespace KingsFarms.Core.Api.Data.Providers;
 
 public interface IDbContext
 {
-    DbSet<Customer> Customers { get; }
-    DbSet<Invoice> Invoices { get; }
-    DbSet<Bed> Beds { get; }
-    DbSet<Harvest> Harvests { get; }
+    //DbSet<Customer> Customers { get; }
+    //DbSet<Invoice> Invoices { get; }
+    //DbSet<Bed> Beds { get; }
+    //DbSet<Harvest> Harvests { get; }
 
-    DbSet<Shipment> Shipments { get; }
-    DbSet<HorseFarm> HorseFarms { get; }
-    DbSet<HorseFarmLoad> HorseFarmLoads { get; }
+    //DbSet<Shipment> Shipments { get; }
+    //DbSet<HorseFarm> HorseFarms { get; }
+    //DbSet<HorseFarmLoad> HorseFarmLoads { get; }
     int SaveChanges();
     void Dispose();
     DbSet<T> GetSet<T>() where T : class;

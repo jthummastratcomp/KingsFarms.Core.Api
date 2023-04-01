@@ -15,21 +15,21 @@ public class SqlController : ControllerBase
         _sqlService = sqlService;
     }
 
-    [HttpGet(CoreApiRoutes.GetBedsFromSql)]
-    public IQueryResult SyncBeds()
-    {
-        var list = _sqlService.GetBeds();
+    //[HttpGet(CoreApiRoutes.GetBedsFromSql)]
+    //public IQueryResult SyncBeds()
+    //{
+    //    var list = _sqlService.GetBeds();
 
-        return new QueryResult<List<Bed>> {Data = list, Status = new SuccessResult()};
-    }
+    //    return new QueryResult<List<Bed>> {Data = list, Status = new SuccessResult()};
+    //}
 
-    [HttpGet(CoreApiRoutes.GetHarvestsFromSql)]
-    public IQueryResult GetHarvestsFromSql()
-    {
-        var list = _sqlService.GetHarvests();
+    //[HttpGet(CoreApiRoutes.GetHarvestsFromSql)]
+    //public IQueryResult GetHarvestsFromSql()
+    //{
+    //    var list = _sqlService.GetHarvests();
 
-        return new QueryResult<List<Harvest>> {Data = list, Status = new SuccessResult()};
-    }
+    //    return new QueryResult<List<Harvest>> {Data = list, Status = new SuccessResult()};
+    //}
 
     [HttpGet(CoreApiRoutes.GetCustomersFromSql)]
     public IQueryResult GetCustomersFromSql()
@@ -39,11 +39,11 @@ public class SqlController : ControllerBase
         return new QueryResult<List<Customer>> {Data = list, Status = new SuccessResult()};
     }
 
-    [HttpGet(CoreApiRoutes.GetInvoicesFromSql)]
-    public IQueryResult GetInvoicesFromSql()
-    {
-        var list = _sqlService.GetInvoices();
+    //[HttpGet(CoreApiRoutes.GetInvoicesFromSql)]
+    //public IQueryResult GetInvoicesFromSql()
+    //{
+    //    var list = _sqlService.GetInvoices();
 
-        return new QueryResult<List<Invoice>> {Data = list, Status = new SuccessResult()};
-    }
+    //    return new QueryResult<List<Invoice>> {Data = list, Status = new SuccessResult()};
+    //}
 }

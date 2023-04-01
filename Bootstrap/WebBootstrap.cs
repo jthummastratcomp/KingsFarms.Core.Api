@@ -1,7 +1,9 @@
 ﻿using Autofac;
+using KingsFarms.Core.Api.Controllers;
 using KingsFarms.Core.Api.Data.Domain;
 using KingsFarms.Core.Api.Data.Providers;
 using KingsFarms.Core.Api.Data.Repositories;
+using KingsFarms.Core.Api.Mappers;
 using KingsFarms.Core.Api.Services;
 using KingsFarms.Core.Api.Services.Interfaces;
 using Serilog;
@@ -78,6 +80,7 @@ public class WebBootstrap : Module
 
         builder.RegisterType<SyncService>().As<ISyncService>();
         builder.RegisterType<SqlService>().As<ISqlService>();
+        builder.RegisterType<DbService>().As<IDbService>();
 
         builder.RegisterType<MessagingService>().As<IMessagingService>()
             .WithParameter("accountSid", _hotTowelCoreApiSettings.twilioAccountSid)
@@ -87,7 +90,7 @@ public class WebBootstrap : Module
             .WithParameter("toSmsPhone", _hotTowelCoreApiSettings.twilioSmsTo);
 
 
-        //builder.RegisterType<CustomerDataProvider>().As<ICustomerDataProvider>();
+        builder.RegisterType<CustomerMapper>().As<ICustomerMapper>();
 
         //builder.RegisterType<Repository<Customer>>().As<IRepository<Customer>>();
         //builder.RegisterType<Repository<Invoice>>().As<IRepository<Invoice>>();
@@ -102,8 +105,8 @@ public class WebBootstrap : Module
         //builder.RegisterType<KingsFarmsDbContext>().As<IDbContext>();
 
         builder.RegisterType<CustomerRepository>().As<IRepository<Customer>>();
-        builder.RegisterType<InvoiceRepository>().As<IRepository<Invoice>>();
-        builder.RegisterType<BedRepository>().As<IRepository<Bed>>();
-        builder.RegisterType<HarvestRepository>().As<IRepository<Harvest>>();
+        //builder.RegisterType<InvoiceRepository>().As<IRepository<Invoice>>();
+        //builder.RegisterType<BedRepository>().As<IRepository<Bed>>();
+        //builder.RegisterType<HarvestRepository>().As<IRepository<Harvest>>();
     }
 }
