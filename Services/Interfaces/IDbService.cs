@@ -6,6 +6,6 @@ public interface IDbService
 {
     void AddCustomer(Customer customer);
     List<Customer> GetCustomersDb();
-    void DeleteCustomer(int customerId);
+    void RemoveCustomer(int customerId, string customerKey);
     void EditCustomer(int customerId, string customerKey, Customer customer);
 }

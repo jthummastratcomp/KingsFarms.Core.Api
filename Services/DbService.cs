@@ -23,10 +23,16 @@ internal class DbService : IDbService
         return _unitOfWork.CustomerRepo.All().ToList();
     }
 
-    public void DeleteCustomer(int customerId)
+    public void RemoveCustomer(int customerId, string customerKey)
     {
-        throw new NotImplementedException();
+        var currentCustomer = customerId > 0 ? _unitOfWork.CustomerRepo.Get(customerId) : _unitOfWork.CustomerRepo.Find(x => x.Key == customerKey).FirstOrDefault();
+        if (currentCustomer == null) return;
+
+        _unitOfWork.CustomerRepo.Remove(currentCustomer);
+        _unitOfWork.SaveChanges();
     }
+
+    
 
     public void EditCustomer(int customerId, string customerKey, Customer modifiedCustomer)
     {

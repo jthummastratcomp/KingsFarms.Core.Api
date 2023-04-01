@@ -2,8 +2,8 @@
 
 namespace KingsFarms.Core.Api.Controllers;
 
-// [ApiController]
-public class DbController : ApiControllerBase //ControllerBase
+
+public class DbController : ApiControllerBase
 {
     [HttpGet(CoreApiRoutes.GetCustomersDb)]
     public List<CustomerDbViewModel> GetCustomers()
@@ -26,6 +26,6 @@ public class DbController : ApiControllerBase //ControllerBase
     [HttpPost(CoreApiRoutes.RemoveCustomerDb)]
     public CustomerDbViewModel RemoveCustomer(string customerIdOrKey, CustomerDbViewModel vm)
     {
-        return Mediator.Send(new RemoveCustomerDbRequest {ViewModel = vm}).Result;
+        return Mediator.Send(new RemoveCustomerDbRequest {CustomerIdOrKey = customerIdOrKey, ViewModel = vm}).Result;
     }
 }

@@ -64,3 +64,26 @@ public class EditCustomerRequestHandler : IRequestHandler<EditCustomerDbRequest,
         return dbRequest.ViewModel;
     }
 }
+
+
+public class RemoveCustomerRequestHandler : IRequestHandler<RemoveCustomerDbRequest, CustomerDbViewModel>
+{
+    private readonly IDbService _dbService;
+    private readonly ICustomerMapper _customerMapper;
+
+    public RemoveCustomerRequestHandler(IDbService dbService, ICustomerMapper customerMapper)
+    {
+        _dbService = dbService;
+        _customerMapper = customerMapper;
+    }
+
+    public async Task<CustomerDbViewModel> Handle(RemoveCustomerDbRequest dbRequest, CancellationToken cancellationToken)
+    {
+        var customer = _customerMapper.MapCustomerDbViewModelToCustomer(dbRequest.ViewModel);
+
+
+        _dbService.RemoveCustomer(customer.Id, customer.Key);
+
+        return dbRequest.ViewModel;
+    }
+}
