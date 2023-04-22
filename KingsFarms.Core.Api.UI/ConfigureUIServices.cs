@@ -24,7 +24,7 @@ public class ConfigureUIServices : Module
             .WithRegistrationScope(RegistrationScope.Scoped)
             .Build());
 
-        builder.RegisterModule(new ConfigureApplicationServices());
+        builder.RegisterModule(new ConfigureApplicationServices(_appSettings));
 
         base.Load(builder);
     }
